@@ -3,87 +3,83 @@
 /// <summary>
 /// Provides player states, movement and mechanics.
 /// </summary>
-public class Player : AStateController 
+public class Player : AStateController
 {
     public static Player Instance;
-    Rigidbody rigidBody;
-    Transform playerParent;
+    [HideInInspector] public Rigidbody rigidBody; 
+    [HideInInspector] public Transform playerParent;
 
     #region STATES
-    // Running
-    // Jumping
-    // At intersection?
+    public InStreetState inStreetState = new();
+    public JumpState jumpState = new();
+    public AtIntersectionState atIntersection = new();
     // Stopped
     #endregion
 
     #region BEHAVIOURS
-    public RailControl railControl;
+    public Railed railed;
+    public Jumper jumper;
     public EndlessRunner endlessRunner;
-    public TurnControl turnControl;
-    public StaminaSystem staminaSystem;
+    public Turner turner;
+    public Resilient resilient;
     public Collecter collecter;
     #endregion
 
     #region CHECKERS
-    [Header("Checkers")]
-    //Checker of layer in that position
-    public Transform groundChecker;
-    public Transform obstacleChecker;
-    public LayerMask groundLayer;
-    public LayerMask obstacleLayer;
+    [Header("Layers and its checkers")]
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] LayerMask obstacleLayer;
+    [SerializeField] Transform groundChecker;
+    [SerializeField] Transform obstacleChecker;
     #endregion
 
     #region MOVEMENT
     [Header("Movement")]
-    public float sideSpeed = 6.0f;
-    public float forwardSpeed = 7.0f;
-    public float jumpForce = 7.0f;
+    [SerializeField] float railChangeSpeed;
+    [SerializeField] float forwardSpeed;
+    [SerializeField] float jumpForce;
     [Tooltip("Its children are the diferrent rails")]
-    public Transform railsParent;
+    [SerializeField] Transform rails;
     #endregion
 
     #region MECHANICS
     [Header("Mechanics")]
-    public GameObject collectible;
-    public float staminaLossPerSecond = 2f;
-    public float staminaLossPerCrash = 5f;
+    [SerializeField] GameObject collectible;
+    [SerializeField] float staminaLossPerStep;
+    [SerializeField] float staminaLossPerJump;
     #endregion
 
     public void Awake()
     {
+        // Singleton
         if (Instance == null)
             Instance = this;
         else
             Destroy(gameObject);
     }
 
-
     public override void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
         playerParent = transform.parent;
 
-        //SetState(Running)
-
-        railControl = new(transform, sideSpeed, railsParent);
-        endlessRunner = new(rigidBody, playerParent, forwardSpeed, jumpForce, groundChecker, obstacleChecker, groundLayer, obstacleLayer);
-        turnControl = new(playerParent);
-        staminaSystem = new(obstacleChecker, obstacleLayer, staminaLossPerSecond, staminaLossPerCrash);
+        railed = new(transform, railChangeSpeed, rails);
+        jumper = new(rigidBody, groundChecker, groundLayer, jumpForce);
+        endlessRunner = new(playerParent, forwardSpeed, obstacleChecker, obstacleLayer);
+        turner = new(playerParent);
+        resilient = new(staminaLossPerStep, staminaLossPerJump);
         collecter = new(collectible);
+
+        SetState(inStreetState);
     }
 
     public override void Update()
     {
-        railControl.Update();
-        endlessRunner.Update();
-        turnControl.Update();
-        staminaSystem.Update();
+        currentState.Update();
     }
 
     public override void OnTriggerEnter(Collider other)
     {
-        turnControl.OnTriggerEnter(other);
-        staminaSystem.OnTriggerEnter(other);
-        collecter.OnTriggerEnter(other);
+        currentState.OnTriggerEnter(other);
     }
 }

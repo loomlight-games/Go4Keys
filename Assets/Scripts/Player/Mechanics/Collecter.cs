@@ -6,9 +6,9 @@ using UnityEngine;
 /// </summary>
 public class Collecter
 {
-    //EVENT HANDLER FOR COLLECTING
     public event EventHandler ObjectCollectedEvent;//Stores methods to invoke when hitting a collectible
     readonly GameObject collectible;
+
     //[SerializeField] AudioSource collectionSound;//Audio
 
     public Collecter(GameObject collectible)
@@ -32,12 +32,4 @@ public class Collecter
             ObjectCollectedEvent?.Invoke(this, EventArgs.Empty);
         }
     }
-}
-////////////////////////////////////////////////////////////////////////////
-///PSEUDOCODE
-///
-/// when hitting a collectible
-///     destroy it
-///     play sound
-///     invoke methods in event handler
-///     
+} 

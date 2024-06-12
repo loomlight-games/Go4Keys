@@ -4,13 +4,13 @@ using UnityEngine.UI;
 
 public class StaminaBar : MonoBehaviour
 {
-    StaminaSystem staminaSystem;
+    Resilient staminaSystem;
     public Slider slider;
 
     // Start is called before the first frame update
     void Start()
     {
-        staminaSystem = Player.Instance.staminaSystem;
+        staminaSystem = Player.Instance.resilient;
 
         //SUBSCRIBES ENDRESULT TO EVENT HANDLER OF RESULT
         staminaSystem.StaminaChangeEvent += SetStamina;

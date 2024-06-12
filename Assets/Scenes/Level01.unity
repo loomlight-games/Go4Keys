@@ -45394,7 +45394,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2085242730}
   - component: {fileID: 2085242736}
-  - component: {fileID: 2085242735}
   - component: {fileID: 2085242737}
   m_Layer: 0
   m_Name: RunnerParent
@@ -45422,33 +45421,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &2085242735
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2085242729}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &2085242736
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -46541,6 +46513,14 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5859872538111919777, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
+      propertyPath: rails
+      value: 
+      objectReference: {fileID: 1322850705}
+    - target: {fileID: 5859872538111919777, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
+      propertyPath: jumpForce
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5859872538111919777, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
       propertyPath: collectible
       value: 
       objectReference: {fileID: 947267103}
@@ -46548,6 +46528,14 @@ PrefabInstance:
       propertyPath: railsParent
       value: 
       objectReference: {fileID: 1322850705}
+    - target: {fileID: 5859872538111919777, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
+      propertyPath: forwardSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5859872538111919777, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
+      propertyPath: railChangeSpeed
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8117148013260554024, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
       propertyPath: railsParent
       value: 

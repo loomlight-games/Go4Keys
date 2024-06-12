@@ -20,7 +20,7 @@ public class GameStateController : AStateController
 
     public override void Update()
     {
-        currentState.FrameUpdate();
+        currentState.Update();
     }
 
     public override IState GetState()

@@ -6,11 +6,12 @@ using UnityEngine;
 /// </summary>
 public abstract class AStateController: MonoBehaviour
 {
-    public IState currentState;
+    protected IState currentState;
 
     public abstract void Start();
     public abstract void Update();
     public virtual void OnTriggerEnter(Collider other) { }
+    public virtual void OnTriggerExit(Collider other) { }
 
     /// <summary>
     /// Gets the current state of the controller
@@ -27,6 +28,7 @@ public abstract class AStateController: MonoBehaviour
     public virtual void SetState(IState state)
     {
         currentState = state;
+        Debug.Log(currentState.ToString());
         currentState.Enter(this);
     }
 }

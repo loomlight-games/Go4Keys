@@ -5,10 +5,11 @@ using UnityEngine;
 /// </summary>
 public abstract class APlayerState : IState
 {
+    protected Player player;
     public abstract void Enter(AStateController controller);
-
-    // Not MonoBehaviour.Update() because the controller is already MonoBehaviour
-    public abstract void FrameUpdate();
-
+    public abstract void Update();
+    public virtual void OnTriggerEnter(Collider other) { }
+    public virtual void OnTriggerExit(Collider other) { }
     public abstract void Exit();
+
 }

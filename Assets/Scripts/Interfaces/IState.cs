@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 /// <summary>
 /// Defines an state
 /// </summary>
@@ -13,12 +15,19 @@ public interface IState
     /// <summary>
     /// Called in MonoBehaviour.Update() in controller
     /// </summary>
-    public void FrameUpdate();
+    public void Update();
 
     /// <summary>
-    /// Called in MonoBehaviour.FixedUpdate() in controller
+    /// Called in MonoBehaviour.OnTriggerEnter(Collider other) in controller
     /// </summary>
-    public virtual void FrameFixedUpdate() { } // Virtual = optional
+    /// <param name="other">Trigger collided</param>
+    public void OnTriggerEnter(Collider other);
+
+    /// <summary>
+    /// Called in MonoBehaviour.OnTriggerExit(Collider other) in controller
+    /// </summary>
+    /// <param name="other">Trigger collided</param>
+    public void OnTriggerExit(Collider other);
 
     /// <summary>
     /// Called when exiting an state

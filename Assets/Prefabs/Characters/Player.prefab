@@ -164,21 +164,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d492cd5d8cd8cda4085d0ee14fc2588f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundChecker: {fileID: 1121701607193939789}
-  obstacleChecker: {fileID: 4890186227112978585}
+  rigidBody: {fileID: 0}
+  playerParent: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 128
-  sideSpeed: 6
-  forwardSpeed: 7
+  groundChecker: {fileID: 1121701607193939789}
+  obstacleChecker: {fileID: 4890186227112978585}
+  railChangeSpeed: 7
+  forwardSpeed: 8
   jumpForce: 7
-  railsParent: {fileID: 0}
+  rails: {fileID: 0}
   collectible: {fileID: 0}
-  staminaLossPerSecond: 2
-  staminaLossPerCrash: 5
+  staminaLossPerStep: 2
+  staminaLossPerJump: 300
 --- !u!82 &11544385760409037
 AudioSource:
   m_ObjectHideFlags: 0
