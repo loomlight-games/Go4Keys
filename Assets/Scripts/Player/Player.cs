@@ -5,6 +5,7 @@
 /// </summary>
 public class Player : AStateController 
 {
+    public static Player Instance;
     Rigidbody rigidBody;
     Transform playerParent;
 
@@ -16,11 +17,11 @@ public class Player : AStateController
     #endregion
 
     #region BEHAVIOURS
-    RailControl railControl;
-    EndlessRunner endlessRunner;
-    TurnControl turnControl;
-    StaminaSystem staminaSystem;
-    Collecter collecter;
+    public RailControl railControl;
+    public EndlessRunner endlessRunner;
+    public TurnControl turnControl;
+    public StaminaSystem staminaSystem;
+    public Collecter collecter;
     #endregion
 
     #region CHECKERS
@@ -48,6 +49,15 @@ public class Player : AStateController
     public float staminaLossPerCrash = 5f;
     #endregion
 
+    public void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
+
+
     public override void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
@@ -56,8 +66,8 @@ public class Player : AStateController
         //SetState(Running)
 
         railControl = new(transform, sideSpeed, railsParent);
-        endlessRunner = new(rigidBody,playerParent,forwardSpeed,jumpForce,groundChecker,obstacleChecker,groundLayer,obstacleLayer);
-        turnControl = new (playerParent);
+        endlessRunner = new(rigidBody, playerParent, forwardSpeed, jumpForce, groundChecker, obstacleChecker, groundLayer, obstacleLayer);
+        turnControl = new(playerParent);
         staminaSystem = new(obstacleChecker, obstacleLayer, staminaLossPerSecond, staminaLossPerCrash);
         collecter = new(collectible);
     }

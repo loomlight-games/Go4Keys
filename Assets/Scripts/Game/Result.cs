@@ -10,7 +10,7 @@ public class Result : MonoBehaviour
 
     //SUBJECTS
     [SerializeField] CollectiblesUI collectibleUI;
-    [SerializeField] StaminaSystem stamina;
+    [SerializeField] StaminaSystem staminaSystem;
     [SerializeField] Chaser chaser;
 
     //Sprites
@@ -28,7 +28,8 @@ public class Result : MonoBehaviour
         //SUBSCRIBES VICTORY TO EVENT HANDLER OF COLLECTIBLES UI
         collectibleUI.VictoryEvent += Victory;
         chaser.CaughtEvent += Caught;
-        stamina.TiredEvent += Stamina;
+        staminaSystem = Player.Instance.staminaSystem;
+        staminaSystem.TiredEvent += Stamina;
 
         victoryAdvice.SetActive(false);
         caughtAdvice.SetActive(false);

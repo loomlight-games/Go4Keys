@@ -44,6 +44,7 @@ public class KeyAutosave : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        collecter = Player.Instance.collecter;
         //SUBSCRIBES INCREMENT COUNT TO EVENT HANDLER OF COLLECTER
         collecter.ObjectCollectedEvent += IncrCount;
 

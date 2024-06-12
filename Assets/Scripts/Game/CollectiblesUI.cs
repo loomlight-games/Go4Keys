@@ -45,6 +45,8 @@ public class CollectiblesUI : MonoBehaviour
             RestoreUI(counter);
         }
 
+        collecter = Player.Instance.collecter;
+
         //UPDATEUI WHEN OBJECT COLLECTED
         collecter.ObjectCollectedEvent += UpdateUI;
     }
