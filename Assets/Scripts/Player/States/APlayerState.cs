@@ -1,9 +1,9 @@
 using UnityEngine;
 
 /// <summary>
-/// Implements common functionalities in all game states
+/// Implements common functionalities in all player states
 /// </summary>
-public abstract class AGameState : IState //MonoBehaviour, IState
+public abstract class APlayerState : IState
 {
     public abstract void Enter(AStateController controller);
 

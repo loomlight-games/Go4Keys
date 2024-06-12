@@ -1,37 +1,39 @@
 using UnityEngine;
 
-//TURN IN INTERSECTIONS TURNPOINTS
-
-public class TurnControl : MonoBehaviour
+/// <summary>
+/// Provides turn ability to player parent at intersections.
+/// </summary>
+public class TurnControl
 {
-    //Positions
+    readonly Transform playerParent;
     Vector2 position2;//Position (X,Z) of this object 
     Vector2 turnPoint;//Position or center (X, Z) of turn area 
-    
-    //Restrictions
     bool canTurn = false;//Can make a turn
     bool left = false;//Has turned left
     bool right = false;//has turned right
+    //[SerializeField] AudioSource turningSound;
 
-    //Sounds
-    [SerializeField] AudioSource turningSound;
+    public TurnControl(Transform playerParent)
+    {
+        this.playerParent = playerParent;
+    }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         //Saves X,Z position of this object
-        position2 = new Vector2(transform.position.x, transform.position.z);
+        position2 = new Vector2(playerParent.position.x, playerParent.position.z);
 
         //Has entered an intersection
         if (canTurn)
         {
             //Can make a turn
-            Turn();
+            CheckTurn();
         }
     }
 
     //Enters trigger area
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         //With an intersection
         if (other.gameObject.CompareTag("Intersection"))
@@ -50,7 +52,7 @@ public class TurnControl : MonoBehaviour
     }
 
     //Turn to last selected side before reaching turnpoint
-    void Turn()
+    void CheckTurn()
     {
         //The distance between this object and the turnpoint at least 0.4f
         if (Vector2.Distance(position2, turnPoint) <= 0.4f)
@@ -63,12 +65,12 @@ public class TurnControl : MonoBehaviour
                 CenterToTurnPoint();
                 
                 //Rotates object
-                transform.Rotate(0f, -90f, 0f);
+                playerParent.Rotate(0f, -90f, 0f);
 
                 //Can't make any more turn 
                 canTurn = false;
 
-                turningSound.Play();
+                //turningSound.Play();
 
                 //Debug.Log("Has rotated to left");
             }
@@ -79,12 +81,12 @@ public class TurnControl : MonoBehaviour
                 CenterToTurnPoint();
 
                 //Rotates object
-                transform.Rotate(0f, 90f, 0f);
+                playerParent.Rotate(0f, 90f, 0f);
 
                 //Can't make any more turn 
                 canTurn = false;
 
-                turningSound.Play();
+                //turningSound.Play();
 
                 //Debug.Log("Has rotated to right");
             }
@@ -122,11 +124,12 @@ public class TurnControl : MonoBehaviour
         }
     }
 
-    //Centers object to intersection center keeping Y position)
-    //To maintain intermediate rail at center of street
+    /// <summary>
+    /// Centers object to intersection center keeping Y position) to maintain intermediate rail at center of street
+    /// </summary>
     void CenterToTurnPoint()
     {
-        transform.position = new Vector3(turnPoint.x, transform.position.y, turnPoint.y);
+        playerParent.position = new Vector3(turnPoint.x, playerParent.position.y, turnPoint.y);
     }
 }
 

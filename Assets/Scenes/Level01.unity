@@ -4935,7 +4935,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21ef5dd793589f446813f5d555ee6626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stamina: {fileID: 1403954495}
   slider: {fileID: 253742360}
 --- !u!1001 &254514544
 PrefabInstance:
@@ -11507,7 +11506,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectibleUI: {fileID: 1260561404}
-  stamina: {fileID: 1403954495}
   chaser: {fileID: 818281345}
   victoryAdvice: {fileID: 655107747}
   caughtAdvice: {fileID: 1938530618}
@@ -29415,7 +29413,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4207123450704b24d8f1d5ef792ebf6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collecter: {fileID: 1403954494}
   leftUI: {fileID: 1782363297}
   foundUI: {fileID: 1069986186}
 --- !u!114 &1260561405
@@ -29430,7 +29427,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197fa9be5f240054eb2e461d9018257b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collecter: {fileID: 1403954494}
   resetter: {fileID: 481660409}
   collectiblesUI: {fileID: 1260561404}
 --- !u!4 &1261492218 stripped
@@ -31529,28 +31525,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8714495261299368167, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
   m_PrefabInstance: {fileID: 5841858328898109884}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1403954494 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8740289528916705316, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
-  m_PrefabInstance: {fileID: 5841858328898109884}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce33ae7d219fe4a4784b21fb0fe1c97b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1403954495 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3507830099252260984, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
-  m_PrefabInstance: {fileID: 5841858328898109884}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbdcc7b0efeec54478f590c5c51ef993, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &1403954497 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 537072828840809052, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
@@ -34431,7 +34405,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1524388006}
-  - component: {fileID: 1524388007}
   m_Layer: 5
   m_Name: GameManager
   m_TagString: Untagged
@@ -34455,20 +34428,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1524388007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1524388005}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3de829e32ebb982428ef2994befeb1a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftUI: {fileID: 0}
-  foundUI: {fileID: 0}
 --- !u!4 &1531247863 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2601740332267842871, guid: e2d525b388e78ff4fb9e94d0f3e7d545, type: 3}
@@ -45436,7 +45395,6 @@ GameObject:
   - component: {fileID: 2085242730}
   - component: {fileID: 2085242736}
   - component: {fileID: 2085242735}
-  - component: {fileID: 2085242733}
   - component: {fileID: 2085242737}
   m_Layer: 0
   m_Name: RunnerParent
@@ -45464,19 +45422,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2085242733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2085242729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 939d00c65f719b545a5003e374a7e0a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turningSound: {fileID: 2085242737}
 --- !u!54 &2085242735
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -46595,6 +46540,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5859872538111919777, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
+      propertyPath: collectible
+      value: 
+      objectReference: {fileID: 947267103}
+    - target: {fileID: 5859872538111919777, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
+      propertyPath: railsParent
+      value: 
+      objectReference: {fileID: 1322850705}
     - target: {fileID: 8117148013260554024, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
       propertyPath: railsParent
       value: 

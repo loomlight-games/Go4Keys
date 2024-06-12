@@ -1,34 +1,34 @@
 using UnityEngine;
 
-//HANDLES KEYBOARD INPUTS TO MOVE PLAYER BETWEEN RAILS
-
-public class RailControl : MonoBehaviour
+/// <summary>
+/// Provides lateral movement between rails.
+/// </summary>
+public class RailControl
 {
-    //Speed
-    [SerializeField] float sideSpeed = 6.0f;//Changing of rail
+    readonly Transform player;
+    readonly float sideSpeed;//Changing of rail
+    readonly Transform railsParent;//Its children are the diferrent rails
+    readonly float[] rails;//Array of X position of each rail
+    Vector3 currentRailPos;//Vector of current rail position
+    public int currentRailIndex = 1;//Index of current rail (in array)
 
-    //Rails of movement
-    [SerializeField] Transform railsParent;//Its children are the diferrent rails
-    private float[] rails;//Array of X position of each rail
-    private Vector3 currentRail;//Vector of current rail position
-    public int currentIndex = 1;//Index of current rail (in array)
-
-    // Start is called before the first frame update
-    void Start()
+    public RailControl(Transform player, float sideSpeed, Transform railsParent)
     {
+        this.player = player;
+        this.sideSpeed = sideSpeed;
+        this.railsParent = railsParent;
+
         //Creates array the size of number of children of railsParent
         rails = new float[railsParent.childCount];
 
-        //Fills the array with the positions
+        //Fills the array with the rails positions
         for (int i = 0; i < rails.Length; i++)
         {
             rails[i] = railsParent.GetChild(i).position.x;
         }
-
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Update()
     {
         Input();
 
@@ -37,17 +37,19 @@ public class RailControl : MonoBehaviour
         MoveTowardsCurrentRail();
     }
 
-    //Handles inputs (move to left or right rail, and jump)
+    /// <summary>
+    /// Handles inputs (move to left or right rail)
+    /// </summary>
     void Input()
     {
         //A key pressed: change to left rail
         if (UnityEngine.Input.GetKeyDown(KeyCode.A))
         {
             //Not in the leftMost rail
-            if (currentIndex > 0)
+            if (currentRailIndex > 0)
             {
                 //Move one rail to left
-                currentIndex--;
+                currentRailIndex--;
             }
         }
 
@@ -55,25 +57,29 @@ public class RailControl : MonoBehaviour
         else if (UnityEngine.Input.GetKeyDown(KeyCode.D))
         {
             //Not in the rightMost rail
-            if (currentIndex < rails.Length - 1)
+            if (currentRailIndex < rails.Length - 1)
             {
                 //Move one rail to right
-                currentIndex++;
+                currentRailIndex++;
             }
         }
     }
 
+    /// <summary>
+    /// Updates current rail vector with X position of the rail and Y and Z positions of this object
+    /// </summary>
     private void UpdateCurrentRail()
     {
-        //Updates current rail vector with X position of the rail and Y and Z positions of this object
-        currentRail = new Vector3(rails[currentIndex], transform.localPosition.y, transform.localPosition.z);
+        currentRailPos = new Vector3(rails[currentRailIndex], player.localPosition.y, player.localPosition.z);
     }
 
+    /// <summary>
+    /// Moves to current rail at sideSpeed (according to local position = parent position).
+    /// </summary>
     private void MoveTowardsCurrentRail()
     {
-        //Moves to current rail at sideSpeed (according to local position = parent position)
         //localposition adapts the axis of this object after the parent has rotated
-        transform.localPosition = Vector3.MoveTowards(transform.localPosition, currentRail, sideSpeed * Time.deltaTime);
+        player.localPosition = Vector3.MoveTowards(player.localPosition, currentRailPos, sideSpeed * Time.deltaTime);
     }
 }
 

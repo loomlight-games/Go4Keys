@@ -1,30 +1,32 @@
 using System;
 using UnityEngine;
 
-//HANDLES COLLECTION OF AN OBJECT
-
-public class Collecter : MonoBehaviour
+/// <summary>
+/// Provides collecter behaviour of an specific object.
+/// </summary>
+public class Collecter
 {
     //EVENT HANDLER FOR COLLECTING
     public event EventHandler ObjectCollectedEvent;//Stores methods to invoke when hitting a collectible
-    
-    //Object to collect
-    [SerializeField] GameObject collectible;
+    readonly GameObject collectible;
+    //[SerializeField] AudioSource collectionSound;//Audio
 
-    //Audio
-    [SerializeField] AudioSource collectionSound;
+    public Collecter(GameObject collectible)
+    {
+        this.collectible = collectible;
+    }
 
     //Collision trigger
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         //With an object with the same tag of the one to collect
         if (other.gameObject.CompareTag(collectible.tag))
         {
-            //Destroys it
-            Destroy(other.gameObject);
+            //Deactivates it
+            other.gameObject.SetActive(false);
 
             //Audio
-            collectionSound.Play();
+            //collectionSound.Play();
 
             //Invokes methods in eventHandler
             ObjectCollectedEvent?.Invoke(this, EventArgs.Empty);

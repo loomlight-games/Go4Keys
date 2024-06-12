@@ -7,9 +7,6 @@ using UnityEngine;
 /// </summary>
 public class GameStateController : AStateController
 {
-    #region STATES
-    AGameState currentState;
-    #endregion
 
     #region UI elements
     [Header("Fixers")]
