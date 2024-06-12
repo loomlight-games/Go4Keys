@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.5
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 104943857}
-  m_IndirectSpecularColor: {r: 0.0896221, g: 0.11222048, b: 0.15308481, a: 0.5}
+  m_IndirectSpecularColor: {r: 0.09014189, g: 0.11285706, b: 0.15346143, a: 0.5}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1892,14 +1892,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 104943856}
-  m_LocalRotation: {x: 0.4375445, y: -0.23074259, z: 0.11723967, w: 0.8611432}
+  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: 0, y: 17, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 53.87, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &113760229
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7990,11 +7990,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1260561403}
-  - {fileID: 253742359}
   - {fileID: 481660406}
-  - {fileID: 537384726}
   - {fileID: 697397131}
+  - {fileID: 253742359}
+  - {fileID: 537384726}
+  - {fileID: 1260561403}
   m_Father: {fileID: 1524388006}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11273,7 +11273,7 @@ GameObject:
   - component: {fileID: 537384728}
   - component: {fileID: 537384727}
   m_Layer: 5
-  m_Name: Result advices
+  m_Name: Result popUps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11506,8 +11506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c207825dbdc45342a52fdffa53fbca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectibleUI:
-    collecter: {fileID: 0}
+  collectibleUI: {fileID: 1260561404}
   stamina: {fileID: 1403954495}
   chaser: {fileID: 818281345}
   victoryAdvice: {fileID: 655107747}
@@ -29433,8 +29432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collecter: {fileID: 1403954494}
   resetter: {fileID: 481660409}
-  collectiblesUI:
-    collecter: {fileID: 0}
+  collectiblesUI: {fileID: 1260561404}
 --- !u!4 &1261492218 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4870167790249810, guid: 50477af197889084e8a6d97f2b73b73b, type: 3}
@@ -34434,7 +34432,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1524388006}
   - component: {fileID: 1524388007}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34469,20 +34467,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de829e32ebb982428ef2994befeb1a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  enemy: {fileID: 0}
   leftUI: {fileID: 0}
   foundUI: {fileID: 0}
-  staminaBar: {fileID: 0}
-  pauseButton: {fileID: 0}
-  resumeButton: {fileID: 0}
-  replayButton: {fileID: 0}
-  menuButton: {fileID: 0}
-  quitButton: {fileID: 0}
-  victoryAdvice: {fileID: 0}
-  caughtAdvice: {fileID: 0}
-  staminaAdvice: {fileID: 0}
-  popUps: {fileID: 0}
 --- !u!4 &1531247863 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2601740332267842871, guid: e2d525b388e78ff4fb9e94d0f3e7d545, type: 3}

@@ -9,7 +9,7 @@ public class Result : MonoBehaviour
     public event EventHandler EndGameEvent;//Stores methods to invoke when game ends
 
     //SUBJECTS
-    [SerializeField] GamePlayState collectibleUI;
+    [SerializeField] CollectiblesUI collectibleUI;
     [SerializeField] StaminaSystem stamina;
     [SerializeField] Chaser chaser;
 

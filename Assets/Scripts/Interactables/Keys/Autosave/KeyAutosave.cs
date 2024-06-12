@@ -20,7 +20,7 @@ public class KeyAutosave : MonoBehaviour
 
     //Key count resetter (main menu button and victory)
     [SerializeField] KeyCountResetter resetter;
-    [SerializeField] GamePlayState collectiblesUI;
+    [SerializeField] CollectiblesUI collectiblesUI;
 
     private void ResetFromResetter(object sender, EventArgs e)
     {

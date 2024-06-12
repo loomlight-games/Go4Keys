@@ -3,12 +3,12 @@ using UnityEngine;
 /// <summary>
 /// Implements common functionalities in all game states
 /// </summary>
-public abstract class AGameState : IState
+public abstract class AGameState : IState //MonoBehaviour, IState
 {
-    public abstract void Enter(AStateController controller);
-
-    // Not MonoBehaviour.Update() because the controller is already MonoBehaviour
+    // Not mono behaviour because the controller handles each frame
     public abstract void FrameUpdate();
+    public abstract void FrameFixedUpdate();
 
+    public abstract void Enter();
     public abstract void Exit();
 }
