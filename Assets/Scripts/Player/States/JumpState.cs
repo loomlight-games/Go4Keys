@@ -1,18 +1,30 @@
+using System;
 using UnityEngine;
 
 /// <summary>
-/// Jumps once while still moving forward endlessly and changing rail
+/// Jumps once while still moving forward endlessly and changing rail.
+/// Can enter an intersection or be caught.
 /// </summary>
 public class JumpState : APlayerState
 {
-    //AudioSource jumpSound;
-    bool atIntersection = false;
+    bool hasSurpassedTurnPoint = true;
+    bool isCaught = false;
+    bool eventsSubscribed = false;
 
     public override void Enter(AStateController controller)
     {
         player = (Player) controller;
         player.jumper.Jump();// Jumps
         player.resilient.Jumps();// Jumped, thus, loses a lot of stamina
+
+        if (!eventsSubscribed)// Subscribe just once
+        {
+            player.endlessRunner.AtIntersectionEvent += AtIntersection;
+            player.turner.TurnedEvent += TurnPointSurpassed;
+            player.chaserResetter.CaughtEvent += Caught;
+
+            eventsSubscribed = true;
+        }
     }
 
     public override void Update()
@@ -25,12 +37,10 @@ public class JumpState : APlayerState
 
     public override void OnTriggerEnter(Collider other)
     {
-        player.resilient.OnTriggerEnter(other);
-        player.collecter.OnTriggerEnter(other);
-        player.chaserResetter.OnTriggerEnter(other);
-
-        if (other.gameObject.CompareTag("Intersection"))
-            atIntersection = true;
+        player.endlessRunner.OnTriggerEnter(other); // Can enter an intersection
+        player.resilient.OnTriggerEnter(other); // Can recover stamina
+        player.collecter.OnTriggerEnter(other); // Can find a collectible
+        player.chaserResetter.OnTriggerEnter(other); // Can reset chaser position
     }
 
     public override void Exit()
@@ -39,10 +49,32 @@ public class JumpState : APlayerState
         {
             player.SetState(player.runState);
         }
-        else if (atIntersection)
+        if (!hasSurpassedTurnPoint)
         {
             player.SetState(player.atIntersection);
-            atIntersection = false;
         }
+        else if (player.jumper.IsGrounded())
+        {
+            player.SetState(player.runState);
+        }
+        else if (isCaught)
+        {
+            //isCaught = false; No need bc won't return
+            player.SetState(player.caughtState);
+        }
+    }
+
+    void AtIntersection(object sender, EventArgs any)
+    {
+        hasSurpassedTurnPoint = false;
+    }
+    void TurnPointSurpassed(object sender, bool turned)
+    {
+        hasSurpassedTurnPoint = true;
+    }
+
+    void Caught(object sender, EventArgs any)
+    {
+        isCaught = true;
     }
 }

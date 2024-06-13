@@ -46,7 +46,7 @@ public class KeyAutosave : MonoBehaviour
     {
         collecter = Player.Instance.collecter;
         //SUBSCRIBES INCREMENT COUNT TO EVENT HANDLER OF COLLECTER
-        collecter.ObjectCollectedEvent += IncrCount;
+        collecter.CollectibleFoundEvent += IncrCount;
 
         //SUBSCRIBES RESET COUNT TO EVENT HANDLER OF MAIN MENU BUTTON
         resetter.KeyCountResetEvent += ResetFromResetter;

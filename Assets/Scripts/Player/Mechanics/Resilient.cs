@@ -2,20 +2,19 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// Provides limited stamina.
+/// Provides limited stamina. Can recover it when hitting certain object.
 /// </summary>
 public class Resilient
 {
-    public event EventHandler TiredEvent;//Stores methods to invoke when there's no stamina left
-    public event EventHandler <float> StaminaChangeEvent;//Stores methods to invoke when stamina changes
-    
+    public event EventHandler TiredEvent; 
+    public event EventHandler <float> StaminaLossEvent;
+    public event EventHandler StaminaRecoverEvent;
+
     readonly float lossPerStep;
     readonly float lossPerJump;
     const float MAX_STAMINA = 100;
     float currentStamina;
     bool staminaAlreadyEnded = false;
-
-    //[SerializeField] AudioSource drinkSound;//Audio
 
     public Resilient(float staminaLossPerStep, float staminaLossPerJump)
     {
@@ -51,15 +50,13 @@ public class Resilient
         //Has enough stamina
         if (currentStamina > 0)
         {
-            //Invokes methods in eventHandler
-            StaminaChangeEvent?.Invoke(this, currentStamina);
+            StaminaLossEvent?.Invoke(this, currentStamina);
         }
         //Doesn't have any more stamina
         else
         {
             if (!staminaAlreadyEnded)
             {
-                //Invokes methods in eventHandler
                 TiredEvent?.Invoke(this, EventArgs.Empty);
 
                 //To ensure that TiredEvent is only invoked once
@@ -85,8 +82,7 @@ public class Resilient
             if (currentStamina > MAX_STAMINA)
                 currentStamina = MAX_STAMINA;
 
-            //Audio
-            //drinkSound.Play();
+            StaminaRecoverEvent?.Invoke(this, EventArgs.Empty);
         }
     }
 }

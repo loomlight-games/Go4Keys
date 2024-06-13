@@ -21,8 +21,9 @@ public class Chaser : MonoBehaviour
     void Start()
     {
         chaserRigidBody = transform.GetComponent<Rigidbody>();
+
         player = Player.Instance;
-        player.caughtState.CaughtEvent += TargetCaught;
+        player.chaserResetter.CaughtEvent += TargetCaught;
         player.chaserResetter.ChaserResettedEvent += ResetPosition;
     }
 

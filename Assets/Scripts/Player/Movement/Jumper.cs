@@ -1,10 +1,13 @@
+using System;
 using UnityEngine;
 
 /// <summary>
-/// Provides jumping ability.
+/// Provides jumping ability. Can detect when ground is hit.
 /// </summary>
 public class Jumper
 {
+    public event EventHandler JumpEvent;
+
     readonly Rigidbody rigidBody;
     readonly Transform groundChecker;
     readonly LayerMask groundLayer;
@@ -26,6 +29,8 @@ public class Jumper
         rigidBody.velocity = new Vector3(rigidBody.velocity.x,
                                          jumpForce,
                                          rigidBody.velocity.z);
+
+        JumpEvent?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>

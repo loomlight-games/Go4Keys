@@ -6,10 +6,8 @@ using UnityEngine;
 /// </summary>
 public class Collecter
 {
-    public event EventHandler ObjectCollectedEvent;//Stores methods to invoke when hitting a collectible
+    public event EventHandler CollectibleFoundEvent;
     readonly GameObject collectible;
-
-    //[SerializeField] AudioSource collectionSound;//Audio
 
     public Collecter(GameObject collectible)
     {
@@ -25,11 +23,7 @@ public class Collecter
             //Deactivates it
             other.gameObject.SetActive(false);
 
-            //Audio
-            //collectionSound.Play();
-
-            //Invokes methods in eventHandler
-            ObjectCollectedEvent?.Invoke(this, EventArgs.Empty);
+            CollectibleFoundEvent?.Invoke(this, EventArgs.Empty);
         }
     }
 } 

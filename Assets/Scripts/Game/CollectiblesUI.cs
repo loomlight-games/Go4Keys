@@ -48,7 +48,7 @@ public class CollectiblesUI : MonoBehaviour
         collecter = Player.Instance.collecter;
 
         //UPDATEUI WHEN OBJECT COLLECTED
-        collecter.ObjectCollectedEvent += UpdateUI;
+        collecter.CollectibleFoundEvent += UpdateUI;
     }
 
     //Fills array with children of a gameobject

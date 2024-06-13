@@ -31,7 +31,7 @@ public abstract class AStateController: MonoBehaviour
     public virtual void SetState(IState state)
     {
         currentState = state;
-        Debug.Log(currentState.ToString());
+        //Debug.Log(currentState.ToString());
         currentState.Enter(this);
     }
 }

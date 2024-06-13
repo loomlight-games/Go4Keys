@@ -1,10 +1,14 @@
+using System;
 using UnityEngine;
 
 /// <summary>
 /// Provides endless forward movement. Stops when detecting an obstacle in front.
+/// Can detect an intersection.
 /// </summary>
 public class EndlessRunner
 {
+    public event EventHandler AtIntersectionEvent;
+
     readonly Transform transform;
     readonly float forwardSpeed;
     readonly Transform obstacleChecker;
@@ -23,5 +27,11 @@ public class EndlessRunner
         // Obstacle is NOT in front (obstacle checker collides with obstacle layer)
         if (!Physics.CheckSphere(obstacleChecker.position, .4f, obstacleLayer))
             transform.Translate(forwardSpeed * Time.deltaTime * Vector3.forward);
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Intersection"))
+            AtIntersectionEvent?.Invoke(this, EventArgs.Empty);
     }
 }
