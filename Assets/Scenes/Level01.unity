@@ -11506,7 +11506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectibleUI: {fileID: 1260561404}
-  chaser: {fileID: 818281345}
+  player: {fileID: 0}
   victoryAdvice: {fileID: 655107747}
   caughtAdvice: {fileID: 1938530618}
   staminaAdvice: {fileID: 983962023}
@@ -19459,17 +19459,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab6d4075e8d4ea24a8351a965929d7ab, type: 3}
---- !u!114 &818281345 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7624390240055608613, guid: d76042eafccd8c840a33121b95135238, type: 3}
-  m_PrefabInstance: {fileID: 6891846007854428528}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54a02bcd4f4b2c340850e96cd373af6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &831615375
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45438,7 +45427,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 2, z: 0.1}
   m_Center: {x: 0, y: -3, z: 0.8}
@@ -46517,10 +46506,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1322850705}
     - target: {fileID: 5859872538111919777, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
-      propertyPath: jumpForce
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5859872538111919777, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
       propertyPath: collectible
       value: 
       objectReference: {fileID: 947267103}
@@ -46528,14 +46513,6 @@ PrefabInstance:
       propertyPath: railsParent
       value: 
       objectReference: {fileID: 1322850705}
-    - target: {fileID: 5859872538111919777, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
-      propertyPath: forwardSpeed
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5859872538111919777, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
-      propertyPath: railChangeSpeed
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 8117148013260554024, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
       propertyPath: railsParent
       value: 
@@ -46620,6 +46597,10 @@ PrefabInstance:
     - target: {fileID: 16122683316483596, guid: d76042eafccd8c840a33121b95135238, type: 3}
       propertyPath: m_Name
       value: Robber
+      objectReference: {fileID: 0}
+    - target: {fileID: 16122683316483596, guid: d76042eafccd8c840a33121b95135238, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 6038181690433566219, guid: d76042eafccd8c840a33121b95135238, type: 3}
       propertyPath: m_RootOrder

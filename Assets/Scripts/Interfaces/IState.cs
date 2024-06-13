@@ -20,14 +20,12 @@ public interface IState
     /// <summary>
     /// Called in MonoBehaviour.OnTriggerEnter(Collider other) in controller
     /// </summary>
-    /// <param name="other">Trigger collided</param>
     public void OnTriggerEnter(Collider other);
 
     /// <summary>
-    /// Called in MonoBehaviour.OnTriggerExit(Collider other) in controller
+    /// Called in MonoBehaviour.OnCollisionEnter(Collider other) in controller
     /// </summary>
-    /// <param name="other">Trigger collided</param>
-    public void OnTriggerExit(Collider other);
+    public void OnCollisionEnter(Collision collision);
 
     /// <summary>
     /// Called when exiting an state

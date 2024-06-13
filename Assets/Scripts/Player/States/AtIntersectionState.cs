@@ -5,19 +5,19 @@ using UnityEngine;
 /// </summary>
 public class AtIntersectionState : APlayerState
 {
+    bool caught = false;
+
     public override void Enter(AStateController controller)
     {
         player = (Player)controller;
     }
     public override void Update()
     {
-        
         player.endlessRunner.Update(); // Runs endlessly, 
         player.resilient.Runs(); // thus, loses stamina
         player.railed.Update(); // Change rails
         player.turner.Update(); // Can take a turn to another street
 
-        // Checks exit
         Exit();
     }
     public override void OnTriggerEnter(Collider other)
@@ -27,10 +27,17 @@ public class AtIntersectionState : APlayerState
         player.turner.OnTriggerEnter(other);
     }
 
+    public override void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+            caught = true;
+    }
+
     public override void Exit()
     {
-        // Reached turnpoint
         if (player.turner.HasReachedTurnPoint())
-            player.SetState(player.inStreetState);
+            player.SetState(player.runState);
+        else if (caught)
+            player.SetState(player.caughtState);
     }
 }

@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Runs forward endlessly, losing stamina, and changes rail.
+/// Runs forward endlessly, losing stamina and changing rail.
 /// </summary>
-public class InStreetState : APlayerState
+public class RunState : APlayerState
 {
     bool atIntersection = false;
+    bool caught = false;
 
     public override void Enter(AStateController controller)
     {
@@ -18,7 +19,7 @@ public class InStreetState : APlayerState
         player.resilient.Runs(); // thus, loses stamina
         player.railed.Update(); // Change rails
         
-        Exit(); // Checks exit
+        Exit();
     }
 
     public override void OnTriggerEnter(Collider other) 
@@ -31,15 +32,26 @@ public class InStreetState : APlayerState
             atIntersection = true;
     }
 
+    public override void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+            caught = true;
+    }
+
     public override void Exit()
     {
-        // 'Space' key pressed 
         if (Input.GetKeyDown(KeyCode.Space))
+        {
             player.SetState(player.jumpState);
-
-        // If entered an intersection
-        if (atIntersection)
+        }
+        else if (atIntersection)
+        {
             player.SetState(player.atIntersection);
             atIntersection = false;
+        }
+        else if (caught)
+        {
+            player.SetState(player.caughtState);
+        }
     }
 }

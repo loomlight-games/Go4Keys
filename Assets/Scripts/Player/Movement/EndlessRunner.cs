@@ -9,7 +9,6 @@ public class EndlessRunner
     readonly float forwardSpeed;
     readonly Transform obstacleChecker;
     readonly LayerMask obstacleLayer;
-    float forwardValue;
 
     public EndlessRunner(Transform transform, float forwardSpeed, Transform obstacleChecker, LayerMask obstacleLayer)
     {
@@ -21,13 +20,8 @@ public class EndlessRunner
 
     public void Update()
     {
-        // Obstacle is hit (obstacle checker collides with obstacle layer)
-        if (Physics.CheckSphere(obstacleChecker.position, .4f, obstacleLayer))
-            forwardValue = 0.0f; // Stops moving
-        else // Not hitting any obstacle
-            forwardValue = forwardSpeed; // Resumes moving
-
-        //Move the object at forward speed to the orientation it's facing
-        transform.Translate(forwardValue * Time.deltaTime * Vector3.forward);
+        // Obstacle is NOT in front (obstacle checker collides with obstacle layer)
+        if (!Physics.CheckSphere(obstacleChecker.position, .4f, obstacleLayer))
+            transform.Translate(forwardSpeed * Time.deltaTime * Vector3.forward);
     }
 }

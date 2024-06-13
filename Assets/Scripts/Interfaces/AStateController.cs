@@ -11,7 +11,9 @@ public abstract class AStateController: MonoBehaviour
     public abstract void Start();
     public abstract void Update();
     public virtual void OnTriggerEnter(Collider other) { }
-    public virtual void OnTriggerExit(Collider other) { }
+    public virtual void OnCollisionEnter(Collision collision) { }
+
+    //public virtual void OnTriggerExit(Collider other) { }
 
     /// <summary>
     /// Gets the current state of the controller
@@ -21,6 +23,7 @@ public abstract class AStateController: MonoBehaviour
     {
         return currentState;
     }
+
     /// <summary>
     /// Sets the current state of the controller
     /// </summary>

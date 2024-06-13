@@ -7,9 +7,8 @@ public abstract class APlayerState : IState
 {
     protected Player player;
     public abstract void Enter(AStateController controller);
-    public abstract void Update();
+    public virtual void Update() { }
     public virtual void OnTriggerEnter(Collider other) { }
-    public virtual void OnTriggerExit(Collider other) { }
-    public abstract void Exit();
-
+    public virtual void OnCollisionEnter(Collision collision) { }
+    public virtual void Exit() { }
 }

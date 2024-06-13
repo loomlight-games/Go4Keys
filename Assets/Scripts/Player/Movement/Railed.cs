@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -28,9 +29,8 @@ public class Railed
 
     public void Update()
     {
-        //A key pressed: change to left rail
-        if (UnityEngine.Input.GetKeyDown(KeyCode.A))
-        {
+        if (Input.GetKeyDown(KeyCode.A)) // To left rail
+        { 
             //Not in the leftMost rail
             if (currentRailIndex > 0)
             {
@@ -38,9 +38,7 @@ public class Railed
                 currentRailIndex--;
             }
         }
-
-        //D key pressed: change to right rail
-        else if (UnityEngine.Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.D)) // To right rail
         {
             //Not in the rightMost rail
             if (currentRailIndex < railsXPositions.Length - 1)
@@ -58,6 +56,5 @@ public class Railed
         // Moves to current rail (according to local position = parent position).
         // localposition adapts the axis of this object after the parent has rotated
         player.localPosition = Vector3.MoveTowards(player.localPosition, currentRailPos, railChangeSpeed * Time.deltaTime);
-
     }
 }    

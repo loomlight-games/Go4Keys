@@ -69,7 +69,7 @@ public class Resilient
         }
     }
 
-    public void OnTriggerEnter(Collider other)//works same as onCollisionEnter
+    public void OnTriggerEnter(Collider other)
     {
         //With an energy drink
         if (other.gameObject.CompareTag("EnergyDrink"))
@@ -83,9 +83,7 @@ public class Resilient
 
             //Ensures stamina max
             if (currentStamina > MAX_STAMINA)
-            {
                 currentStamina = MAX_STAMINA;
-            }
 
             //Audio
             //drinkSound.Play();

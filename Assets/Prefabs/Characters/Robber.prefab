@@ -98,19 +98,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a02bcd4f4b2c340850e96cd373af6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  chaseSpeed: 0.1
+  acceleration: 0.1
+  accelerationIncrement: 40
   jumpForce: 7
-  jumpsOver:
-    serializedVersion: 2
-    m_Bits: 128
-  jumpsOn:
-    serializedVersion: 2
-    m_Bits: 8
-  chaserChecker: {fileID: 7510089936956980722}
-  targetChecker: {fileID: 0}
-  pauseMenu: {fileID: 0}
-  result: {fileID: 0}
+  checker: {fileID: 7510089936956980722}
+  checkerRadious: 0.6
 --- !u!1 &1179765167107107232
 GameObject:
   m_ObjectHideFlags: 0

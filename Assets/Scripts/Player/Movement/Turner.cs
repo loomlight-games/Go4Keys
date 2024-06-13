@@ -68,6 +68,10 @@ public class Turner
         }
     }
 
+    /// <summary>
+    /// The turn point has been reached and can't make a turn
+    /// </summary>
+    /// <returns></returns>
     internal bool HasReachedTurnPoint()
     {
         return turnPointReached;

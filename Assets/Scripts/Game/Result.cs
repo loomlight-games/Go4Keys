@@ -10,8 +10,7 @@ public class Result : MonoBehaviour
 
     //SUBJECTS
     [SerializeField] CollectiblesUI collectibleUI;
-    [SerializeField] Resilient staminaSystem;
-    [SerializeField] Chaser chaser;
+    [SerializeField] Player player;
 
     //Sprites
     [SerializeField] GameObject victoryAdvice;
@@ -25,11 +24,12 @@ public class Result : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = Player.Instance;
+
         //SUBSCRIBES VICTORY TO EVENT HANDLER OF COLLECTIBLES UI
         collectibleUI.VictoryEvent += Victory;
-        chaser.CaughtEvent += Caught;
-        staminaSystem = Player.Instance.resilient;
-        staminaSystem.TiredEvent += Stamina;
+        player.caughtState.CaughtEvent += Caught;
+        player.resilient.TiredEvent += Stamina;
 
         victoryAdvice.SetActive(false);
         caughtAdvice.SetActive(false);

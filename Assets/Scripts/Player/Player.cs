@@ -10,10 +10,10 @@ public class Player : AStateController
     [HideInInspector] public Transform playerParent;
 
     #region STATES
-    public InStreetState inStreetState = new();
+    public RunState runState = new();
     public JumpState jumpState = new();
     public AtIntersectionState atIntersection = new();
-    // Stopped
+    public CaughtState caughtState = new();
     #endregion
 
     #region BEHAVIOURS
@@ -27,17 +27,17 @@ public class Player : AStateController
 
     #region CHECKERS
     [Header("Layers and its checkers")]
-    [SerializeField] LayerMask groundLayer;
-    [SerializeField] LayerMask obstacleLayer;
+    public LayerMask groundLayer;
+    public LayerMask obstacleLayer;
     [SerializeField] Transform groundChecker;
-    [SerializeField] Transform obstacleChecker;
+    public Transform obstacleChecker;
     #endregion
 
     #region MOVEMENT
     [Header("Movement")]
     [SerializeField] float railChangeSpeed;
     [SerializeField] float forwardSpeed;
-    [SerializeField] float jumpForce;
+    public float jumpForce;
     [Tooltip("Its children are the diferrent rails")]
     [SerializeField] Transform rails;
     #endregion
@@ -70,7 +70,7 @@ public class Player : AStateController
         resilient = new(staminaLossPerStep, staminaLossPerJump);
         collecter = new(collectible);
 
-        SetState(inStreetState);
+        SetState(runState);
     }
 
     public override void Update()
@@ -81,5 +81,10 @@ public class Player : AStateController
     public override void OnTriggerEnter(Collider other)
     {
         currentState.OnTriggerEnter(other);
+    }
+
+    public override void OnCollisionEnter(Collision collision)
+    {
+        currentState.OnCollisionEnter(collision);
     }
 }

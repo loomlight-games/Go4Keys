@@ -8,6 +8,7 @@ TagManager:
   - Obstacle
   - EnergyDrink
   - Key
+  - Enemy
   layers:
   - Default
   - TransparentFX

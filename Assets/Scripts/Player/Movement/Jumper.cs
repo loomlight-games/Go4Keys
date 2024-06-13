@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Provides jumping ability.
+/// </summary>
 public class Jumper
 {
     readonly Rigidbody rigidBody;
