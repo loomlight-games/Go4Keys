@@ -1,8 +1,9 @@
 using System;
 using UnityEngine;
 
-//HANDLES UI COUNTER OF COLLECTIBLES
-
+/// <summary>
+/// Updates collected icons as the player collectes keys
+/// </summary>
 [Serializable]
 public class CollectiblesUI
 {
@@ -52,12 +53,9 @@ public class CollectiblesUI
         //Instantiate array of size of num of children
         GameObject[] array = new GameObject[GOgroup.transform.childCount];
 
-        //Fills array
+        //Fills array with every gameobject in the group (child)
         for (int i = 0; i < GOgroup.transform.childCount; i++)
-        {
-            //With every gameobject in the group (child)
             array[i] = GOgroup.transform.GetChild(i).gameObject;
-        }
 
         return array;
     }

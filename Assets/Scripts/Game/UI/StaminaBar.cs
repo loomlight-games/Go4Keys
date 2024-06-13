@@ -1,22 +1,27 @@
 
 using UnityEngine.UI;
 
-public class StaminaBar// : MonoBehaviour
+/// <summary>
+/// Updates stamina bar as the player stamina
+/// </summary>
+public class StaminaBar
 {
-    Slider staminaBar;
+    readonly Slider staminaBar;
 
     public StaminaBar(Slider staminaBar)
     {
         this.staminaBar = staminaBar;
     }
 
-    // Start is called before the first frame update
     public void Start()
     {
-        Player.Instance.resilient.StaminaChangeEvent += SetStamina;
+        Player.Instance.resilient.StaminaChangeEvent += UpdateValue;
     }
 
-    void SetStamina(object sender, float stamina)
+    /// <summary>
+    /// Updates bar/slider value to the received
+    /// </summary>
+    void UpdateValue(object sender, float stamina)
     {
         staminaBar.value = stamina;
     }

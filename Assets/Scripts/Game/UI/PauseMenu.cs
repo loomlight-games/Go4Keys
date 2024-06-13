@@ -4,24 +4,32 @@ using UnityEngine.SceneManagement;
 
 //HANDLES PAUSE MENU
 
-public class PauseMenu : MonoBehaviour
+public class PauseMenu
 {
     //SUBJECT
     [SerializeField] Result result;
 
     //Buttons
-    [SerializeField] GameObject pauseButton;
-    [SerializeField] GameObject resumeButton;
-    [SerializeField] GameObject replayButton;
-    [SerializeField] GameObject menuButton;
-    [SerializeField] GameObject quitButton;
+    readonly GameObject pauseButton;
+    readonly GameObject resumeButton;
+    readonly GameObject replayButton;
+    readonly GameObject mainMenuButton;
+    readonly GameObject quitGameButton;
 
     //Game states
     private bool gameInPause = false;
     private bool gameEnded = false;
 
-    // Start is called before the first frame update
-    void Start()
+    public PauseMenu(GameObject pauseButton, GameObject resumeButton, GameObject replayButton, GameObject mainMenuButton, GameObject quitGameButton)
+    {
+        this.pauseButton = pauseButton;
+        this.resumeButton = resumeButton;
+        this.replayButton = replayButton;
+        this.mainMenuButton = mainMenuButton;
+        this.quitGameButton = quitGameButton;
+    }
+
+    public void Start()
     {
         //SUBSCRIBES ENDRESULT TO EVENT HANDLER OF RESULT
         result.EndGameEvent += EndResult;
@@ -29,8 +37,7 @@ public class PauseMenu : MonoBehaviour
         Resume();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Update()
     {
         //'Esc' pressed
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -59,50 +66,70 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    //End result UI (shows replay game button as well)
-    void EndResult(object sender, EventArgs e)
+    /// <summary>
+    /// End result UI (shows replay game button as well)
+    /// </summary>
+    public void EndResult(object sender, EventArgs e)
     {
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
 
-        gameEnded = true;
+        //gameEnded = true;
 
-        menuButton.SetActive(true);
-        quitButton.SetActive(true);
+        mainMenuButton.SetActive(true);
+        quitGameButton.SetActive(true);
         resumeButton.SetActive(false);
         pauseButton.SetActive(false);
         replayButton.SetActive(true);
     }
 
-    //Resumes simulation
-    public void Resume()
+    public void EndResult()
     {
-        Time.timeScale = 1f;
+        //Time.timeScale = 0f;
 
-        gameInPause = false;
+        //gameEnded = true;
 
-        pauseButton.SetActive(true);
-        menuButton.SetActive(false);
-        quitButton.SetActive(false);
+        mainMenuButton.SetActive(true);
+        quitGameButton.SetActive(true);
         resumeButton.SetActive(false);
-        replayButton.SetActive(false);
-
+        pauseButton.SetActive(false);
+        replayButton.SetActive(true);
     }
 
-    //Stops simulation
+    /// <summary>
+    /// Resumes simulation
+    /// </summary>
+    public void Resume()
+    {
+        //Time.timeScale = 1f;
+
+        //gameInPause = false;
+
+        pauseButton.SetActive(true);
+        mainMenuButton.SetActive(false);
+        quitGameButton.SetActive(false);
+        resumeButton.SetActive(false);
+        replayButton.SetActive(false);
+    }
+
+    /// <summary>
+    /// Stops simulation
+    /// </summary>
     public void Pause()
     {
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
 
-        gameInPause = true;
+        //gameInPause = true;
 
-        menuButton.SetActive(true);
-        quitButton.SetActive(true);
+        mainMenuButton.SetActive(true);
+        quitGameButton.SetActive(true);
         resumeButton.SetActive(true);
         pauseButton.SetActive(false);
         replayButton.SetActive(false);
     }
 
-    //Replays game
+    /// <summary>
+    /// Replays game
+    /// </summary>
     public void ReplayGame()
     {
         Time.timeScale = 1f;//Resumes simulation
@@ -114,12 +141,19 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene(currentScene.name);
     }
 
+    /// <summary>
+    /// Loads MainMenu scene
+    /// </summary>
     public void BackToMenu()
     {
         Time.timeScale = 1f;
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);//Loads main menu scene
     }
+
+    /// <summary>
+    /// Quits game
+    /// </summary>
     public void QuitGame()
     {
         Application.Quit();

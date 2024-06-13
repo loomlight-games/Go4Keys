@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,20 +9,27 @@ using UnityEngine.UI;
 public class GameManager : AStateController
 {
     public static GameManager Instance;
+    public bool paused = false;
+    public bool replay = false;
+
+    #region EVENTS
+    //public event EventHandler<bool> GameButtonClicked;
+    #endregion
 
     #region STATES
     // Main menu
     // Options 
     // Credits
     public InGameState inGame = new();// InGame
-    // Pause
-    // EndGame
+    public PauseGameState pausedGame = new(); // Pause
+    public EndGameState endGame = new(); // EndGame
     #endregion
 
     #region BEHAVIOURS
     public CollectiblesUI collectibles;
     public StaminaBar stamina;
-    public KeyAutosave autosave;
+    //public KeyAutosave autosave;
+    public PauseMenu pauseMenu;
     #endregion
 
     #region GRAPHICS
@@ -61,8 +70,23 @@ public class GameManager : AStateController
     {
         collectibles = new(leftIcons, foundIcons);
         stamina = new(staminaBar);
-        autosave = new();
+        //autosave = new();
+        pauseMenu = new(pauseButton, resumeButton, replayButton, mainMenuButton, quitGameButton);
 
         SetState(inGame);
+    }
+
+    public void PauseGame(bool paused)
+    {
+        //GameButtonClicked?.Invoke(this, paused);
+        Debug.Log(paused);
+        this.paused = paused;
+    }
+
+    public void ReplayGame()
+    {
+        //ReplayButtonClicked?.Invoke(this, paused);
+        Debug.Log(paused);
+        replay = true;
     }
 }

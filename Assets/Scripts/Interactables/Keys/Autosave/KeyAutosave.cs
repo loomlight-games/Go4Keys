@@ -49,19 +49,19 @@ public class KeyAutosave
         }
     }
 
-    private void ResetFromResetter(object sender, EventArgs e)
+    void ResetFromResetter(object sender, EventArgs e)
     {
         keyCount = -1;
         dirtyKey = true;
     }
 
-    private void ResetAtVictory(object sender, EventArgs e)
+    void ResetAtVictory(object sender, EventArgs e)
     {
         keyCount = -2;
         dirtyKey = true;
     }
 
-    private void IncrCount(object sender, EventArgs e)
+    void IncrCount(object sender, EventArgs e)
     {
         keyCount++;
         dirtyKey = true;
