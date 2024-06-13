@@ -37,7 +37,7 @@ public class RunState : APlayerState
     {
         player.endlessRunner.OnTriggerEnter(other); // Can enter an intersection
         player.resilient.OnTriggerEnter(other); // Can recover stamina
-        player.collecter.OnTriggerEnter(other); // Can find a collectible
+        player.keyCollecter.OnTriggerEnter(other); // Can find a collectible
         player.turner.OnTriggerEnter(other); // Set the center of intersection
         player.chaserResetter.OnTriggerEnter(other); // Can reset chaser position
     }

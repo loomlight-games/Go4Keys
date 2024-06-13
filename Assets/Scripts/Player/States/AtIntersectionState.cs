@@ -35,7 +35,7 @@ public class AtIntersectionState : APlayerState
     public override void OnTriggerEnter(Collider other)
     {
         player.resilient.OnTriggerEnter(other); // Can recover stamina
-        player.collecter.OnTriggerEnter(other); // Can find a collectible
+        player.keyCollecter.OnTriggerEnter(other); // Can find a collectible
         player.turner.OnTriggerEnter(other); // Sets the center of intersection
         player.chaserResetter.OnTriggerEnter(other); // Can reset chaser position
     }

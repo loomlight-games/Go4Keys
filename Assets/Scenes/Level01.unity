@@ -4841,7 +4841,6 @@ GameObject:
   m_Component:
   - component: {fileID: 253742359}
   - component: {fileID: 253742360}
-  - component: {fileID: 253742361}
   m_Layer: 5
   m_Name: Stamina bar
   m_TagString: Untagged
@@ -4923,19 +4922,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &253742361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 253742358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21ef5dd793589f446813f5d555ee6626, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 253742360}
 --- !u!1001 &254514544
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7989,11 +7975,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 481660406}
-  - {fileID: 697397131}
-  - {fileID: 253742359}
-  - {fileID: 537384726}
   - {fileID: 1260561403}
+  - {fileID: 253742359}
+  - {fileID: 481660406}
+  - {fileID: 537384726}
+  - {fileID: 697397131}
   m_Father: {fileID: 1524388006}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9699,11 +9685,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 759077794}
-  - {fileID: 632492753}
-  - {fileID: 1254098755}
   - {fileID: 1476640414}
   - {fileID: 963387592}
+  - {fileID: 1254098755}
+  - {fileID: 759077794}
+  - {fileID: 632492753}
   m_Father: {fileID: 381533222}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -34887,6 +34873,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1524388006}
+  - component: {fileID: 1524388007}
   m_Layer: 5
   m_Name: GameManager
   m_TagString: Untagged
@@ -34912,6 +34899,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1524388007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524388005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16d09aba76e85a14fbfba4212c1965b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftIcons: {fileID: 1782363297}
+  foundIcons: {fileID: 1069986186}
+  staminaBar: {fileID: 253742360}
+  pauseButton: {fileID: 1476640413}
+  resumeButton: {fileID: 963387591}
+  replayButton: {fileID: 0}
+  mainMenuButton: {fileID: 1254098754}
+  quitGameButton: {fileID: 632492752}
+  victory: {fileID: 655107747}
+  caught: {fileID: 1938530618}
+  tired: {fileID: 983962023}
 --- !u!4 &1531247863 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2601740332267842871, guid: e2d525b388e78ff4fb9e94d0f3e7d545, type: 3}
@@ -46860,7 +46870,7 @@ PrefabInstance:
     - target: {fileID: 3507830099252260984, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
       propertyPath: staminaBar
       value: 
-      objectReference: {fileID: 253742361}
+      objectReference: {fileID: 0}
     - target: {fileID: 3507830099252260984, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
       propertyPath: staminaBoost
       value: 
@@ -46889,10 +46899,6 @@ PrefabInstance:
       propertyPath: railsParent
       value: 
       objectReference: {fileID: 1322850705}
-    - target: {fileID: 5859872538111919777, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
-      propertyPath: staminaLossPerStep
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 8117148013260554024, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
       propertyPath: railsParent
       value: 

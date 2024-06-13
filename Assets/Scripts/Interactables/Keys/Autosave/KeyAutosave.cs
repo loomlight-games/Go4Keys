@@ -16,7 +16,7 @@ public class KeyAutosave : MonoBehaviour
     KeySerializable key;
 
     //Subject (key collecter)
-    [SerializeField] Collecter collecter;
+    [SerializeField] KeyCollecter collecter;
 
     //Key count resetter (main menu button and victory)
     [SerializeField] KeyCountResetter resetter;
@@ -44,7 +44,7 @@ public class KeyAutosave : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        collecter = Player.Instance.collecter;
+        collecter = Player.Instance.keyCollecter;
         //SUBSCRIBES INCREMENT COUNT TO EVENT HANDLER OF COLLECTER
         collecter.CollectibleFoundEvent += IncrCount;
 

@@ -1,23 +1,23 @@
-using UnityEngine;
-using UnityEngine.Assertions;
+
 using UnityEngine.UI;
 
-public class StaminaBar : MonoBehaviour
+public class StaminaBar// : MonoBehaviour
 {
-    Resilient staminaSystem;
-    public Slider slider;
+    Slider staminaBar;
 
-    // Start is called before the first frame update
-    void Start()
+    public StaminaBar(Slider staminaBar)
     {
-        staminaSystem = Player.Instance.resilient;
-
-        //SUBSCRIBES ENDRESULT TO EVENT HANDLER OF RESULT
-        staminaSystem.StaminaChangeEvent += SetStamina;
+        this.staminaBar = staminaBar;
     }
 
-    public void SetStamina(object sender, float stamina)
+    // Start is called before the first frame update
+    public void Start()
     {
-        slider.value = stamina;
+        Player.Instance.resilient.StaminaChangeEvent += SetStamina;
+    }
+
+    void SetStamina(object sender, float stamina)
+    {
+        staminaBar.value = stamina;
     }
 }

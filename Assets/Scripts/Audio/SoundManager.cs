@@ -27,7 +27,7 @@ public class SoundManager : MonoBehaviour
         player.resilient.StaminaChangeEvent += StaminaRecover;
         player.jumper.JumpEvent += Jump;
         player.chaserResetter.ChaserResettedEvent += ChaserResetted;
-        player.collecter.CollectibleFoundEvent += CollectibleFound;
+        player.keyCollecter.CollectibleFoundEvent += CollectibleFound;
         player.turner.TurnedEvent += Turn;
     }
 

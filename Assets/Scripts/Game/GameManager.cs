@@ -12,14 +12,14 @@ public class GameManager : AStateController
     // Main menu
     // Options 
     // Credits
-    //public InGameState inGame = new();// InGame
+    public InGameState inGame = new();// InGame
     // Pause
     // EndGame
     #endregion
 
     #region BEHAVIOURS
     //public CollectiblesUI collectibles;
-    //public StaminaBarUI stamina;
+    public StaminaBar stamina;
     #endregion
 
     #region GRAPHICS
@@ -59,8 +59,8 @@ public class GameManager : AStateController
     public override void Start()
     {
         //collectibles = new(leftIcons, foundIcons);
-        //stamina = new(staminaBar);
+        stamina = new(staminaBar);
 
-        //SetState(inGame);
+        SetState(inGame);
     }
 }

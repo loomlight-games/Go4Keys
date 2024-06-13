@@ -10,7 +10,7 @@ public class CollectiblesUI : MonoBehaviour
     public event EventHandler VictoryEvent;//Stores methods to invoke when winning
 
     //SUBJECT
-    [SerializeField] Collecter collecter;
+    [SerializeField] KeyCollecter collecter;
 
     //DIRTYFLAG
     KeySerializable keySerializable;
@@ -45,7 +45,7 @@ public class CollectiblesUI : MonoBehaviour
             RestoreUI(counter);
         }
 
-        collecter = Player.Instance.collecter;
+        collecter = Player.Instance.keyCollecter;
 
         //UPDATEUI WHEN OBJECT COLLECTED
         collecter.CollectibleFoundEvent += UpdateUI;

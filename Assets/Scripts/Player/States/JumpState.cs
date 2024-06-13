@@ -39,7 +39,7 @@ public class JumpState : APlayerState
     {
         player.endlessRunner.OnTriggerEnter(other); // Can enter an intersection
         player.resilient.OnTriggerEnter(other); // Can recover stamina
-        player.collecter.OnTriggerEnter(other); // Can find a collectible
+        player.keyCollecter.OnTriggerEnter(other); // Can find a collectible
         player.chaserResetter.OnTriggerEnter(other); // Can reset chaser position
     }
 
