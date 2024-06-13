@@ -11199,7 +11199,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c207825dbdc45342a52fdffa53fbca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectibleUI: {fileID: 1260561404}
   victoryAdvice: {fileID: 655107747}
   caughtAdvice: {fileID: 1938530618}
   staminaAdvice: {fileID: 983962023}
@@ -29843,8 +29842,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1260561403}
-  - component: {fileID: 1260561404}
-  - component: {fileID: 1260561405}
   m_Layer: 5
   m_Name: Collectibles
   m_TagString: Untagged
@@ -29874,34 +29871,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1260561404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1260561402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4207123450704b24d8f1d5ef792ebf6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftUI: {fileID: 1782363297}
-  foundUI: {fileID: 1069986186}
---- !u!114 &1260561405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1260561402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 197fa9be5f240054eb2e461d9018257b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resetter: {fileID: 481660409}
-  collectiblesUI: {fileID: 1260561404}
 --- !u!4 &1261492218 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4870167790249810, guid: 50477af197889084e8a6d97f2b73b73b, type: 3}
@@ -45902,7 +45871,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2085242729}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: -71.63}
+  m_LocalPosition: {x: 0, y: 5, z: -71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

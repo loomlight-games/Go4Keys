@@ -18,8 +18,9 @@ public class GameManager : AStateController
     #endregion
 
     #region BEHAVIOURS
-    //public CollectiblesUI collectibles;
+    public CollectiblesUI collectibles;
     public StaminaBar stamina;
+    public KeyAutosave autosave;
     #endregion
 
     #region GRAPHICS
@@ -58,8 +59,9 @@ public class GameManager : AStateController
 
     public override void Start()
     {
-        //collectibles = new(leftIcons, foundIcons);
+        collectibles = new(leftIcons, foundIcons);
         stamina = new(staminaBar);
+        autosave = new();
 
         SetState(inGame);
     }

@@ -4,54 +4,49 @@ using UnityEngine;
 //HANDLES UI COUNTER OF COLLECTIBLES
 
 [Serializable]
-public class CollectiblesUI : MonoBehaviour
+public class CollectiblesUI
 {
-    //EVENT HANDLER FOR VICTORY
-    public event EventHandler VictoryEvent;//Stores methods to invoke when winning
+    public event EventHandler AllFoundEvent;
 
-    //SUBJECT
-    [SerializeField] KeyCollecter collecter;
+    readonly GameObject leftIcons;
+    readonly GameObject foundIcons;
+    private GameObject[] leftArray;
+    private GameObject[] foundArray;
+    private int collectedCounter = -1;
+    //KeySerializable keySerializable;
 
-    //DIRTYFLAG
-    KeySerializable keySerializable;
-
-    //UI elements
-    [SerializeField] GameObject leftUI;//Contains all left collectibles icons in UI
-    [SerializeField] GameObject foundUI;//Contains all found collectibles icons in UI
-    
-    //Arrays
-    private GameObject[] leftArray;//Array of left collectibles in UI
-    private GameObject[] foundArray;//Array of found collectibles in UI
-    
-    //Found objects counter
-    private int counter;
-
-    // Start is called before the first frame update
-    void Start()
+    public CollectiblesUI(GameObject leftIcons, GameObject foundIcons)
     {
+        this.leftIcons = leftIcons;
+        this.foundIcons = foundIcons;
+    }
+
+    public void Start()
+    {
+        Player.Instance.keyCollecter.CollectibleFoundEvent += AddFoundIcon;
+
         //Creates arrays
-        leftArray = SetArray(leftUI);
-        foundArray = SetArray(foundUI);
+        leftArray = SetArray(leftIcons);
+        foundArray = SetArray(foundIcons);
 
         ActivateArray(leftArray, true);
         ActivateArray(foundArray, false);
 
+        /*
         //Restores found counter from memory
         keySerializable = new KeySerializable();
-        counter = keySerializable.DeserializeInt();
+        collectedCounter = keySerializable.DeserializeInt();
+        */
+        Debug.Log(collectedCounter);
+
+        if (collectedCounter > -1)//At least one (0) collectible was found
+            RestoreUI(collectedCounter);
         
-        if (counter > -1)//At least one (0) collectible was found
-        {
-            RestoreUI(counter);
-        }
-
-        collecter = Player.Instance.keyCollecter;
-
-        //UPDATEUI WHEN OBJECT COLLECTED
-        collecter.CollectibleFoundEvent += UpdateUI;
     }
 
-    //Fills array with children of a gameobject
+    /// <summary>
+    /// Fills array with children of a gameobject
+    /// </summary>
     GameObject[] SetArray(GameObject GOgroup)
     {
         //Instantiate array of size of num of children
@@ -67,34 +62,43 @@ public class CollectiblesUI : MonoBehaviour
         return array;
     }
 
-    //Activate or deactivate elements of an array
+    /// <summary>
+    /// Activate or deactivate all elements of an array
+    /// </summary>
     void ActivateArray(GameObject[] array, bool isActive)
     {
-        //Fills array
         for (int i = 0; i < array.Length; i++)
         {
-            array[i].SetActive(isActive);//Activates or deactivates each element
+            array[i].SetActive(isActive);
         }
     }
 
-    //Updates UI, showing a found icon instead of a left one
-    void UpdateUI(object sender, EventArgs e)
+    /// <summary>
+    /// Updates UI, showing a found icon instead of a left one
+    /// </summary>
+    void AddFoundIcon(object sender, EventArgs e)
     {
-        counter++;
+        collectedCounter++;
 
-        leftArray[counter].SetActive(false);
-        foundArray[counter].SetActive(true);
+        Debug.Log(collectedCounter);
 
-        if (counter == foundArray.Length-1) {
-            //Invokes methods when winning
-            VictoryEvent?.Invoke(this, EventArgs.Empty);
+        if (collectedCounter >= foundArray.Length - 1)
+        {
+            Debug.Log("All found");
+            AllFoundEvent?.Invoke(this, EventArgs.Empty);
+        }
+        else
+        {
+            leftArray[collectedCounter].SetActive(false);
+            foundArray[collectedCounter].SetActive(true);
         }
     }
 
-    //Restores found UI
+    /// <summary>
+    /// Restores found UI
+    /// </summary>
     void RestoreUI(int index)
     {
-        //Travel through arrays
         for (int i = 0; i <= index; i++) 
         {
             leftArray[i].SetActive(false);

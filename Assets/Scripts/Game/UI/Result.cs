@@ -9,8 +9,7 @@ public class Result : MonoBehaviour
     public event EventHandler EndGameEvent;//Stores methods to invoke when game ends
 
     //SUBJECTS
-    [SerializeField] CollectiblesUI collectibleUI;
-    Player player;
+    //[SerializeField] CollectiblesUI collectibleUI;
 
     //Sprites
     [SerializeField] GameObject victoryAdvice;
@@ -20,11 +19,10 @@ public class Result : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = Player.Instance;
 
-        collectibleUI.VictoryEvent += Victory;
-        player.chaserResetter.CaughtEvent += Caught;
-        player.resilient.StaminaChangeEvent += Stamina;
+        GameManager.Instance.collectibles.AllFoundEvent += Victory;
+        Player.Instance.chaserResetter.CaughtEvent += Caught;
+        Player.Instance.resilient.StaminaChangeEvent += Stamina;
 
         victoryAdvice.SetActive(false);
         caughtAdvice.SetActive(false);
