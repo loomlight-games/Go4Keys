@@ -6,7 +6,7 @@ public class PauseGameState : AGameState
     {
         game = (GameManager)controller;
         Time.timeScale = 0f;
-        game.pauseMenu.Pause();
+        game.gameButtonsUI.ShowPauseButtons();
     }
 
     public override void Update()
@@ -14,7 +14,7 @@ public class PauseGameState : AGameState
         //'Esc' pressed
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            game.paused = false;
+            game.gamePaused = false;
         }
 
         Exit();
@@ -23,7 +23,7 @@ public class PauseGameState : AGameState
     public override void Exit()
     {
         // Switch to InGame if resume button is clicked
-        if (!game.paused)
+        if (!game.gamePaused)
         {
             Time.timeScale = 1f;
             game.SetState(game.inGame);

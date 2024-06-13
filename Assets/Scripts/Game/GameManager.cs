@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +7,11 @@ using UnityEngine.UI;
 public class GameManager : AStateController
 {
     public static GameManager Instance;
-    public bool paused = false;
-    public bool replay = false;
+    [HideInInspector] public bool gamePaused = false;
+    [HideInInspector] public bool replayGame = false;
+    [HideInInspector] public bool playerVictory = false;
+    [HideInInspector] public bool playerCaught = false;
+    [HideInInspector] public bool playerTired = false;
 
     #region EVENTS
     //public event EventHandler<bool> GameButtonClicked;
@@ -20,16 +21,17 @@ public class GameManager : AStateController
     // Main menu
     // Options 
     // Credits
-    public InGameState inGame = new();// InGame
-    public PauseGameState pausedGame = new(); // Pause
-    public EndGameState endGame = new(); // EndGame
+    public InGameState inGame = new();
+    public PauseGameState pausedGame = new();
+    public EndGameState endGame = new();
     #endregion
 
     #region BEHAVIOURS
-    public CollectiblesUI collectibles;
-    public StaminaBar stamina;
+    public PlayerCollectedUI playerCollectedUI;
+    public PlayerStaminaUI playerStaminaUI;
     //public KeyAutosave autosave;
-    public PauseMenu pauseMenu;
+    public GameButtonsUI gameButtonsUI;
+    public GameResultUI gameResultUI;
     #endregion
 
     #region GRAPHICS
@@ -68,10 +70,11 @@ public class GameManager : AStateController
 
     public override void Start()
     {
-        collectibles = new(leftIcons, foundIcons);
-        stamina = new(staminaBar);
+        playerCollectedUI = new(leftIcons, foundIcons);
+        playerStaminaUI = new(staminaBar);
         //autosave = new();
-        pauseMenu = new(pauseButton, resumeButton, replayButton, mainMenuButton, quitGameButton);
+        gameButtonsUI = new(pauseButton, resumeButton, replayButton, mainMenuButton, quitGameButton);
+        gameResultUI = new(victory, caught, tired);
 
         SetState(inGame);
     }
@@ -79,14 +82,14 @@ public class GameManager : AStateController
     public void PauseGame(bool paused)
     {
         //GameButtonClicked?.Invoke(this, paused);
-        Debug.Log(paused);
-        this.paused = paused;
+        //Debug.Log(paused);
+        gamePaused = paused;
     }
 
     public void ReplayGame()
     {
         //ReplayButtonClicked?.Invoke(this, paused);
-        Debug.Log(paused);
-        replay = true;
+        //Debug.Log(gamePaused);
+        replayGame = true;
     }
 }

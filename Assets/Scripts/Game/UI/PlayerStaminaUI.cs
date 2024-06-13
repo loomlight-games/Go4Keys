@@ -4,16 +4,16 @@ using UnityEngine.UI;
 /// <summary>
 /// Updates stamina bar as the player stamina
 /// </summary>
-public class StaminaBar
+public class PlayerStaminaUI
 {
     readonly Slider staminaBar;
 
-    public StaminaBar(Slider staminaBar)
+    public PlayerStaminaUI(Slider staminaBar)
     {
         this.staminaBar = staminaBar;
     }
 
-    public void Start()
+    public void SubscribeToStaminaChangeEvent()
     {
         Player.Instance.resilient.StaminaChangeEvent += UpdateValue;
     }

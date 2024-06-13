@@ -1,26 +1,18 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//HANDLES PAUSE MENU
-
-public class PauseMenu
+/// <summary>
+/// Handles gameplay buttons
+/// </summary>
+public class GameButtonsUI
 {
-    //SUBJECT
-    [SerializeField] Result result;
-
-    //Buttons
     readonly GameObject pauseButton;
     readonly GameObject resumeButton;
     readonly GameObject replayButton;
     readonly GameObject mainMenuButton;
     readonly GameObject quitGameButton;
 
-    //Game states
-    private bool gameInPause = false;
-    private bool gameEnded = false;
-
-    public PauseMenu(GameObject pauseButton, GameObject resumeButton, GameObject replayButton, GameObject mainMenuButton, GameObject quitGameButton)
+    public GameButtonsUI(GameObject pauseButton, GameObject resumeButton, GameObject replayButton, GameObject mainMenuButton, GameObject quitGameButton)
     {
         this.pauseButton = pauseButton;
         this.resumeButton = resumeButton;
@@ -29,6 +21,7 @@ public class PauseMenu
         this.quitGameButton = quitGameButton;
     }
 
+    /*
     public void Start()
     {
         //SUBSCRIBES ENDRESULT TO EVENT HANDLER OF RESULT
@@ -37,8 +30,10 @@ public class PauseMenu
         Resume();
     }
 
+    
     public void Update()
     {
+
         //'Esc' pressed
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -65,6 +60,7 @@ public class PauseMenu
             
         }
     }
+   
 
     /// <summary>
     /// End result UI (shows replay game button as well)
@@ -81,29 +77,12 @@ public class PauseMenu
         pauseButton.SetActive(false);
         replayButton.SetActive(true);
     }
+     */
 
-    public void EndResult()
+
+
+    public void ShowPlayButtons()
     {
-        //Time.timeScale = 0f;
-
-        //gameEnded = true;
-
-        mainMenuButton.SetActive(true);
-        quitGameButton.SetActive(true);
-        resumeButton.SetActive(false);
-        pauseButton.SetActive(false);
-        replayButton.SetActive(true);
-    }
-
-    /// <summary>
-    /// Resumes simulation
-    /// </summary>
-    public void Resume()
-    {
-        //Time.timeScale = 1f;
-
-        //gameInPause = false;
-
         pauseButton.SetActive(true);
         mainMenuButton.SetActive(false);
         quitGameButton.SetActive(false);
@@ -111,15 +90,9 @@ public class PauseMenu
         replayButton.SetActive(false);
     }
 
-    /// <summary>
-    /// Stops simulation
-    /// </summary>
-    public void Pause()
+
+    public void ShowPauseButtons()
     {
-        //Time.timeScale = 0f;
-
-        //gameInPause = true;
-
         mainMenuButton.SetActive(true);
         quitGameButton.SetActive(true);
         resumeButton.SetActive(true);
@@ -127,6 +100,16 @@ public class PauseMenu
         replayButton.SetActive(false);
     }
 
+    public void ShowEndButtons()
+    {
+        mainMenuButton.SetActive(true);
+        quitGameButton.SetActive(true);
+        resumeButton.SetActive(false);
+        pauseButton.SetActive(false);
+        replayButton.SetActive(true);
+    }
+
+    /*
     /// <summary>
     /// Replays game
     /// </summary>
@@ -139,7 +122,7 @@ public class PauseMenu
 
         //Reload the current scene
         SceneManager.LoadScene(currentScene.name);
-    }
+    }*/
 
     /// <summary>
     /// Loads MainMenu scene

@@ -27,7 +27,7 @@ public class KeyAutosave
         //resetter.KeyCountResetEvent += ResetFromResetter;
 
         //SUBSCRIBES RESET COUNT TO EVENT HANDLER OF VICTORY
-        GameManager.Instance.collectibles.AllFoundEvent += ResetAtVictory;
+        GameManager.Instance.playerCollectedUI.AllFoundEvent += ResetAtVictory;
 
         //Restores found counter from memory
         KeySerializable keySerializable = new ();

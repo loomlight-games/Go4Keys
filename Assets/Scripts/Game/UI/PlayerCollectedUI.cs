@@ -5,7 +5,7 @@ using UnityEngine;
 /// Updates collected icons as the player collectes keys
 /// </summary>
 [Serializable]
-public class CollectiblesUI
+public class PlayerCollectedUI
 {
     public event EventHandler AllFoundEvent;
 
@@ -16,13 +16,13 @@ public class CollectiblesUI
     private int collectedCounter = -1;
     //KeySerializable keySerializable;
 
-    public CollectiblesUI(GameObject leftIcons, GameObject foundIcons)
+    public PlayerCollectedUI(GameObject leftIcons, GameObject foundIcons)
     {
         this.leftIcons = leftIcons;
         this.foundIcons = foundIcons;
     }
 
-    public void Start()
+    public void Initialize()
     {
         Player.Instance.keyCollecter.CollectibleFoundEvent += AddFoundIcon;
 
@@ -38,7 +38,7 @@ public class CollectiblesUI
         keySerializable = new KeySerializable();
         collectedCounter = keySerializable.DeserializeInt();
         */
-        Debug.Log(collectedCounter);
+        //Debug.Log(collectedCounter);
 
         if (collectedCounter > -1)//At least one (0) collectible was found
             RestoreUI(collectedCounter);
@@ -78,7 +78,7 @@ public class CollectiblesUI
     {
         collectedCounter++;
 
-        Debug.Log(collectedCounter);
+        //Debug.Log(collectedCounter);
 
         if (collectedCounter >= foundArray.Length - 1)
         {
