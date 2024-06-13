@@ -24,7 +24,7 @@ public class Result : MonoBehaviour
 
         collectibleUI.VictoryEvent += Victory;
         player.chaserResetter.CaughtEvent += Caught;
-        player.resilient.TiredEvent += Stamina;
+        player.resilient.StaminaChangeEvent += Stamina;
 
         victoryAdvice.SetActive(false);
         caughtAdvice.SetActive(false);
@@ -42,9 +42,12 @@ public class Result : MonoBehaviour
         caughtAdvice.SetActive(true);
     }
 
-    void Stamina(object sender, EventArgs e)
+    void Stamina(object sender, float stamina)
     {
-        EndGameEvent?.Invoke(this, EventArgs.Empty);
-        staminaAdvice.SetActive(true);
+        if (stamina < 0)
+        {
+            EndGameEvent?.Invoke(this, EventArgs.Empty);
+            staminaAdvice.SetActive(true);
+        }
     }
 }

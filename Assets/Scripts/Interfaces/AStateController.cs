@@ -8,12 +8,24 @@ public abstract class AStateController: MonoBehaviour
 {
     protected IState currentState;
 
-    public abstract void Start();
-    public abstract void Update();
-    public virtual void OnTriggerEnter(Collider other) { }
-    public virtual void OnCollisionEnter(Collision collision) { }
+    public abstract void Awake();
 
-    //public virtual void OnTriggerExit(Collider other) { }
+    public abstract void Start();
+
+    public virtual void Update()
+    {
+        currentState.Update();
+    }
+
+    public virtual void OnTriggerEnter(Collider other)
+    {
+        currentState.OnTriggerEnter(other);
+    }
+
+    public virtual void OnCollisionEnter(Collision collision)
+    {
+        currentState.OnCollisionEnter(collision);
+    }
 
     /// <summary>
     /// Gets the current state of the controller
@@ -31,7 +43,8 @@ public abstract class AStateController: MonoBehaviour
     public virtual void SetState(IState state)
     {
         currentState = state;
-        //Debug.Log(currentState.ToString());
         currentState.Enter(this);
+
+        Debug.Log(currentState.ToString());
     }
 }

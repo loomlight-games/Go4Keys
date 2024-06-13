@@ -13,7 +13,7 @@ public class StaminaBar : MonoBehaviour
         staminaSystem = Player.Instance.resilient;
 
         //SUBSCRIBES ENDRESULT TO EVENT HANDLER OF RESULT
-        staminaSystem.StaminaLossEvent += SetStamina;
+        staminaSystem.StaminaChangeEvent += SetStamina;
     }
 
     public void SetStamina(object sender, float stamina)

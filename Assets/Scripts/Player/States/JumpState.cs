@@ -17,7 +17,7 @@ public class JumpState : APlayerState
         player.jumper.Jump();// Jumps
         player.resilient.Jumps();// Jumped, thus, loses a lot of stamina
 
-        if (!eventsSubscribed)// Subscribe just once
+        if (!eventsSubscribed) // Subscribe just once
         {
             player.endlessRunner.AtIntersectionEvent += AtIntersection;
             player.turner.TurnedEvent += TurnPointSurpassed;

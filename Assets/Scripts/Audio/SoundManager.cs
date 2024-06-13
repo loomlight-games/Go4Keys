@@ -6,6 +6,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     Player player;
+    float lastStaminaValue = 100f;
 
     // Game
     [SerializeField] AudioSource staminaRecovered;
@@ -23,16 +24,19 @@ public class SoundManager : MonoBehaviour
     {
         player = Player.Instance;
 
-        player.resilient.StaminaRecoverEvent += StaminaRecover;
+        player.resilient.StaminaChangeEvent += StaminaRecover;
         player.jumper.JumpEvent += Jump;
         player.chaserResetter.ChaserResettedEvent += ChaserResetted;
         player.collecter.CollectibleFoundEvent += CollectibleFound;
         player.turner.TurnedEvent += Turn;
     }
 
-    void StaminaRecover(object sender, EventArgs any)
+    void StaminaRecover(object sender, float stamina)
     {
-        staminaRecovered.Play();
+        if (stamina > lastStaminaValue)
+            staminaRecovered.Play();
+
+        lastStaminaValue = stamina;
     }
 
     void Jump(object sender, EventArgs any)

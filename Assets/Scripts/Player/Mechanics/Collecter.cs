@@ -7,6 +7,7 @@ using UnityEngine;
 public class Collecter
 {
     public event EventHandler CollectibleFoundEvent;
+    
     readonly GameObject collectible;
 
     public Collecter(GameObject collectible)

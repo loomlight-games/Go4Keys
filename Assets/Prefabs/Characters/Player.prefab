@@ -176,8 +176,8 @@ MonoBehaviour:
   jumpForce: 7
   rails: {fileID: 0}
   collectible: {fileID: 0}
-  staminaLossPerStep: 2
-  staminaLossPerJump: 300
+  staminaLossPerStep: 3
+  staminaLossPerJump: 500
   chaserResetDistance: 8
 --- !u!1001 &8825828370497070521
 PrefabInstance:

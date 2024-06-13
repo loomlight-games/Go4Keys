@@ -15,14 +15,13 @@ public class RunState : APlayerState
     {
         player = (Player) controller;
 
-        if (!eventsSubscribed)// Subscribe just once
+        if (!eventsSubscribed) // Subscribe just once
         {
             player.endlessRunner.AtIntersectionEvent += AtIntersection;
             player.chaserResetter.CaughtEvent += Caught;
 
             eventsSubscribed = true;
         }
-
     }
 
     public override void Update()

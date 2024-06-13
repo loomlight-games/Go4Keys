@@ -51,7 +51,7 @@ public class Player : AStateController
     [SerializeField] float chaserResetDistance;
     #endregion
 
-    public void Awake()
+    public override void Awake()
     {
         // Singleton
         if (Instance == null)
@@ -74,20 +74,5 @@ public class Player : AStateController
         chaserResetter = new(chaserResetDistance);
 
         SetState(runState);
-    }
-
-    public override void Update()
-    {
-        currentState.Update();
-    }
-
-    public override void OnTriggerEnter(Collider other)
-    {
-        currentState.OnTriggerEnter(other);
-    }
-
-    public override void OnCollisionEnter(Collision collision)
-    {
-        currentState.OnCollisionEnter(collision);
     }
 }

@@ -6,7 +6,7 @@ public class EnergyDrink : MonoBehaviour
 {
     // Intrinsic properties (FLYWEIGHT)
     // Type of energy drink 
-    public EnergyDrinkSO recoverAmount;
+    public EnergyDrinkSO type;
 
     //Extrinsic properties
     public RotatorySO rotationType;
