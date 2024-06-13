@@ -9,6 +9,7 @@ TagManager:
   - EnergyDrink
   - Key
   - Enemy
+  - Resetter
   layers:
   - Default
   - TransparentFX

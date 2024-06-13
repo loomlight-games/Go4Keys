@@ -27,6 +27,7 @@ public class RunState : APlayerState
         player.resilient.OnTriggerEnter(other);
         player.collecter.OnTriggerEnter(other);
         player.turner.OnTriggerEnter(other);
+        player.chaserResetter.OnTriggerEnter(other);
 
         if (other.gameObject.CompareTag("Intersection"))
             atIntersection = true;

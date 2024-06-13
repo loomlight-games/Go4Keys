@@ -10,11 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8140362928770344619}
   - component: {fileID: 4103084811826501276}
-  - component: {fileID: 4300942623716537110}
   - component: {fileID: 6981480652824272483}
   m_Layer: 0
   m_Name: Police Bonus
-  m_TagString: Untagged
+  m_TagString: Resetter
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,22 +55,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 4.2899494, z: 3}
   m_Center: {x: 2, y: 0.14497489, z: 0}
---- !u!114 &4300942623716537110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8176369248234091789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2c62bc1c13850f4699ee093a0ac3dcf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 8714495261299368167, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
-  chaser: {fileID: 6038181690433566219, guid: d76042eafccd8c840a33121b95135238, type: 3}
-  safeDist: 8
-  policeSound: {fileID: 6981480652824272483}
 --- !u!82 &6981480652824272483
 AudioSource:
   m_ObjectHideFlags: 0

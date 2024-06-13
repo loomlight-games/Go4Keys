@@ -46513,6 +46513,10 @@ PrefabInstance:
       propertyPath: railsParent
       value: 
       objectReference: {fileID: 1322850705}
+    - target: {fileID: 5859872538111919777, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
+      propertyPath: chaserResetDistance
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8117148013260554024, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
       propertyPath: railsParent
       value: 
@@ -46657,6 +46661,10 @@ PrefabInstance:
     - target: {fileID: 7624390240055608613, guid: d76042eafccd8c840a33121b95135238, type: 3}
       propertyPath: pauseMenu
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624390240055608613, guid: d76042eafccd8c840a33121b95135238, type: 3}
+      propertyPath: resetDistance
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7624390240055608613, guid: d76042eafccd8c840a33121b95135238, type: 3}
       propertyPath: targetChecker

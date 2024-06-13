@@ -181,6 +181,7 @@ MonoBehaviour:
   collectible: {fileID: 0}
   staminaLossPerStep: 2
   staminaLossPerJump: 300
+  chaserResetDistance: 8
 --- !u!82 &11544385760409037
 AudioSource:
   m_ObjectHideFlags: 0

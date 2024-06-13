@@ -1,8 +1,9 @@
 using System;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 /// <summary>
-/// Provides chaser behaviour for the player. Jump obstacles automatically.
+/// Provides chaser behaviour after the player. Jump obstacles automatically.
 /// </summary>
 public class Chaser : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class Chaser : MonoBehaviour
         chaserRigidBody = transform.GetComponent<Rigidbody>();
         player = Player.Instance;
         player.caughtState.CaughtEvent += TargetCaught;
+        player.chaserResetter.ChaserResettedEvent += ResetPosition;
     }
 
     void Update()
@@ -58,8 +60,18 @@ public class Chaser : MonoBehaviour
     /// <summary>
     /// Called by the event invoked when target has been caught.
     /// </summary>
-    private void TargetCaught(object sender, EventArgs e)
+    void TargetCaught(object sender, EventArgs e)
     {
         targetCaught = true;
+    }
+
+    /// <summary>
+    /// Called by the event invoked when target collides with a resetter.
+    /// </summary>
+    void ResetPosition(object sender, float resetDistance)
+    {
+        transform.localPosition = new Vector3(player.transform.localPosition.x, 
+                                              transform.localPosition.y, 
+                                              player.transform.localPosition.z - resetDistance);
     }
 }

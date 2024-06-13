@@ -23,6 +23,7 @@ public class Player : AStateController
     public Turner turner;
     public Resilient resilient;
     public Collecter collecter;
+    public ChaserResetter chaserResetter;
     #endregion
 
     #region CHECKERS
@@ -37,7 +38,7 @@ public class Player : AStateController
     [Header("Movement")]
     [SerializeField] float railChangeSpeed;
     [SerializeField] float forwardSpeed;
-    public float jumpForce;
+    [SerializeField] float jumpForce;
     [Tooltip("Its children are the diferrent rails")]
     [SerializeField] Transform rails;
     #endregion
@@ -47,6 +48,7 @@ public class Player : AStateController
     [SerializeField] GameObject collectible;
     [SerializeField] float staminaLossPerStep;
     [SerializeField] float staminaLossPerJump;
+    [SerializeField] float chaserResetDistance;
     #endregion
 
     public void Awake()
@@ -69,6 +71,7 @@ public class Player : AStateController
         turner = new(playerParent);
         resilient = new(staminaLossPerStep, staminaLossPerJump);
         collecter = new(collectible);
+        chaserResetter = new(chaserResetDistance);
 
         SetState(runState);
     }
