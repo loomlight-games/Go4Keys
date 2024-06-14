@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -5,15 +6,12 @@ using UnityEngine.UI;
 /// </summary>
 public class PlayerStaminaUI
 {
-    readonly Slider staminaBar;
+    Slider staminaBar;
 
-    public PlayerStaminaUI(Slider staminaBar)
+    public void Initialize()
     {
-        this.staminaBar = staminaBar;
-    }
+        staminaBar = GameObject.Find("Stamina bar").GetComponent<Slider>();
 
-    public void SubscribeToStaminaChangeEvent()
-    {
         Player.Instance.resilient.StaminaChangeEvent += UpdateValue;
     }
 

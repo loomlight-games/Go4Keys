@@ -10,7 +10,6 @@ public class GameManager : AStateController
 {
     public static GameManager Instance;
     public event EventHandler<string> ButtonClicked;
-    //[HideInInspector] public string result;
 
     #region STATES
     public GameMainMenuState mainMenuState = new();
@@ -25,19 +24,6 @@ public class GameManager : AStateController
     public PlayerCollectiblesUI playerCollectedUI;
     public PlayerStaminaUI playerStaminaUI;
     //public KeyAutosave autosave;
-    #endregion
-
-    #region GRAPHICS
-    [Header("Collectibles")]
-    [Tooltip("Contains all left collectibles icons in UI")]
-    [SerializeField] GameObject leftIcons;
-    [Tooltip("Contains all found collectibles icons in UI")]
-    [SerializeField] GameObject foundIcons;
-
-    [Header("Stamina bar")]
-    [SerializeField] Slider staminaBar;
-
-    //TUTORIAL
     #endregion
 
     public override void Awake()
@@ -57,8 +43,8 @@ public class GameManager : AStateController
         }
         else
         {
-            playerCollectedUI = new(leftIcons, foundIcons);
-            playerStaminaUI = new(staminaBar);
+            playerCollectedUI = new();
+            playerStaminaUI = new();
             //autosave = new();
 
             SetState(playState);

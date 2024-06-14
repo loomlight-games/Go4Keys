@@ -15,8 +15,7 @@ public class GamePlayState : AGameState
         pauseButton = buttons.transform.Find("Pause").gameObject;
         pauseButton.SetActive(true);
 
-
-        game.playerStaminaUI.SubscribeToStaminaChangeEvent();
+        game.playerStaminaUI.Initialize();
         game.playerCollectedUI.Initialize();
         //game.autosave.Start();
 

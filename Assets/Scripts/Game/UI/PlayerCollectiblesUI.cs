@@ -7,24 +7,13 @@ using UnityEngine;
 [Serializable]
 public class PlayerCollectiblesUI
 {
-    readonly GameObject leftIcons;
-    readonly GameObject foundIcons;
-    private GameObject[] leftArray;
-    private GameObject[] foundArray;
-
-    public PlayerCollectiblesUI(GameObject leftIcons, GameObject foundIcons)
-    {
-        this.leftIcons = leftIcons;
-        this.foundIcons = foundIcons;
-    }
+    GameObject[] leftArray;
+    GameObject[] foundArray;
 
     public void Initialize()
     {
-        leftArray = SetArray(leftIcons);
-        foundArray = SetArray(foundIcons);
-
-        //ActivateArray(leftArray, true);
-        //ActivateArray(foundArray, false);
+        leftArray = SetArray(GameObject.Find("Remaining"));
+        foundArray = SetArray(GameObject.Find("Found"));
 
         Player.Instance.keyCollecter.CollectibleFoundEvent += UpdateIcons;
     }
@@ -32,30 +21,17 @@ public class PlayerCollectiblesUI
     /// <summary>
     /// Fills array with children of a gameobject
     /// </summary>
-    GameObject[] SetArray(GameObject GOgroup)
+    GameObject[] SetArray(GameObject parent)
     {
         //Instantiate array of size of num of children
-        GameObject[] array = new GameObject[GOgroup.transform.childCount];
+        GameObject[] array = new GameObject[parent.transform.childCount];
 
         //Fills array with every gameobject in the group (child)
-        for (int i = 0; i < GOgroup.transform.childCount; i++)
-            array[i] = GOgroup.transform.GetChild(i).gameObject;
+        for (int i = 0; i < parent.transform.childCount; i++)
+            array[i] = parent.transform.GetChild(i).gameObject;
 
         return array;
     }
-
-    /*
-    /// <summary>
-    /// Activate or deactivate all elements of an array
-    /// </summary>
-    void ActivateArray(GameObject[] array, bool isActive)
-    {
-        for (int i = 0; i < array.Length; i++)
-        {
-            array[i].SetActive(isActive);
-        }
-    }
-    */
 
     /// <summary>
     /// Updates icons changing the left ones as the found ones
