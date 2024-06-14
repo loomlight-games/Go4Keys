@@ -1,7 +1,5 @@
 using System;
-using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 /// <summary>
 /// Implements context methods 
@@ -20,12 +18,6 @@ public class GameManager : AStateController
     public GameEndState endState = new();
     #endregion
 
-    #region BEHAVIOURS
-    public PlayerCollectiblesUI playerCollectedUI;
-    public PlayerStaminaUI playerStaminaUI;
-    //public KeyAutosave autosave;
-    #endregion
-
     public override void Awake()
     {
         // Singleton
@@ -38,17 +30,9 @@ public class GameManager : AStateController
     public override void Start()
     {
         if (SceneManager.GetActiveScene().name == "Main Menu")
-        {
             SetState(mainMenuState);
-        }
         else
-        {
-            playerCollectedUI = new();
-            playerStaminaUI = new();
-            //autosave = new();
-
             SetState(playState);
-        }
     }
 
     public void ClickButton(string buttonName)

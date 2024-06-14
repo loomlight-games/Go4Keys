@@ -2,6 +2,8 @@
 
 public class GamePlayState : AGameState
 {
+    PlayerCollectiblesUI playerCollectedUI;
+    PlayerStaminaUI playerStaminaUI;
     GameObject buttons;
     GameObject pauseButton;
     string buttonClickedName = "None";
@@ -14,15 +16,17 @@ public class GamePlayState : AGameState
         buttons = GameObject.Find("Buttons");
         pauseButton = buttons.transform.Find("Pause").gameObject;
         pauseButton.SetActive(true);
-
-        game.playerStaminaUI.Initialize();
-        game.playerCollectedUI.Initialize();
         //game.autosave.Start();
 
         if (!eventsSubscribed) // Subscribes to events just once
         {
             game.ButtonClicked += ButtonClicked;
             Player.Instance.endState.EndGameEvent += GameEnded;
+
+            playerCollectedUI = new();
+            playerStaminaUI = new();
+            playerCollectedUI.Initialize();
+            playerStaminaUI.Initialize();
 
             eventsSubscribed = true;
         }
