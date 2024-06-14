@@ -14,7 +14,7 @@ public abstract class AStateController: MonoBehaviour
 
     public virtual void Update()
     {
-        currentState.Update();
+        currentState.UpdateFrame();
     }
 
     public virtual void OnTriggerEnter(Collider other)
@@ -44,6 +44,14 @@ public abstract class AStateController: MonoBehaviour
     {
         currentState = state;
         currentState.Enter(this);
+
+        Debug.Log(currentState.ToString());
+    }
+
+    public virtual void SetState(IState state, string info)
+    {
+        currentState = state;
+        currentState.Enter(this, info);
 
         Debug.Log(currentState.ToString());
     }

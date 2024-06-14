@@ -25,8 +25,6 @@ public class GamePauseState : AGameState
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             resume = true;
-
-        Exit();
     }
 
     public override void Exit()

@@ -54,7 +54,8 @@ public class SoundManager : MonoBehaviour
 
     void CollectibleFound(object sender, int collected)
     {
-        collectibleFound.Play();
+        if (collected > 0)
+            collectibleFound.Play();
     }
 
     void Turn(object sender, bool turned)

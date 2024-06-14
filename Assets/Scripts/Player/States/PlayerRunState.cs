@@ -8,15 +8,19 @@ using UnityEngine;
 public class PlayerRunState : APlayerState
 {
     bool atIntersection = false;
-    bool isCaught = false;
+    string result;
     bool eventsSubscribed = false;
 
     public override void Enter()
     {
+        player.keyCollecter.Initialize();
+
         if (!eventsSubscribed) // Subscribe just once
         {
             player.endlessRunner.AtIntersectionEvent += AtIntersection;
+            player.keyCollecter.AllFoundEvent += Victory;
             player.chased.CaughtEvent += Caught;
+            player.resilient.StaminaChangeEvent += Tired;
 
             eventsSubscribed = true;
         }
@@ -27,8 +31,6 @@ public class PlayerRunState : APlayerState
         player.endlessRunner.Update(); // Runs endlessly,
         player.resilient.Runs(); // thus, loses stamina
         player.railed.Update(); // Changes rails
-        
-        Exit();
     }
 
     public override void OnTriggerEnter(Collider other) 
@@ -56,10 +58,9 @@ public class PlayerRunState : APlayerState
             atIntersection = false;
             player.SetState(player.atIntersection);
         }
-        else if (isCaught)
+        else if (result != null)
         {
-            //isCaught = false; No need bc won't return
-            player.SetState(player.caughtState);
+            player.SetState(player.endState, result);
         }
     }
 
@@ -68,8 +69,21 @@ public class PlayerRunState : APlayerState
         atIntersection = true;
     }
 
+    void Victory(object sender, EventArgs e)
+    {
+        result = "Victory";
+    }
+
     void Caught(object sender, EventArgs any)
     {
-        isCaught = true;
+        result = "Caught";
+    }
+
+    void Tired(object sender, float stamina)
+    {
+        if (stamina <= 0)
+        {
+            result = "Tired";
+        }
     }
 }

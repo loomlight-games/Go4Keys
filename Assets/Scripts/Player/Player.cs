@@ -8,12 +8,15 @@ public class Player : AStateController
     public static Player Instance;
     [HideInInspector] public Rigidbody rigidBody; 
     [HideInInspector] public Transform playerParent;
+    //[HideInInspector] public bool victory = false;
+    //[HideInInspector] public bool caught = false;
+    //[HideInInspector] public bool tired = false;
 
     #region STATES
     public PlayerRunState runState = new();
     public PlayerJumpState jumpState = new();
     public PlayerAtIntersectionState atIntersection = new();
-    public PlayerCaughtState caughtState = new();
+    public PlayerEndState endState = new();
     #endregion
 
     #region BEHAVIOURS

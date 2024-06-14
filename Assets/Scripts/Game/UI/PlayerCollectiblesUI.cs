@@ -11,8 +11,6 @@ public class PlayerCollectiblesUI
     readonly GameObject foundIcons;
     private GameObject[] leftArray;
     private GameObject[] foundArray;
-    //private int collectedCounter = -1;
-    //KeySerializable keySerializable;
 
     public PlayerCollectiblesUI(GameObject leftIcons, GameObject foundIcons)
     {
@@ -22,25 +20,13 @@ public class PlayerCollectiblesUI
 
     public void Initialize()
     {
-        Player.Instance.keyCollecter.CollectibleFoundEvent += UpdateIcons;
-
         leftArray = SetArray(leftIcons);
         foundArray = SetArray(foundIcons);
 
-        ActivateArray(leftArray, true);
-        ActivateArray(foundArray, false);
+        //ActivateArray(leftArray, true);
+        //ActivateArray(foundArray, false);
 
-        /*
-        //Restores found counter from memory
-        keySerializable = new KeySerializable();
-        collectedCounter = keySerializable.DeserializeInt();
-        
-        //Debug.Log(collectedCounter);
-
-        if (collectedCounter > -1)//At least one (0) collectible was found
-            RestoreUI(collectedCounter);
-        */
-
+        Player.Instance.keyCollecter.CollectibleFoundEvent += UpdateIcons;
     }
 
     /// <summary>
@@ -58,6 +44,7 @@ public class PlayerCollectiblesUI
         return array;
     }
 
+    /*
     /// <summary>
     /// Activate or deactivate all elements of an array
     /// </summary>
@@ -66,28 +53,6 @@ public class PlayerCollectiblesUI
         for (int i = 0; i < array.Length; i++)
         {
             array[i].SetActive(isActive);
-        }
-    }
-
-    /*
-    /// <summary>
-    /// Updates UI, showing a found icon instead of a left one
-    /// </summary>
-    void AddFoundIcon(object sender, EventArgs e)
-    {
-        collectedCounter++;
-
-        //Debug.Log(collectedCounter);
-
-        if (collectedCounter >= foundArray.Length - 1)
-        {
-            Debug.Log("All found");
-            //AllFoundEvent?.Invoke(this, EventArgs.Empty);
-        }
-        else
-        {
-            leftArray[collectedCounter].SetActive(false);
-            foundArray[collectedCounter].SetActive(true);
         }
     }
     */

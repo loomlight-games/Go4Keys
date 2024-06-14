@@ -9,10 +9,7 @@ public class GameManager : AStateController
 {
     public static GameManager Instance;
     public event EventHandler<string> GameButtonClicked;
-
-    [HideInInspector] public bool playerVictory = false;
-    [HideInInspector] public bool playerCaught = false;
-    [HideInInspector] public bool playerTired = false;
+    //[HideInInspector] public string result;
 
     #region STATES
     // Main menu

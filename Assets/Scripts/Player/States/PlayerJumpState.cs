@@ -30,8 +30,6 @@ public class PlayerJumpState : APlayerState
     {
         player.endlessRunner.Update(); // Continues moving forward
         player.railed.Update(); // Change rails
-        
-        Exit(); // Checks exit
     }
 
     public override void OnTriggerEnter(Collider other)
@@ -55,7 +53,7 @@ public class PlayerJumpState : APlayerState
         else if (isCaught)
         {
             //isCaught = false; No need bc won't return
-            player.SetState(player.caughtState);
+            player.SetState(player.endState);
         }
     }
 

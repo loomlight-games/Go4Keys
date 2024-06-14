@@ -27,8 +27,6 @@ public class PlayerAtIntersectionState : APlayerState
         player.resilient.Runs(); // thus, loses stamina
         player.railed.Update(); // Change rails
         player.turner.Update(); // Can take a turn to another street
-
-        Exit();
     }
     public override void OnTriggerEnter(Collider other)
     {
@@ -53,7 +51,7 @@ public class PlayerAtIntersectionState : APlayerState
         else if (isCaught)
         {
             //isCaught = false; No need bc won't return
-            player.SetState(player.caughtState);
+            player.SetState(player.endState);
             
         }
     }

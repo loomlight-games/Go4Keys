@@ -4,6 +4,8 @@ using UnityEngine;
 public class GamePlayState : AGameState
 {
     bool pause = false;
+    bool gameEnded = false;
+    string result;
     bool eventsSubscribed = false;
 
     public override void Enter()
@@ -17,10 +19,7 @@ public class GamePlayState : AGameState
         if (!eventsSubscribed) // Subscribes to events just once
         {
             game.GameButtonClicked += ButtonClicked;
-
-            Player.Instance.keyCollecter.AllFoundEvent += Victory;
-            Player.Instance.chased.CaughtEvent += Caught;
-            Player.Instance.resilient.StaminaChangeEvent += Tired;
+            Player.Instance.endState.EndGameEvent += GameEnded;
 
             eventsSubscribed = true;
         }
@@ -32,8 +31,6 @@ public class GamePlayState : AGameState
             pause = true;
 
         //game.autosave.Update();
-
-        Exit();
     }
 
     public override void Exit()
@@ -43,9 +40,9 @@ public class GamePlayState : AGameState
             pause = false;
             game.SetState(game.pauseState);
         }
-        else if (game.playerVictory || game.playerCaught || game.playerTired)
+        else if (gameEnded)
         {
-            game.SetState(game.endState);
+            game.SetState(game.endState,result);
         }
     }
 
@@ -55,21 +52,9 @@ public class GamePlayState : AGameState
             pause = true;
     }
 
-    void Victory(object sender, EventArgs e)
+    void GameEnded(object sender, string result)
     {
-        game.playerVictory = true;
-    }
-
-    void Caught(object sender, EventArgs e)
-    {
-        game.playerCaught = true;
-    }
-
-    void Tired(object sender, float stamina)
-    {
-        if (stamina <= 0)
-        {
-            game.playerTired = true;
-        }
+        gameEnded = true;
+        this.result = result;
     }
 }

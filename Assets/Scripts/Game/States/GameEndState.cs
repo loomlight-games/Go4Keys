@@ -8,17 +8,17 @@ public class GameEndState : AGameState
     bool quit = false;
     bool eventsSubscribed = false;
 
-    public override void Enter()
+    public override void Enter(string result)
     {
         Time.timeScale = 0f; // Stops simulation
 
         game.gameButtonsUI.ShowEndButtons();
 
-        if(game.playerVictory)
+        if(result == "Victory")
             game.gameResultUI.ShowVictory();
-        else if (game.playerCaught)
+        else if (result == "Caught")
             game.gameResultUI.ShowCaught();
-        else if (game.playerTired) 
+        else if (result == "Tired") 
             game.gameResultUI.ShowTired();
 
         if (!eventsSubscribed) // Subscribes to events just once
@@ -32,8 +32,6 @@ public class GameEndState : AGameState
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             replay = true;
-
-        Exit();
     }
 
     public override void Exit()

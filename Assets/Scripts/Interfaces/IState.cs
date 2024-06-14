@@ -9,13 +9,17 @@ public interface IState
     /// <summary>
     /// Called when entering an state
     /// </summary>
-    /// 
     public void Enter(AStateController controller);
+
+    /// <summary>
+    /// Called when entering an state with additional information
+    /// </summary>
+    public void Enter(AStateController controller, string info) { }
 
     /// <summary>
     /// Called in MonoBehaviour.Update() in controller
     /// </summary>
-    public void Update();
+    public void UpdateFrame();
 
     /// <summary>
     /// Called in MonoBehaviour.OnTriggerEnter(Collider other) in controller
