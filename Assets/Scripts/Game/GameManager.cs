@@ -7,8 +7,10 @@ using UnityEngine.UI;
 public class GameManager : AStateController
 {
     public static GameManager Instance;
-    [HideInInspector] public bool gamePaused = false;
-    [HideInInspector] public bool replayGame = false;
+    [HideInInspector] public bool paused = false;
+    [HideInInspector] public bool replay = false;
+    [HideInInspector] public bool toMainMenu = false;
+    [HideInInspector] public bool quit = false;
     [HideInInspector] public bool playerVictory = false;
     [HideInInspector] public bool playerCaught = false;
     [HideInInspector] public bool playerTired = false;
@@ -82,14 +84,22 @@ public class GameManager : AStateController
     public void PauseGame(bool paused)
     {
         //GameButtonClicked?.Invoke(this, paused);
-        //Debug.Log(paused);
-        gamePaused = paused;
+        this.paused = paused;
     }
 
     public void ReplayGame()
     {
         //ReplayButtonClicked?.Invoke(this, paused);
-        //Debug.Log(gamePaused);
-        replayGame = true;
+        replay = true;
+    }
+
+    public void ToMainMenu()
+    {
+        toMainMenu = true;
+    }
+
+    public void QuitGame()
+    {
+        quit = true;
     }
 }

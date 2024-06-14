@@ -122,7 +122,7 @@ public class GameButtonsUI
 
         //Reload the current scene
         SceneManager.LoadScene(currentScene.name);
-    }*/
+    }
 
     /// <summary>
     /// Loads MainMenu scene
@@ -132,7 +132,7 @@ public class GameButtonsUI
         Time.timeScale = 1f;
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);//Loads main menu scene
-    }
+    }*/
 
     /// <summary>
     /// Quits game

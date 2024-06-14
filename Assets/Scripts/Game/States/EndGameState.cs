@@ -21,22 +21,34 @@ public class EndGameState : AGameState
 
     public override void Update()
     {
-        //'Esc' pressed
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            game.replayGame = true;
-        }
+            game.replay = true;
 
         Exit();
     }
 
     public override void Exit()
     {
-        // Reload game if replay button is pressed
-        if (game.replayGame)
+        // Replay button clicked or 'Esc' pressed
+        if (game.replay)
         {
             Time.timeScale = 1f; // Resumes simulation
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        else if (game.toMainMenu)
+        {
+            Debug.Log("To main menu");
+
+            Time.timeScale = 1f; // Resumes simulation
+
+            SceneManager.LoadScene("Main Menu");
+        }
+        else if (game.quit)
+        {
+            Debug.Log("Quit game");
+
+            Application.Quit();
         }
     }
 }

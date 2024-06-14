@@ -30,9 +30,8 @@ public class InGameState : AGameState
 
     public override void Update()
     {
-        //'Esc' pressed
         if (Input.GetKeyDown(KeyCode.Escape))
-            game.gamePaused = true;
+            game.paused = true;
 
         //game.autosave.Update();
 
@@ -41,7 +40,8 @@ public class InGameState : AGameState
 
     public override void Exit()
     {
-        if (game.gamePaused) // Pause button clicked or 'Esc' pressed
+        // Pause button clicked or 'Esc' pressed
+        if (game.paused) 
             game.SetState(game.pausedGame);
         else if (game.playerVictory || game.playerCaught || game.playerTired)
             game.SetState(game.endGame);
