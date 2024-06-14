@@ -22,15 +22,16 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.Instance.ButtonClicked += ButtonClicked;
+
         if (SceneManager.GetActiveScene().name == "Main Menu")
         {
             mainMenuMusic.Play();
-            GameManager.Instance.ButtonClicked += ButtonClicked;
         }
         else
         {
             gameplayMusic.Play();
-            mainMenuMusic.Stop();
+
             Player.Instance.resilient.StaminaChangeEvent += StaminaRecover;
             Player.Instance.jumper.JumpEvent += Jump;
             Player.Instance.chased.ChaserResettedEvent += ChaserResetted;
