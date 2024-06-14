@@ -2,15 +2,14 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class InGameState : AGameState
+public class GamePlayState : AGameState
 {
+    bool pause = false;
     bool eventsSubscribed = false;
 
     public override void Enter(AStateController controller)
     {
         game = (GameManager)controller;
-
-        //game.GameButtonClicked += PauseButtonClicked;
 
         game.playerStaminaUI.SubscribeToStaminaChangeEvent();
         game.playerCollectedUI.Initialize();
@@ -18,8 +17,10 @@ public class InGameState : AGameState
         game.gameButtonsUI.ShowPlayButtons();
         game.gameResultUI.HideAll();
 
-        if (!eventsSubscribed) // Subscribe just once
+        if (!eventsSubscribed) // Subscribes to events just once
         {
+            game.GameButtonClicked += ButtonClicked;
+
             game.playerCollectedUI.AllFoundEvent += Victory;
             Player.Instance.chaserResetter.CaughtEvent += Caught;
             Player.Instance.resilient.StaminaChangeEvent += Tired;
@@ -31,7 +32,7 @@ public class InGameState : AGameState
     public override void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            game.paused = true;
+            pause = true;
 
         //game.autosave.Update();
 
@@ -40,19 +41,22 @@ public class InGameState : AGameState
 
     public override void Exit()
     {
-        // Pause button clicked or 'Esc' pressed
-        if (game.paused) 
-            game.SetState(game.pausedGame);
+        if (pause) // Pause button clicked or 'Esc' pressed
+        {
+            pause = false;
+            game.SetState(game.pauseState);
+        }
         else if (game.playerVictory || game.playerCaught || game.playerTired)
-            game.SetState(game.endGame);
+        {
+            game.SetState(game.endState);
+        }
     }
 
-    /*
-    public void PauseButtonClicked(object sender, bool value)
+    void ButtonClicked(object sender, string buttonName)
     {
-        paused = value;
+        if (buttonName == "Pause")
+            pause = true;
     }
-    */
 
     void Victory(object sender, EventArgs e)
     {

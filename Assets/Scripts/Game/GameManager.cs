@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,25 +8,22 @@ using UnityEngine.UI;
 public class GameManager : AStateController
 {
     public static GameManager Instance;
-    [HideInInspector] public bool paused = false;
-    [HideInInspector] public bool replay = false;
-    [HideInInspector] public bool toMainMenu = false;
-    [HideInInspector] public bool quit = false;
     [HideInInspector] public bool playerVictory = false;
     [HideInInspector] public bool playerCaught = false;
     [HideInInspector] public bool playerTired = false;
+    
 
     #region EVENTS
-    //public event EventHandler<bool> GameButtonClicked;
+    public event EventHandler<string> GameButtonClicked;
     #endregion
 
     #region STATES
     // Main menu
     // Options 
     // Credits
-    public InGameState inGame = new();
-    public PauseGameState pausedGame = new();
-    public EndGameState endGame = new();
+    public GamePlayState playState = new();
+    public GamePauseState pauseState = new();
+    public GameEndState endState = new();
     #endregion
 
     #region BEHAVIOURS
@@ -78,28 +76,11 @@ public class GameManager : AStateController
         gameButtonsUI = new(pauseButton, resumeButton, replayButton, mainMenuButton, quitGameButton);
         gameResultUI = new(victory, caught, tired);
 
-        SetState(inGame);
+        SetState(playState);
     }
 
-    public void PauseGame(bool paused)
+    public void ClickGameButton(string buttonName)
     {
-        //GameButtonClicked?.Invoke(this, paused);
-        this.paused = paused;
-    }
-
-    public void ReplayGame()
-    {
-        //ReplayButtonClicked?.Invoke(this, paused);
-        replay = true;
-    }
-
-    public void ToMainMenu()
-    {
-        toMainMenu = true;
-    }
-
-    public void QuitGame()
-    {
-        quit = true;
+        GameButtonClicked?.Invoke(this, buttonName);
     }
 }
