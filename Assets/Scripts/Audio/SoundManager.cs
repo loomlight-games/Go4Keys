@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour
 {
     float lastStaminaValue = 100f;
     bool played = false;
 
+    [SerializeField] AudioSource mainMenuMusic;
+    [SerializeField] AudioSource gameplayMusic;
     [SerializeField] AudioSource staminaRecovered;
     [SerializeField] AudioSource jump;
     [SerializeField] AudioSource chaserResetted;
@@ -19,10 +22,15 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.Instance.ButtonClicked += ButtonClicked;
-
-        if (Player.Instance != null)
+        if (SceneManager.GetActiveScene().name == "Main Menu")
         {
+            mainMenuMusic.Play();
+            GameManager.Instance.ButtonClicked += ButtonClicked;
+        }
+        else
+        {
+            gameplayMusic.Play();
+            mainMenuMusic.Stop();
             Player.Instance.resilient.StaminaChangeEvent += StaminaRecover;
             Player.Instance.jumper.JumpEvent += Jump;
             Player.Instance.chased.ChaserResettedEvent += ChaserResetted;
