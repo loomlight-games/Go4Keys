@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class SoundManager : MonoBehaviour
 {
     float lastStaminaValue = 100f;
+    bool played = false;
 
     // Game
     [SerializeField] AudioSource staminaRecovered;
@@ -26,6 +28,10 @@ public class SoundManager : MonoBehaviour
         Player.Instance.chased.ChaserResettedEvent += ChaserResetted;
         Player.Instance.keyCollecter.CollectibleFoundEvent += CollectibleFound;
         Player.Instance.turner.TurnedEvent += Turn;
+        GameManager.Instance.GameButtonClicked += ButtonClicked;
+        Player.Instance.keyCollecter.AllFoundEvent += Victory;
+        Player.Instance.chased.CaughtEvent += Caught;
+        Player.Instance.resilient.StaminaChangeEvent += Tired;
     }
 
     void StaminaRecover(object sender, float stamina)
@@ -56,4 +62,29 @@ public class SoundManager : MonoBehaviour
         if (turned)
             turn.Play();
     }
+
+    void ButtonClicked(object sender, string buttonName)
+    {
+        pause.Play();
+    }
+
+    void Victory(object sender, EventArgs e)
+    {
+        victory.Play();
+    }
+
+    void Caught(object sender, EventArgs e)
+    {
+        defeat.Play();
+    }
+
+    void Tired(object sender, float stamina)
+    {
+        if (stamina <= 0 && !played)
+        {
+            defeat.Play();
+            played = true;
+        }
+    }
+
 }

@@ -17,11 +17,6 @@ public class KeyCollecter
         this.keysToCollect = keyToCollect;
     }
 
-    public void Initialize()
-    {
-        //CollectibleFoundEvent?.Invoke(this, keysCollected);
-    }
-
     public void OnTriggerEnter(Collider other)
     {
         // A key
