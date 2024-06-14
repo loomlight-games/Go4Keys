@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class GamePlayState : AGameState
 {
-    bool pause = false;
-    bool gameEnded = false;
+    GameObject UI;
+    string buttonClickedName = "None";
     string result;
+    bool gameEnded = false;
     bool eventsSubscribed = false;
 
     public override void Enter()
@@ -28,16 +29,16 @@ public class GamePlayState : AGameState
     public override void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            pause = true;
+            buttonClickedName = "Pause";
 
         //game.autosave.Update();
     }
 
     public override void Exit()
     {
-        if (pause) // Pause button clicked or 'Esc' pressed
+        if (buttonClickedName == "Pause") // Pause button clicked or 'Esc' pressed
         {
-            pause = false;
+            buttonClickedName = "None";
             game.SetState(game.pauseState);
         }
         else if (gameEnded)
@@ -48,8 +49,7 @@ public class GamePlayState : AGameState
 
     void ButtonClicked(object sender, string buttonName)
     {
-        if (buttonName == "Pause")
-            pause = true;
+        this.buttonClickedName = buttonName;
     }
 
     void GameEnded(object sender, string result)
