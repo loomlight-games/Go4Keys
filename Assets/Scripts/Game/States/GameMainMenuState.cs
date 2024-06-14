@@ -3,11 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class GameMainMenuState : AGameState
 {
+    GameObject UI;
     string buttonClickedName = "None";
     bool eventsSubscribed = false;
 
     public override void Enter()
     {
+        UI = GameObject.Find("UI");
+        UI = UI.transform.Find("Main menu UI").gameObject;
+        UI.SetActive(true);
+
         if (!eventsSubscribed) // Subscribes to events just once
         {
             game.ButtonClicked += ButtonClicked;
@@ -20,15 +25,19 @@ public class GameMainMenuState : AGameState
         switch (buttonClickedName)
         {
             case "Start":
+                UI.SetActive(false);
                 SceneManager.LoadScene("Level01");
                 break;
             case "Options":
+                UI.SetActive(false);
                 game.SetState(game.optionsMenuState);
                 break;
             case "Credits":
+                UI.SetActive(false);
                 game.SetState(game.creditsState);
                 break;
             case "Quit":
+                UI.SetActive(false);
                 Debug.Log("Quit");
                 Application.Quit();
                 break;
