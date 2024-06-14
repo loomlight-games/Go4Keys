@@ -1,7 +1,7 @@
 using System;
 
 /// <summary>
-/// Player has been caught. No return.
+/// Player has been caught, is tired or has found all collectibles. No exit.
 /// </summary>
 public class PlayerEndState : APlayerState
 {
