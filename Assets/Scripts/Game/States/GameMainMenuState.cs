@@ -25,7 +25,6 @@ public class GameMainMenuState : AGameState
         switch (buttonClickedName)
         {
             case "Start":
-                UI.SetActive(false);
                 SceneManager.LoadScene("Level01");
                 break;
             case "Options":
@@ -37,7 +36,6 @@ public class GameMainMenuState : AGameState
                 game.SetState(game.creditsState);
                 break;
             case "Quit":
-                UI.SetActive(false);
                 Debug.Log("Quit");
                 Application.Quit();
                 break;
