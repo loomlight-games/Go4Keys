@@ -7,7 +7,7 @@ using UnityEngine;
 public class TutorialManager : MonoBehaviour
 {
     //DIRTYFLAG
-    TutorialVisibility tutorialVisibility;//Serialized object to know if tutorial is active
+    readonly Serializable<bool> tutorialVisibility = new();//Serialized object to know if tutorial is active
     bool tutorialIsShown;//Learn tutorial
 
     //Sprites group
@@ -27,11 +27,8 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Instantantiate serialized object
-        tutorialVisibility = new TutorialVisibility();
-
         //Reads from memory if tutorial is activated
-        tutorialIsShown = tutorialVisibility.Deserialize();
+        tutorialIsShown = tutorialVisibility.Deserialize("tutorialvisibility.json");
 
         //Want to learn the tutorial
         if (tutorialIsShown)

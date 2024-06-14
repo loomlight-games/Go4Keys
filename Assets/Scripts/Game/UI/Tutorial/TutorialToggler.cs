@@ -1,82 +1,38 @@
-using System;
 using UnityEngine;
 
-//HANDLES TUTORIAL TOGGLING (DIRTY FLAG)
-
-[Serializable]
-public class TutorialToggler : MonoBehaviour
+/// <summary>
+/// Toggles tutorial visibility and saves it in memory
+/// </summary>
+public class TutorialToggler
 {
-    //Dirty flag boolean
-    bool dirtyTutorial = false;
+    readonly Serializable<bool> tutorialSerializable = new(); // Handles tutorial visibility
+    readonly string tutorialFile = "tutorialVisibility.json";
+    GameObject togglers, activatedButton, deactivatedButton;
 
-    //Serializable object for tutorial visibility
-    TutorialVisibility tutorialVisibility;
-
-    //Visibility of tutorial
-    [SerializeField] bool tutorialIsShown;//Can be changed in the editor
-
-    //Buttons
-    [SerializeField] GameObject activatedButton;
-    [SerializeField] GameObject deactivatedButton;
-
-    //Toggles (dirties) tutorial to activate it
-    public void Activate()
+    public void Initialize()
     {
-        dirtyTutorial = true;
+        togglers = GameObject.Find("Tutorial togglers");
+        activatedButton = togglers.transform.Find("Tutorial on").gameObject;
+        deactivatedButton = togglers.transform.Find("Tutorial off").gameObject;
 
-        tutorialIsShown = true;
-
-        //Toggles buttons
-        activatedButton.SetActive(true);
-        deactivatedButton.SetActive(false);
+        Recover();
     }
 
-    //Toggles (dirties) tutorial to deactivate it
-    public void Deactivate()
+    public void Recover()
     {
-        dirtyTutorial = true;
-
-        tutorialIsShown = false;
-
-        //Toggles buttons
-        activatedButton.SetActive(false);
-        deactivatedButton.SetActive(true);
+        bool tutorialActivated = tutorialSerializable.Deserialize(tutorialFile);
+        Toggle(tutorialActivated);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void Activate(bool activated)
     {
-        //Instantantiate serialized object
-        tutorialVisibility = new TutorialVisibility();
-
-        //Reads from memory if tutorial is activated
-        tutorialIsShown = tutorialVisibility.Deserialize();
-
-        //Activated at start
-        if (tutorialIsShown)
-        {
-            Activate();
-        }
-        else
-        {
-            Deactivate();
-        }
+        tutorialSerializable.Serialize(activated, tutorialFile);
+        Toggle(activated);
     }
 
-    // Update is called once per frame
-    void Update()
+    void Toggle(bool activated)
     {
-        //Tutorial has been toggled
-        if(dirtyTutorial)
-        {
-            //Creates serializable object
-            tutorialVisibility = new TutorialVisibility(tutorialIsShown);
-
-            //Saves in memory tutorial visibility
-            tutorialVisibility.Serialize();
-
-            //Cleans after saving
-            dirtyTutorial = false;
-        }
+        activatedButton.SetActive(activated);
+        deactivatedButton.SetActive(!activated);
     }
 }
