@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 /// <summary>
@@ -8,15 +7,17 @@ using UnityEngine;
 public class Chaser : MonoBehaviour
 {
     Rigidbody chaserRigidBody;
-    Transform playerObstacleChecker;
+    Transform robberObstacleChecker;
     Transform playerPosition;
+    Transform playerObstacleChecker;
+    LayerMask obstacle;
+    LayerMask ground;
     bool targetCaught = false;
     bool targetRunning = false;
 
     [SerializeField] float acceleration; // Related to its parent speed
     [SerializeField] float accelerationIncrement;
     [SerializeField] float jumpForce;
-    [SerializeField] Transform checker;
     [SerializeField] float checkerRadious;
 
     void Start()
@@ -27,6 +28,9 @@ public class Chaser : MonoBehaviour
         Player.Instance.chased.ChaserResettedEvent += ResetPosition;
         playerPosition = Player.Instance.transform;
         playerObstacleChecker = GameObject.Find("Player obstacle checker").transform;
+        robberObstacleChecker = GameObject.Find("Robber checker").transform;
+        obstacle = 1 << LayerMask.NameToLayer("Obstacle");
+        ground = 1 << LayerMask.NameToLayer("Ground");
     }
 
     void Update()
@@ -36,11 +40,11 @@ public class Chaser : MonoBehaviour
 
         if (!targetCaught)
         {
-            //Obstacle (7) in front of target (has stopped)
-            if (Physics.CheckSphere(playerObstacleChecker.position, .4f, 7)) //Same radious as EndlessRunner.CheckObstacle
+            //Obstacle in front of target (has stopped)
+            if (Physics.CheckSphere(playerObstacleChecker.position, .4f, obstacle)) //Same radious as EndlessRunner.CheckObstacle
             {
                 targetRunning = false;
-                transform.Translate(acceleration*accelerationIncrement * Time.deltaTime * transform.forward, Space.World);
+                transform.Translate(acceleration * accelerationIncrement * Time.deltaTime * transform.forward, Space.World);
             }
             else //No obstacle in front (target still running)
             {
@@ -48,9 +52,9 @@ public class Chaser : MonoBehaviour
                 transform.Translate(acceleration * Time.deltaTime * transform.forward, Space.World);
             }
 
-            // Check for obstacles (7) and jump if it's also touching ground (3)
-            if (Physics.CheckSphere(checker.position, checkerRadious, 7)
-                && Physics.CheckSphere(checker.position, checkerRadious, 3))
+            // Check for obstacles and jump if it's also touching ground
+            if (Physics.CheckSphere(robberObstacleChecker.position, checkerRadious, obstacle)
+                && Physics.CheckSphere(robberObstacleChecker.position, checkerRadious, ground))
             {
                 if (targetRunning) //Jumps if target is running
                 {
@@ -73,8 +77,13 @@ public class Chaser : MonoBehaviour
     /// </summary>
     void ResetPosition(object sender, float resetDistance)
     {
-        transform.localPosition = new Vector3(playerPosition.localPosition.x, 
-                                              transform.localPosition.y,
-                                              playerPosition.localPosition.z - resetDistance);
+        transform.localPosition = new Vector3(playerPosition.localPosition.x, transform.localPosition.y, playerPosition.localPosition.z - resetDistance);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        robberObstacleChecker = GameObject.Find("Robber checker").transform;
+        Gizmos.DrawSphere(robberObstacleChecker.position, checkerRadious);
     }
 }
