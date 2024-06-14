@@ -25,7 +25,7 @@ public class GameManager : AStateController
     public PlayerCollectiblesUI playerCollectedUI;
     public PlayerStaminaUI playerStaminaUI;
     //public KeyAutosave autosave;
-    public GameButtonsUI gameButtonsUI;
+    //public GameButtonsUI gameButtonsUI;
     public GameResultUI gameResultUI;
     #endregion
 
@@ -39,12 +39,12 @@ public class GameManager : AStateController
     [Header("Stamina bar")]
     [SerializeField] Slider staminaBar;
 
-    [Header("Pause menu")]
-    [SerializeField] GameObject pauseButton;
-    [SerializeField] GameObject resumeButton;
-    [SerializeField] GameObject replayButton;
-    [SerializeField] GameObject mainMenuButton;
-    [SerializeField] GameObject quitGameButton;
+    //[Header("Pause menu")]
+    //[SerializeField] GameObject pauseButton;
+    //[SerializeField] GameObject resumeButton;
+    //[SerializeField] GameObject replayButton;
+    //[SerializeField] GameObject mainMenuButton;
+    //[SerializeField] GameObject quitGameButton;
 
     [Header("End game pop ups")]
     [SerializeField] GameObject victory;
@@ -74,7 +74,7 @@ public class GameManager : AStateController
             playerCollectedUI = new(leftIcons, foundIcons);
             playerStaminaUI = new(staminaBar);
             //autosave = new();
-            gameButtonsUI = new(pauseButton, resumeButton, replayButton, mainMenuButton, quitGameButton);
+            //gameButtonsUI = new(pauseButton, resumeButton, replayButton, mainMenuButton, quitGameButton);
             gameResultUI = new(victory, caught, tired);
 
             SetState(playState);

@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class GamePlayState : AGameState
 {
-    GameObject UI;
+    GameObject buttons;
+    GameObject pauseButton;
     string buttonClickedName = "None";
     string result;
     bool gameEnded = false;
@@ -11,10 +12,15 @@ public class GamePlayState : AGameState
 
     public override void Enter()
     {
+        buttons = GameObject.Find("Buttons");
+        pauseButton = buttons.transform.Find("Pause").gameObject;
+        pauseButton.SetActive(true);
+
+
         game.playerStaminaUI.SubscribeToStaminaChangeEvent();
         game.playerCollectedUI.Initialize();
         //game.autosave.Start();
-        game.gameButtonsUI.ShowPlayButtons();
+        //game.gameButtonsUI.ShowPlayButtons();
         game.gameResultUI.HideAll();
 
         if (!eventsSubscribed) // Subscribes to events just once
@@ -39,6 +45,7 @@ public class GamePlayState : AGameState
         if (buttonClickedName == "Pause") // Pause button clicked or 'Esc' pressed
         {
             buttonClickedName = "None";
+            pauseButton.SetActive(false);
             game.SetState(game.pauseState);
         }
         else if (gameEnded)

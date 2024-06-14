@@ -3,16 +3,26 @@ using UnityEngine.SceneManagement;
 
 public class GamePauseState : AGameState
 {
-    bool resume = false;
-    bool mainMenu = false;
-    bool quit = false;
+    GameObject buttons;
+    GameObject resumeButton;
+    GameObject mainMenuButton;
+    GameObject quitButton;
+    string buttonClickedName = "None";
     bool eventsSubscribed = false;
 
     public override void Enter()
     {
+        buttons = GameObject.Find("Buttons");
+        resumeButton = buttons.transform.Find("Resume").gameObject;
+        mainMenuButton = buttons.transform.Find("Main menu").gameObject;
+        quitButton = buttons.transform.Find("Quit").gameObject;
+        resumeButton.SetActive(true);
+        mainMenuButton.SetActive(true);
+        quitButton.SetActive(true);
+
         Time.timeScale = 0f; // Stops simulation
 
-        game.gameButtonsUI.ShowPauseButtons();
+        //game.gameButtonsUI.ShowPauseButtons();
 
         if (!eventsSubscribed) // Subscribes to events just once
         {
@@ -24,28 +34,29 @@ public class GamePauseState : AGameState
     public override void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            resume = true;
+            buttonClickedName = "Resume";
     }
 
     public override void Exit()
     {
-        if (resume) // Resume button clicked or 'Esc' pressed
+        if (buttonClickedName == "Resume") // Resume button clicked or 'Esc' pressed
         {
+            buttonClickedName = "None";
+            resumeButton.SetActive(false);
+            mainMenuButton.SetActive(false);
+            quitButton.SetActive(false);
+
             Time.timeScale = 1f; // Resumes simulation
 
             game.SetState(game.playState);
-
-            resume = false;
         }
-        else if (mainMenu)
+        else if (buttonClickedName == "Main menu")
         {
-            Debug.Log("To main menu");
-
             Time.timeScale = 1f; // Resumes simulation
 
             SceneManager.LoadScene("Main Menu");
         }
-        else if (quit)
+        else if (buttonClickedName == "Quit")
         {
             Debug.Log("Quit game");
 
@@ -55,11 +66,6 @@ public class GamePauseState : AGameState
 
     void ButtonClicked(object sender, string buttonName)
     {
-        if (buttonName == "Resume")
-            resume = true;
-        else if (buttonName == "MainMenu")
-            mainMenu = true;
-        else if (buttonName == "Quit")
-            quit = true;
+        this.buttonClickedName = buttonName;
     }
 }

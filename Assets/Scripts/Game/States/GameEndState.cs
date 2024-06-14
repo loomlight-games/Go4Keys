@@ -3,16 +3,26 @@ using UnityEngine.SceneManagement;
 
 public class GameEndState : AGameState
 {
-    bool replay = false;
-    bool mainMenu = false;
-    bool quit = false;
+    GameObject buttons;
+    GameObject replayButton;
+    GameObject mainMenuButton;
+    GameObject quitButton;
+    string buttonClickedName = "None";
     bool eventsSubscribed = false;
 
     public override void Enter(string result)
     {
+        buttons = GameObject.Find("Buttons");
+        replayButton = buttons.transform.Find("Replay").gameObject;
+        mainMenuButton = buttons.transform.Find("Main menu").gameObject;
+        quitButton = buttons.transform.Find("Quit").gameObject;
+        replayButton.SetActive(true);
+        mainMenuButton.SetActive(true);
+        quitButton.SetActive(true);
+
         Time.timeScale = 0f; // Stops simulation
 
-        game.gameButtonsUI.ShowEndButtons();
+        //game.gameButtonsUI.ShowEndButtons();
 
         if(result == "Victory")
             game.gameResultUI.ShowVictory();
@@ -31,26 +41,29 @@ public class GameEndState : AGameState
     public override void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            replay = true;
+            buttonClickedName = "Replay";
     }
 
     public override void Exit()
     {
-        if (replay) // Replay button clicked or 'Esc' pressed
+        if (buttonClickedName == "Replay") // Replay button clicked or 'Esc' pressed
         {
+            buttonClickedName = "None";
+            replayButton.SetActive(false);
+            mainMenuButton.SetActive(false);
+            quitButton.SetActive(false);
+
             Time.timeScale = 1f; // Resumes simulation
 
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-        else if (mainMenu)
+        else if (buttonClickedName == "Main menu")
         {
-            Debug.Log("To main menu");
-
             Time.timeScale = 1f; // Resumes simulation
 
             SceneManager.LoadScene("Main Menu");
         }
-        else if (quit)
+        else if (buttonClickedName == "Quit")
         {
             Debug.Log("Quit game");
 
@@ -60,11 +73,6 @@ public class GameEndState : AGameState
 
     void ButtonClicked(object sender, string buttonName)
     {
-        if (buttonName == "Replay")
-            replay = true;
-        else if (buttonName == "MainMenu")
-            mainMenu = true;
-        else if (buttonName == "Quit")
-            quit = true;
+        this.buttonClickedName = buttonName;
     }
 }
