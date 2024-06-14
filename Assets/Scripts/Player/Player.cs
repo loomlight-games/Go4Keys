@@ -6,11 +6,6 @@
 public class Player : AStateController
 {
     public static Player Instance;
-    [HideInInspector] public Rigidbody rigidBody; 
-    [HideInInspector] public Transform playerParent;
-    //[HideInInspector] public bool victory = false;
-    //[HideInInspector] public bool caught = false;
-    //[HideInInspector] public bool tired = false;
 
     #region STATES
     public PlayerRunState runState = new();
@@ -19,34 +14,21 @@ public class Player : AStateController
     public PlayerEndState endState = new();
     #endregion
 
-    #region BEHAVIOURS
+    #region HABILITIES
+    public EndlessRunner endlessRunner;
     public Railed railed;
     public Jumper jumper;
-    public EndlessRunner endlessRunner;
     public Turner turner;
     public Resilient resilient;
     public KeyCollecter keyCollecter;
     public Chased chased;
     #endregion
 
-    #region CHECKERS
-    [Header("Layers and its checkers")]
-    public LayerMask groundLayer;
-    public LayerMask obstacleLayer;
-    [SerializeField] Transform groundChecker;
-    public Transform obstacleChecker;
-    #endregion
-
-    #region MOVEMENT
+    #region PROPERTIES
     [Header("Movement")]
-    [SerializeField] float railChangeSpeed;
     [SerializeField] float forwardSpeed;
+    [SerializeField] float railChangeSpeed;
     [SerializeField] float jumpForce;
-    [Tooltip("Its children are the diferrent rails")]
-    [SerializeField] Transform rails;
-    #endregion
-
-    #region MECHANICS
     [Header("Mechanics")]
     [SerializeField] int keysToCollect;
     [SerializeField] float staminaLossPerStep;
@@ -65,17 +47,26 @@ public class Player : AStateController
 
     public override void Start()
     {
-        rigidBody = GetComponent<Rigidbody>();
-        playerParent = transform.parent;
+        Rigidbody rigidBody = GetComponent<Rigidbody>();
+        Transform playerParent = transform.parent;
 
-        railed = new(transform, railChangeSpeed, rails);
-        jumper = new(rigidBody, groundChecker, groundLayer, jumpForce);
-        endlessRunner = new(playerParent, forwardSpeed, obstacleChecker, obstacleLayer);
+        endlessRunner = new(playerParent, forwardSpeed);
+        railed = new(transform, railChangeSpeed);
+        jumper = new(rigidBody, jumpForce);
         turner = new(playerParent);
         resilient = new(staminaLossPerStep, staminaLossPerJump);
         keyCollecter = new(keysToCollect);
         chased = new(chaserResetDistance);
 
         SetState(runState);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Transform obstacleChecker = GameObject.Find("Player obstacle checker").transform;
+        Transform groundChecker = GameObject.Find("Player ground checker").transform;
+        Gizmos.DrawSphere(obstacleChecker.position, 0.4f);
+        Gizmos.DrawSphere(groundChecker.position, 0.1f);
     }
 }

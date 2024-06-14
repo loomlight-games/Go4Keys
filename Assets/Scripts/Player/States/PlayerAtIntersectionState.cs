@@ -9,16 +9,17 @@ public class PlayerAtIntersectionState : APlayerState
 {
     bool hasSurpassedTurnPoint = false;
     bool isCaught = false;
-    bool eventsSubscribed = false;
+    bool alreadyCalled = false;
 
     public override void Enter()
     {
-        if (!eventsSubscribed) // Subscribe just once
+        if (!alreadyCalled)
         {
+            // Subscribe just once
             player.turner.TurnedEvent += TurnPointSurpassed;
             player.chased.CaughtEvent += Caught;
 
-            eventsSubscribed = true;
+            alreadyCalled = true;
         }
     }
     public override void Update()

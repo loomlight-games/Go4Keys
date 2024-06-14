@@ -9,24 +9,32 @@ public class EndlessRunner
 {
     public event EventHandler AtIntersectionEvent;
 
-    readonly Transform transform;
+    readonly Transform runner;
     readonly float forwardSpeed;
-    readonly Transform obstacleChecker;
-    readonly LayerMask obstacleLayer;
+    readonly float checkerRadius = 0.4f;
 
-    public EndlessRunner(Transform transform, float forwardSpeed, Transform obstacleChecker, LayerMask obstacleLayer)
+    Transform obstacleChecker;
+    LayerMask obstacle;
+
+    public EndlessRunner(Transform transform, float forwardSpeed)//, Transform obstacleChecker, LayerMask obstacleLayer)
     {
-        this.transform = transform;
+        this.runner = transform;
         this.forwardSpeed = forwardSpeed;
-        this.obstacleChecker = obstacleChecker;
-        this.obstacleLayer = obstacleLayer;
+    }
+
+    public void Initialize()
+    {
+        obstacleChecker = GameObject.Find("Player obstacle checker").transform;
+        obstacle = 1 << LayerMask.NameToLayer("Obstacle");
     }
 
     public void Update()
     {
         // Obstacle is NOT in front (obstacle checker collides with obstacle layer)
-        if (!Physics.CheckSphere(obstacleChecker.position, .4f, obstacleLayer))
-            transform.Translate(forwardSpeed * Time.deltaTime * Vector3.forward);
+        if (!Physics.CheckSphere(obstacleChecker.position, checkerRadius, obstacle))
+        {
+            runner.Translate(forwardSpeed * Time.deltaTime * Vector3.forward);
+        }
     }
 
     public void OnTriggerEnter(Collider other)

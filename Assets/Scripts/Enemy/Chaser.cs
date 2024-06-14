@@ -8,7 +8,8 @@ using UnityEngine;
 public class Chaser : MonoBehaviour
 {
     Rigidbody chaserRigidBody;
-    Player player; // Target
+    Transform playerObstacleChecker;
+    Transform playerPosition;
     bool targetCaught = false;
     bool targetRunning = false;
 
@@ -22,20 +23,21 @@ public class Chaser : MonoBehaviour
     {
         chaserRigidBody = transform.GetComponent<Rigidbody>();
 
-        player = Player.Instance;
-        player.chased.CaughtEvent += TargetCaught;
-        player.chased.ChaserResettedEvent += ResetPosition;
+        Player.Instance.chased.CaughtEvent += TargetCaught;
+        Player.Instance.chased.ChaserResettedEvent += ResetPosition;
+        playerPosition = Player.Instance.transform;
+        playerObstacleChecker = GameObject.Find("Player obstacle checker").transform;
     }
 
     void Update()
     {
         // Replicates target position in X
-        transform.localPosition = new Vector3(player.transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
+        transform.localPosition = new Vector3(playerPosition.localPosition.x, transform.localPosition.y, transform.localPosition.z);
 
         if (!targetCaught)
         {
-            //Obstacle in front of target (has stopped)
-            if (Physics.CheckSphere(player.obstacleChecker.position, .4f, player.obstacleLayer)) //Same radious as EndlessRunner.CheckObstacle
+            //Obstacle (7) in front of target (has stopped)
+            if (Physics.CheckSphere(playerObstacleChecker.position, .4f, 7)) //Same radious as EndlessRunner.CheckObstacle
             {
                 targetRunning = false;
                 transform.Translate(acceleration*accelerationIncrement * Time.deltaTime * transform.forward, Space.World);
@@ -46,9 +48,9 @@ public class Chaser : MonoBehaviour
                 transform.Translate(acceleration * Time.deltaTime * transform.forward, Space.World);
             }
 
-            // Check for obstacles and jump if it's also touching ground
-            if (Physics.CheckSphere(checker.position, checkerRadious, player.obstacleLayer)
-                && Physics.CheckSphere(checker.position, checkerRadious, player.groundLayer))
+            // Check for obstacles (7) and jump if it's also touching ground (3)
+            if (Physics.CheckSphere(checker.position, checkerRadious, 7)
+                && Physics.CheckSphere(checker.position, checkerRadious, 3))
             {
                 if (targetRunning) //Jumps if target is running
                 {
@@ -71,8 +73,8 @@ public class Chaser : MonoBehaviour
     /// </summary>
     void ResetPosition(object sender, float resetDistance)
     {
-        transform.localPosition = new Vector3(player.transform.localPosition.x, 
-                                              transform.localPosition.y, 
-                                              player.transform.localPosition.z - resetDistance);
+        transform.localPosition = new Vector3(playerPosition.localPosition.x, 
+                                              transform.localPosition.y,
+                                              playerPosition.localPosition.z - resetDistance);
     }
 }

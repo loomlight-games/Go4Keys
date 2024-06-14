@@ -7,14 +7,20 @@ public class Railed
 {
     readonly Transform player;
     readonly float railChangeSpeed;
-    readonly float[] railsXPositions;
+    
+    float[] railsXPositions;
     public int currentRailIndex = 1;
     Vector3 currentRailPos;
 
-    public Railed(Transform player, float railChangeSpeed, Transform railsParent)
+    public Railed(Transform player, float railChangeSpeed)//, Transform railsParent)
     {
         this.player = player;
         this.railChangeSpeed = railChangeSpeed;
+    }
+
+    public void Initialize()
+    {
+        Transform railsParent = GameObject.Find("Rails").transform;
 
         //Creates array the size of number of children of railsParent
         railsXPositions = new float[railsParent.childCount];

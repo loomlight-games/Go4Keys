@@ -8,17 +8,23 @@ public class Jumper
 {
     public event EventHandler JumpEvent;
 
-    readonly Rigidbody rigidBody;
-    readonly Transform groundChecker;
-    readonly LayerMask groundLayer;
+    readonly Rigidbody rigidBody;    
     readonly float jumpForce;
+    readonly float checkerRadius = 0.1f;
 
-    public Jumper(Rigidbody rigidBody, Transform groundChecker, LayerMask groundLayer, float jumpForce)
+    Transform groundChecker;
+    LayerMask ground;
+
+    public Jumper(Rigidbody rigidBody, float jumpForce)
     {
         this.rigidBody = rigidBody;
-        this.groundChecker = groundChecker;
-        this.groundLayer = groundLayer;
         this.jumpForce = jumpForce;
+    }
+
+    public void Initialize()
+    {
+        groundChecker = GameObject.Find("Player ground checker").transform;
+        ground = 1 << LayerMask.NameToLayer("Ground");
     }
 
     /// <summary>
@@ -26,9 +32,7 @@ public class Jumper
     /// </summary>
     public void Jump()
     {
-        rigidBody.velocity = new Vector3(rigidBody.velocity.x,
-                                         jumpForce,
-                                         rigidBody.velocity.z);
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpForce, rigidBody.velocity.z);
 
         JumpEvent?.Invoke(this, EventArgs.Empty);
     }
@@ -39,7 +43,7 @@ public class Jumper
     public bool IsGrounded()
     {
         // Ground is hit (ground checker collides with ground layer)
-        if (Physics.CheckSphere(groundChecker.position, 0.2f, groundLayer))
+        if (Physics.CheckSphere(groundChecker.position, checkerRadius, ground))
             return true;
 
         return false;

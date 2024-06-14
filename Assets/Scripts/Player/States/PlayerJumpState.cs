@@ -9,20 +9,21 @@ public class PlayerJumpState : APlayerState
 {
     bool hasSurpassedTurnPoint = true;
     bool isCaught = false;
-    bool eventsSubscribed = false;
+    bool alreadyCalled = false;
 
     public override void Enter()
     {
         player.jumper.Jump();// Jumps
         player.resilient.Jumps();// Jumped, thus, loses a lot of stamina
 
-        if (!eventsSubscribed) // Subscribe just once
+        if (!alreadyCalled)
         {
+            // Subscribe just once
             player.endlessRunner.AtIntersectionEvent += AtIntersection;
             player.turner.TurnedEvent += TurnPointSurpassed;
             player.chased.CaughtEvent += Caught;
 
-            eventsSubscribed = true;
+            alreadyCalled = true;
         }
     }
 

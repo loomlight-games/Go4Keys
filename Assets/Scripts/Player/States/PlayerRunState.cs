@@ -9,20 +9,25 @@ public class PlayerRunState : APlayerState
 {
     bool atIntersection = false;
     string result;
-    bool eventsSubscribed = false;
+    bool alreadyCalled = false;
 
     public override void Enter()
     {
         player.keyCollecter.Initialize();
 
-        if (!eventsSubscribed) // Subscribe just once
+        if (!alreadyCalled)
         {
+            // Subscribe just once
             player.endlessRunner.AtIntersectionEvent += AtIntersection;
             player.keyCollecter.AllFoundEvent += Victory;
             player.chased.CaughtEvent += Caught;
             player.resilient.StaminaChangeEvent += Tired;
 
-            eventsSubscribed = true;
+            player.endlessRunner.Initialize(); // Detects obstacle checker
+            player.railed.Initialize(); // Detects rails parent
+            player.jumper.Initialize(); // Detects obstacle checker
+
+            alreadyCalled = true;
         }
     }
 
