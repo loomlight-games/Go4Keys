@@ -22,8 +22,6 @@ public class GamePauseState : AGameState
 
         Time.timeScale = 0f; // Stops simulation
 
-        //game.gameButtonsUI.ShowPauseButtons();
-
         if (!eventsSubscribed) // Subscribes to events just once
         {
             game.ButtonClicked += ButtonClicked;
@@ -66,6 +64,6 @@ public class GamePauseState : AGameState
 
     void ButtonClicked(object sender, string buttonName)
     {
-        this.buttonClickedName = buttonName;
+        buttonClickedName = buttonName;
     }
 }

@@ -7,6 +7,10 @@ public class GameEndState : AGameState
     GameObject replayButton;
     GameObject mainMenuButton;
     GameObject quitButton;
+    GameObject results;
+    GameObject victoryResult;
+    GameObject caughtResult;
+    GameObject tiredResult;
     string buttonClickedName = "None";
     bool eventsSubscribed = false;
 
@@ -20,16 +24,19 @@ public class GameEndState : AGameState
         mainMenuButton.SetActive(true);
         quitButton.SetActive(true);
 
+        results = GameObject.Find("Results");
+        victoryResult = results.transform.Find("Victory").gameObject;
+        caughtResult = results.transform.Find("Caught").gameObject;
+        tiredResult = results.transform.Find("Tired").gameObject;
+
         Time.timeScale = 0f; // Stops simulation
 
-        //game.gameButtonsUI.ShowEndButtons();
-
         if(result == "Victory")
-            game.gameResultUI.ShowVictory();
+            victoryResult.SetActive(true);
         else if (result == "Caught")
-            game.gameResultUI.ShowCaught();
-        else if (result == "Tired") 
-            game.gameResultUI.ShowTired();
+            caughtResult.SetActive(true);
+        else if (result == "Tired")
+            tiredResult.SetActive(true);
 
         if (!eventsSubscribed) // Subscribes to events just once
         {
@@ -73,6 +80,6 @@ public class GameEndState : AGameState
 
     void ButtonClicked(object sender, string buttonName)
     {
-        this.buttonClickedName = buttonName;
+        buttonClickedName = buttonName;
     }
 }

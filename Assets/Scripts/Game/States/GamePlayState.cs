@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GamePlayState : AGameState
 {
@@ -20,8 +19,6 @@ public class GamePlayState : AGameState
         game.playerStaminaUI.SubscribeToStaminaChangeEvent();
         game.playerCollectedUI.Initialize();
         //game.autosave.Start();
-        //game.gameButtonsUI.ShowPlayButtons();
-        game.gameResultUI.HideAll();
 
         if (!eventsSubscribed) // Subscribes to events just once
         {
@@ -56,7 +53,7 @@ public class GamePlayState : AGameState
 
     void ButtonClicked(object sender, string buttonName)
     {
-        this.buttonClickedName = buttonName;
+        buttonClickedName = buttonName;
     }
 
     void GameEnded(object sender, string result)
