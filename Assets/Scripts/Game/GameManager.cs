@@ -8,14 +8,11 @@ using UnityEngine.UI;
 public class GameManager : AStateController
 {
     public static GameManager Instance;
+    public event EventHandler<string> GameButtonClicked;
+
     [HideInInspector] public bool playerVictory = false;
     [HideInInspector] public bool playerCaught = false;
     [HideInInspector] public bool playerTired = false;
-    
-
-    #region EVENTS
-    public event EventHandler<string> GameButtonClicked;
-    #endregion
 
     #region STATES
     // Main menu
@@ -27,7 +24,7 @@ public class GameManager : AStateController
     #endregion
 
     #region BEHAVIOURS
-    public PlayerCollectedUI playerCollectedUI;
+    public PlayerCollectiblesUI playerCollectedUI;
     public PlayerStaminaUI playerStaminaUI;
     //public KeyAutosave autosave;
     public GameButtonsUI gameButtonsUI;

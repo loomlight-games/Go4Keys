@@ -5,18 +5,16 @@ using UnityEngine;
 /// Updates collected icons as the player collectes keys
 /// </summary>
 [Serializable]
-public class PlayerCollectedUI
+public class PlayerCollectiblesUI
 {
-    public event EventHandler AllFoundEvent;
-
     readonly GameObject leftIcons;
     readonly GameObject foundIcons;
     private GameObject[] leftArray;
     private GameObject[] foundArray;
-    private int collectedCounter = -1;
+    //private int collectedCounter = -1;
     //KeySerializable keySerializable;
 
-    public PlayerCollectedUI(GameObject leftIcons, GameObject foundIcons)
+    public PlayerCollectiblesUI(GameObject leftIcons, GameObject foundIcons)
     {
         this.leftIcons = leftIcons;
         this.foundIcons = foundIcons;
@@ -24,9 +22,8 @@ public class PlayerCollectedUI
 
     public void Initialize()
     {
-        Player.Instance.keyCollecter.CollectibleFoundEvent += AddFoundIcon;
+        Player.Instance.keyCollecter.CollectibleFoundEvent += UpdateIcons;
 
-        //Creates arrays
         leftArray = SetArray(leftIcons);
         foundArray = SetArray(foundIcons);
 
@@ -37,12 +34,13 @@ public class PlayerCollectedUI
         //Restores found counter from memory
         keySerializable = new KeySerializable();
         collectedCounter = keySerializable.DeserializeInt();
-        */
+        
         //Debug.Log(collectedCounter);
 
         if (collectedCounter > -1)//At least one (0) collectible was found
             RestoreUI(collectedCounter);
-        
+        */
+
     }
 
     /// <summary>
@@ -71,6 +69,7 @@ public class PlayerCollectedUI
         }
     }
 
+    /*
     /// <summary>
     /// Updates UI, showing a found icon instead of a left one
     /// </summary>
@@ -83,7 +82,7 @@ public class PlayerCollectedUI
         if (collectedCounter >= foundArray.Length - 1)
         {
             Debug.Log("All found");
-            AllFoundEvent?.Invoke(this, EventArgs.Empty);
+            //AllFoundEvent?.Invoke(this, EventArgs.Empty);
         }
         else
         {
@@ -91,13 +90,14 @@ public class PlayerCollectedUI
             foundArray[collectedCounter].SetActive(true);
         }
     }
+    */
 
     /// <summary>
-    /// Restores found UI
+    /// Updates icons changing the left ones as the found ones
     /// </summary>
-    void RestoreUI(int index)
+    void UpdateIcons(object sender, int collectedCount)
     {
-        for (int i = 0; i <= index; i++) 
+        for (int i = 0; i < collectedCount; i++)
         {
             leftArray[i].SetActive(false);
             foundArray[i].SetActive(true);

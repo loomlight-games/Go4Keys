@@ -20,7 +20,7 @@ public class PlayerJumpState : APlayerState
         {
             player.endlessRunner.AtIntersectionEvent += AtIntersection;
             player.turner.TurnedEvent += TurnPointSurpassed;
-            player.chaserResetter.CaughtEvent += Caught;
+            player.chased.CaughtEvent += Caught;
 
             eventsSubscribed = true;
         }
@@ -39,7 +39,7 @@ public class PlayerJumpState : APlayerState
         player.endlessRunner.OnTriggerEnter(other); // Can enter an intersection
         player.resilient.OnTriggerEnter(other); // Can recover stamina
         player.keyCollecter.OnTriggerEnter(other); // Can find a collectible
-        player.chaserResetter.OnTriggerEnter(other); // Can reset chaser position
+        player.chased.OnTriggerEnter(other); // Can reset chaser position
     }
 
     public override void Exit()
@@ -51,10 +51,6 @@ public class PlayerJumpState : APlayerState
         if (!hasSurpassedTurnPoint)
         {
             player.SetState(player.atIntersection);
-        }
-        else if (player.jumper.IsGrounded())
-        {
-            player.SetState(player.runState);
         }
         else if (isCaught)
         {

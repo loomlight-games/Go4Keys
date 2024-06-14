@@ -6,14 +6,14 @@ using UnityEngine;
 /// Provides reset ability of chaser position when colliding with a certain object.
 /// Can be caught if collides with chaser as well.
 /// </summary>
-public class ChaserResetter
+public class Chased
 {
     public event EventHandler<float> ChaserResettedEvent;
     public event EventHandler CaughtEvent;
 
     readonly float chaserResetDistance;
 
-    public ChaserResetter(float chaserResetDistance)
+    public Chased(float chaserResetDistance)
     {
         this.chaserResetDistance = chaserResetDistance;
     }

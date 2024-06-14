@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    Player player;
     float lastStaminaValue = 100f;
 
     // Game
@@ -22,13 +21,11 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = Player.Instance;
-
-        player.resilient.StaminaChangeEvent += StaminaRecover;
-        player.jumper.JumpEvent += Jump;
-        player.chaserResetter.ChaserResettedEvent += ChaserResetted;
-        player.keyCollecter.CollectibleFoundEvent += CollectibleFound;
-        player.turner.TurnedEvent += Turn;
+        Player.Instance.resilient.StaminaChangeEvent += StaminaRecover;
+        Player.Instance.jumper.JumpEvent += Jump;
+        Player.Instance.chased.ChaserResettedEvent += ChaserResetted;
+        Player.Instance.keyCollecter.CollectibleFoundEvent += CollectibleFound;
+        Player.Instance.turner.TurnedEvent += Turn;
     }
 
     void StaminaRecover(object sender, float stamina)
@@ -49,7 +46,7 @@ public class SoundManager : MonoBehaviour
         chaserResetted.Play();
     }
 
-    void CollectibleFound(object sender, EventArgs any)
+    void CollectibleFound(object sender, int collected)
     {
         collectibleFound.Play();
     }

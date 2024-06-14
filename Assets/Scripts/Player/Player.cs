@@ -23,7 +23,7 @@ public class Player : AStateController
     public Turner turner;
     public Resilient resilient;
     public KeyCollecter keyCollecter;
-    public ChaserResetter chaserResetter;
+    public Chased chased;
     #endregion
 
     #region CHECKERS
@@ -45,6 +45,7 @@ public class Player : AStateController
 
     #region MECHANICS
     [Header("Mechanics")]
+    [SerializeField] int keysToCollect;
     [SerializeField] float staminaLossPerStep;
     [SerializeField] float staminaLossPerJump;
     [SerializeField] float chaserResetDistance;
@@ -69,8 +70,8 @@ public class Player : AStateController
         endlessRunner = new(playerParent, forwardSpeed, obstacleChecker, obstacleLayer);
         turner = new(playerParent);
         resilient = new(staminaLossPerStep, staminaLossPerJump);
-        keyCollecter = new();
-        chaserResetter = new(chaserResetDistance);
+        keyCollecter = new(keysToCollect);
+        chased = new(chaserResetDistance);
 
         SetState(runState);
     }

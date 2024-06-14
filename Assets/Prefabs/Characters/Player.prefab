@@ -175,7 +175,7 @@ MonoBehaviour:
   forwardSpeed: 8
   jumpForce: 7
   rails: {fileID: 0}
-  collectible: {fileID: 0}
+  keysToCollect: 3
   staminaLossPerStep: 2
   staminaLossPerJump: 500
   chaserResetDistance: 8

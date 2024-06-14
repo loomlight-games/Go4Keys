@@ -16,7 +16,7 @@ public class PlayerRunState : APlayerState
         if (!eventsSubscribed) // Subscribe just once
         {
             player.endlessRunner.AtIntersectionEvent += AtIntersection;
-            player.chaserResetter.CaughtEvent += Caught;
+            player.chased.CaughtEvent += Caught;
 
             eventsSubscribed = true;
         }
@@ -37,12 +37,12 @@ public class PlayerRunState : APlayerState
         player.resilient.OnTriggerEnter(other); // Can recover stamina
         player.keyCollecter.OnTriggerEnter(other); // Can find a collectible
         player.turner.OnTriggerEnter(other); // Set the center of intersection
-        player.chaserResetter.OnTriggerEnter(other); // Can reset chaser position
+        player.chased.OnTriggerEnter(other); // Can reset chaser position
     }
 
     public override void OnCollisionEnter(Collision collision)
     {
-        player.chaserResetter.OnCollisionEnter(collision); // Can be caught
+        player.chased.OnCollisionEnter(collision); // Can be caught
     }
 
     public override void Exit()

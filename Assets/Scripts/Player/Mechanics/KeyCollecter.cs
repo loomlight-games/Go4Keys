@@ -6,7 +6,21 @@ using UnityEngine;
 /// </summary>
 public class KeyCollecter
 {
-    public event EventHandler CollectibleFoundEvent;
+    public event EventHandler AllFoundEvent;
+    public event EventHandler<int> CollectibleFoundEvent;
+
+    readonly int keysToCollect;
+    int keysCollected = 0;
+
+    public KeyCollecter(int keyToCollect)
+    {
+        this.keysToCollect = keyToCollect;
+    }
+
+    public void Initialize()
+    {
+        //CollectibleFoundEvent?.Invoke(this, keysCollected);
+    }
 
     public void OnTriggerEnter(Collider other)
     {
@@ -16,7 +30,12 @@ public class KeyCollecter
             //Deactivates it
             other.gameObject.SetActive(false);
 
-            CollectibleFoundEvent?.Invoke(this, EventArgs.Empty);
+            keysCollected++;
+
+            CollectibleFoundEvent?.Invoke(this, keysCollected);
+
+            if (keysCollected == keysToCollect)
+                AllFoundEvent?.Invoke(this, EventArgs.Empty);
         }
     }
 } 

@@ -22,12 +22,13 @@ public class KeyAutosave
     {
         //SUBSCRIBES INCREMENT COUNT TO EVENT HANDLER OF COLLECTER
         Player.Instance.keyCollecter.CollectibleFoundEvent += IncrCount;
+        Player.Instance.keyCollecter.AllFoundEvent += ResetAtVictory;
 
         //SUBSCRIBES RESET COUNT TO EVENT HANDLER OF MAIN MENU BUTTON
         //resetter.KeyCountResetEvent += ResetFromResetter;
 
         //SUBSCRIBES RESET COUNT TO EVENT HANDLER OF VICTORY
-        GameManager.Instance.playerCollectedUI.AllFoundEvent += ResetAtVictory;
+        //GameManager.Instance.playerCollectedUI.AllFoundEvent += ResetAtVictory;
 
         //Restores found counter from memory
         KeySerializable keySerializable = new ();
@@ -61,7 +62,7 @@ public class KeyAutosave
         dirtyKey = true;
     }
 
-    void IncrCount(object sender, EventArgs e)
+    void IncrCount(object sender, int collected)
     {
         keyCount++;
         dirtyKey = true;

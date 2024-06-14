@@ -13,6 +13,7 @@ public abstract class AGameState : IState //MonoBehaviour, IState
 
         Enter();
     }
+
     public abstract void Enter();
     public virtual void Update() { }
     public virtual void OnTriggerEnter(Collider other) { }

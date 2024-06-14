@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class GamePlayState : AGameState
 {
@@ -19,8 +18,8 @@ public class GamePlayState : AGameState
         {
             game.GameButtonClicked += ButtonClicked;
 
-            game.playerCollectedUI.AllFoundEvent += Victory;
-            Player.Instance.chaserResetter.CaughtEvent += Caught;
+            Player.Instance.keyCollecter.AllFoundEvent += Victory;
+            Player.Instance.chased.CaughtEvent += Caught;
             Player.Instance.resilient.StaminaChangeEvent += Tired;
 
             eventsSubscribed = true;
