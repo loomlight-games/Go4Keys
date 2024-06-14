@@ -10,7 +10,7 @@ public class Jumper
 
     readonly Rigidbody rigidBody;    
     readonly float jumpForce;
-    readonly float checkerRadius = 0.1f;
+    readonly float checkerRadius = 0.2f;
 
     Transform groundChecker;
     LayerMask ground;

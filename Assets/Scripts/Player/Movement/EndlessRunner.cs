@@ -10,7 +10,7 @@ public class EndlessRunner
     public event EventHandler AtIntersectionEvent;
 
     readonly Transform runner;
-    readonly float forwardSpeed;
+    readonly float speed;
     readonly float checkerRadius = 0.4f;
 
     Transform obstacleChecker;
@@ -18,8 +18,8 @@ public class EndlessRunner
 
     public EndlessRunner(Transform transform, float forwardSpeed)//, Transform obstacleChecker, LayerMask obstacleLayer)
     {
-        this.runner = transform;
-        this.forwardSpeed = forwardSpeed;
+        runner = transform;
+        speed = forwardSpeed;
     }
 
     public void Initialize()
@@ -33,7 +33,7 @@ public class EndlessRunner
         // Obstacle is NOT in front (obstacle checker collides with obstacle layer)
         if (!Physics.CheckSphere(obstacleChecker.position, checkerRadius, obstacle))
         {
-            runner.Translate(forwardSpeed * Time.deltaTime * Vector3.forward);
+            runner.Translate(speed * Time.deltaTime * Vector3.forward);
         }
     }
 

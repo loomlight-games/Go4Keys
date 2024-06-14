@@ -8,51 +8,54 @@ public class Turner
 {
     public event EventHandler<bool> TurnedEvent;
 
-    readonly Transform transform;
+    readonly Transform turner;
     Vector2 transformPosition2D;
     Vector2 turnPoint2D;
-    bool turnLeft = false;
-    bool turnRight = false;
+    /// <summary>
+    /// -1 Left 0 Forward 1 Right
+    /// </summary>
+    int turn = 0;
 
     public Turner(Transform transform)
     {
-        this.transform = transform;
+        turner = transform;
     }
 
     public void Update()
     {
         // Saves X,Z position of this object
-        transformPosition2D = new Vector2(transform.position.x, transform.position.z);
+        transformPosition2D = new Vector2(turner.position.x, turner.position.z);
 
         // Not yet at turn point (with some threshold)
         if (Vector2.Distance(transformPosition2D, turnPoint2D) > 0.4f)
         {
             if (Input.GetKeyDown(KeyCode.A)) // To left
             {
-                turnLeft = true;
-                turnRight = false; //The other side is neglected
+                turn = -1;
             }
             if (Input.GetKeyDown(KeyCode.D)) // To right
             {
-                turnRight = true;
-                turnLeft = false;
+                turn = 1;
             }
         }
         else // Has reached turn point
         {
             // Centers object to intersection center to maintain intermediate rail at center of street
-            transform.position = new Vector3(turnPoint2D.x, transform.position.y, turnPoint2D.y);
+            turner.position = new Vector3(turnPoint2D.x, turner.position.y, turnPoint2D.y);
 
-            if (turnLeft)
+            if (turn == -1)
             {
-                transform.Rotate(0f, -90f, 0f);
+                turner.Rotate(0f, -90f, 0f);
                 TurnedEvent?.Invoke(this, true);
             }
-            else if (turnRight)
+            else if (turn == 1)
             {
-                transform.Rotate(0f, 90f, 0f);
+                turner.Rotate(0f, 90f, 0f);
                 TurnedEvent?.Invoke(this, true);
             }
+
+            // Reset decision
+            turn = 0;
 
             TurnedEvent?.Invoke(this, false);
         }
