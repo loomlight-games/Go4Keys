@@ -16,7 +16,7 @@ public class GamePauseState : AGameState
 
         if (!eventsSubscribed) // Subscribes to events just once
         {
-            game.GameButtonClicked += ButtonClicked;
+            game.ButtonClicked += ButtonClicked;
             eventsSubscribed = true;
         }
     }

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -8,13 +9,13 @@ using UnityEngine.UI;
 public class GameManager : AStateController
 {
     public static GameManager Instance;
-    public event EventHandler<string> GameButtonClicked;
+    public event EventHandler<string> ButtonClicked;
     //[HideInInspector] public string result;
 
     #region STATES
-    // Main menu
-    // Options 
-    // Credits
+    public GameMainMenuState mainMenuState = new();
+    public GameOptionsMenuState optionsMenuState = new();
+    public GameCreditsState creditsState = new();
     public GamePlayState playState = new();
     public GamePauseState pauseState = new();
     public GameEndState endState = new();
@@ -64,17 +65,24 @@ public class GameManager : AStateController
 
     public override void Start()
     {
-        playerCollectedUI = new(leftIcons, foundIcons);
-        playerStaminaUI = new(staminaBar);
-        //autosave = new();
-        gameButtonsUI = new(pauseButton, resumeButton, replayButton, mainMenuButton, quitGameButton);
-        gameResultUI = new(victory, caught, tired);
+        if (SceneManager.GetActiveScene().name == "Level01")
+        {
+            playerCollectedUI = new(leftIcons, foundIcons);
+            playerStaminaUI = new(staminaBar);
+            //autosave = new();
+            gameButtonsUI = new(pauseButton, resumeButton, replayButton, mainMenuButton, quitGameButton);
+            gameResultUI = new(victory, caught, tired);
 
-        SetState(playState);
+            SetState(playState);
+        }
+        else
+        {
+            SetState(mainMenuState);
+        }
     }
 
-    public void ClickGameButton(string buttonName)
+    public void ClickButton(string buttonName)
     {
-        GameButtonClicked?.Invoke(this, buttonName);
+        ButtonClicked?.Invoke(this, buttonName);
     }
 }

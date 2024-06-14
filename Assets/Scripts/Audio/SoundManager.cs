@@ -28,7 +28,7 @@ public class SoundManager : MonoBehaviour
         Player.Instance.chased.ChaserResettedEvent += ChaserResetted;
         Player.Instance.keyCollecter.CollectibleFoundEvent += CollectibleFound;
         Player.Instance.turner.TurnedEvent += Turn;
-        GameManager.Instance.GameButtonClicked += ButtonClicked;
+        GameManager.Instance.ButtonClicked += ButtonClicked;
         Player.Instance.keyCollecter.AllFoundEvent += Victory;
         Player.Instance.chased.CaughtEvent += Caught;
         Player.Instance.resilient.StaminaChangeEvent += Tired;

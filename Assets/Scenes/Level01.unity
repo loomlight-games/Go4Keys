@@ -9828,7 +9828,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &482485959
 RectTransform:
   m_ObjectHideFlags: 0
@@ -27232,7 +27232,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1156900017
 RectTransform:
   m_ObjectHideFlags: 0
@@ -34837,9 +34837,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16d09aba76e85a14fbfba4212c1965b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerVictory: 0
-  playerCaught: 0
-  playerTired: 0
   leftIcons: {fileID: 1782363297}
   foundIcons: {fileID: 1069986186}
   staminaBar: {fileID: 253742360}
@@ -39552,7 +39549,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1754053015
 RectTransform:
   m_ObjectHideFlags: 0

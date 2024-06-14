@@ -18,7 +18,7 @@ public class GamePlayState : AGameState
 
         if (!eventsSubscribed) // Subscribes to events just once
         {
-            game.GameButtonClicked += ButtonClicked;
+            game.ButtonClicked += ButtonClicked;
             Player.Instance.endState.EndGameEvent += GameEnded;
 
             eventsSubscribed = true;

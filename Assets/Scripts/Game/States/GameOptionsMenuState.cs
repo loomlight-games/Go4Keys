@@ -1,7 +1,5 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class GameMainMenuState : AGameState
+public class GameOptionsMenuState : AGameState
 {
     string buttonClickedName = "None";
     bool eventsSubscribed = false;
@@ -19,18 +17,14 @@ public class GameMainMenuState : AGameState
     {
         switch (buttonClickedName)
         {
-            case "Start":
-                SceneManager.LoadScene("Level01");
+            case "TutorialOn":
+                
                 break;
-            case "Options":
-                game.SetState(game.optionsMenuState);
+            case "TutorialOff":
+
                 break;
-            case "Credits":
-                game.SetState(game.creditsState);
-                break;
-            case "Quit":
-                Debug.Log("Quit");
-                Application.Quit();
+            case "Return":
+                game.SetState(game.mainMenuState);
                 break;
             default:
                 break;
