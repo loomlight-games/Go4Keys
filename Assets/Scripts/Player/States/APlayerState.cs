@@ -6,7 +6,13 @@ using UnityEngine;
 public abstract class APlayerState : IState
 {
     protected Player player;
-    public abstract void Enter(AStateController controller);
+    public virtual void Enter(AStateController controller)
+    {
+        player = (Player)controller;
+
+        Enter();
+    }
+    public abstract void Enter();
     public virtual void Update() { }
     public virtual void OnTriggerEnter(Collider other) { }
     public virtual void OnCollisionEnter(Collision collision) { }

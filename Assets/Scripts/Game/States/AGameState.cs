@@ -7,7 +7,13 @@ public abstract class AGameState : IState //MonoBehaviour, IState
 {
     protected GameManager game;
 
-    public abstract void Enter(AStateController controller);
+    public virtual void Enter(AStateController controller)
+    {
+        game = (GameManager)controller;
+
+        Enter();
+    }
+    public abstract void Enter();
     public virtual void Update() { }
     public virtual void OnTriggerEnter(Collider other) { }
     public virtual void OnCollisionEnter(Collision collision) { }

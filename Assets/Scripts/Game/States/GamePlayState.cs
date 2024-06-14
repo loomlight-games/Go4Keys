@@ -7,10 +7,8 @@ public class GamePlayState : AGameState
     bool pause = false;
     bool eventsSubscribed = false;
 
-    public override void Enter(AStateController controller)
+    public override void Enter()
     {
-        game = (GameManager)controller;
-
         game.playerStaminaUI.SubscribeToStaminaChangeEvent();
         game.playerCollectedUI.Initialize();
         //game.autosave.Start();

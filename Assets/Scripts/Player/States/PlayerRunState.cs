@@ -1,42 +1,42 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 /// <summary>
-/// Takes a turn at an intersection while still moving forward endlessly and changing rail.
-/// Can be caught or return to run state when surpassing the center of the intersection.
+/// Runs forward endlessly, losing stamina and changing rail.
+/// Can enter an intersection, reset chaser position or be caught.
 /// </summary>
-public class AtIntersectionState : APlayerState
+public class PlayerRunState : APlayerState
 {
-    bool hasSurpassedTurnPoint = false;
+    bool atIntersection = false;
     bool isCaught = false;
     bool eventsSubscribed = false;
 
-    public override void Enter(AStateController controller)
+    public override void Enter()
     {
-        player = (Player)controller;
-
         if (!eventsSubscribed) // Subscribe just once
         {
-            player.turner.TurnedEvent += TurnPointSurpassed;
+            player.endlessRunner.AtIntersectionEvent += AtIntersection;
             player.chaserResetter.CaughtEvent += Caught;
 
             eventsSubscribed = true;
         }
     }
+
     public override void Update()
     {
-        player.endlessRunner.Update(); // Runs endlessly, 
+        player.endlessRunner.Update(); // Runs endlessly,
         player.resilient.Runs(); // thus, loses stamina
-        player.railed.Update(); // Change rails
-        player.turner.Update(); // Can take a turn to another street
-
+        player.railed.Update(); // Changes rails
+        
         Exit();
     }
-    public override void OnTriggerEnter(Collider other)
+
+    public override void OnTriggerEnter(Collider other) 
     {
+        player.endlessRunner.OnTriggerEnter(other); // Can enter an intersection
         player.resilient.OnTriggerEnter(other); // Can recover stamina
         player.keyCollecter.OnTriggerEnter(other); // Can find a collectible
-        player.turner.OnTriggerEnter(other); // Sets the center of intersection
+        player.turner.OnTriggerEnter(other); // Set the center of intersection
         player.chaserResetter.OnTriggerEnter(other); // Can reset chaser position
     }
 
@@ -47,22 +47,25 @@ public class AtIntersectionState : APlayerState
 
     public override void Exit()
     {
-        if (hasSurpassedTurnPoint)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            hasSurpassedTurnPoint = false;
-            player.SetState(player.runState);
+            player.SetState(player.jumpState);
+        }
+        else if (atIntersection)
+        {
+            atIntersection = false;
+            player.SetState(player.atIntersection);
         }
         else if (isCaught)
         {
             //isCaught = false; No need bc won't return
             player.SetState(player.caughtState);
-            
         }
     }
 
-    void TurnPointSurpassed(object sender, bool turned)
+    void AtIntersection(object sender, EventArgs any)
     {
-        hasSurpassedTurnPoint = true;
+        atIntersection = true;
     }
 
     void Caught(object sender, EventArgs any)

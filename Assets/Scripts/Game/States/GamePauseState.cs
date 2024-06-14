@@ -8,10 +8,8 @@ public class GamePauseState : AGameState
     bool quit = false;
     bool eventsSubscribed = false;
 
-    public override void Enter(AStateController controller)
+    public override void Enter()
     {
-        game = (GameManager)controller;
-
         Time.timeScale = 0f; // Stops simulation
 
         game.gameButtonsUI.ShowPauseButtons();

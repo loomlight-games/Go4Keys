@@ -2,72 +2,62 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// Jumps once while still moving forward endlessly and changing rail.
-/// Can enter an intersection or be caught.
+/// Takes a turn at an intersection while still moving forward endlessly and changing rail.
+/// Can be caught or return to run state when surpassing the center of the intersection.
 /// </summary>
-public class JumpState : APlayerState
+public class PlayerAtIntersectionState : APlayerState
 {
-    bool hasSurpassedTurnPoint = true;
+    bool hasSurpassedTurnPoint = false;
     bool isCaught = false;
     bool eventsSubscribed = false;
 
-    public override void Enter(AStateController controller)
+    public override void Enter()
     {
-        player = (Player) controller;
-        player.jumper.Jump();// Jumps
-        player.resilient.Jumps();// Jumped, thus, loses a lot of stamina
-
         if (!eventsSubscribed) // Subscribe just once
         {
-            player.endlessRunner.AtIntersectionEvent += AtIntersection;
             player.turner.TurnedEvent += TurnPointSurpassed;
             player.chaserResetter.CaughtEvent += Caught;
 
             eventsSubscribed = true;
         }
     }
-
     public override void Update()
     {
-        player.endlessRunner.Update(); // Continues moving forward
+        player.endlessRunner.Update(); // Runs endlessly, 
+        player.resilient.Runs(); // thus, loses stamina
         player.railed.Update(); // Change rails
-        
-        Exit(); // Checks exit
-    }
+        player.turner.Update(); // Can take a turn to another street
 
+        Exit();
+    }
     public override void OnTriggerEnter(Collider other)
     {
-        player.endlessRunner.OnTriggerEnter(other); // Can enter an intersection
         player.resilient.OnTriggerEnter(other); // Can recover stamina
         player.keyCollecter.OnTriggerEnter(other); // Can find a collectible
+        player.turner.OnTriggerEnter(other); // Sets the center of intersection
         player.chaserResetter.OnTriggerEnter(other); // Can reset chaser position
+    }
+
+    public override void OnCollisionEnter(Collision collision)
+    {
+        player.chaserResetter.OnCollisionEnter(collision); // Can be caught
     }
 
     public override void Exit()
     {
-        if (player.jumper.IsGrounded())
+        if (hasSurpassedTurnPoint)
         {
-            player.SetState(player.runState);
-        }
-        if (!hasSurpassedTurnPoint)
-        {
-            player.SetState(player.atIntersection);
-        }
-        else if (player.jumper.IsGrounded())
-        {
+            hasSurpassedTurnPoint = false;
             player.SetState(player.runState);
         }
         else if (isCaught)
         {
             //isCaught = false; No need bc won't return
             player.SetState(player.caughtState);
+            
         }
     }
 
-    void AtIntersection(object sender, EventArgs any)
-    {
-        hasSurpassedTurnPoint = false;
-    }
     void TurnPointSurpassed(object sender, bool turned)
     {
         hasSurpassedTurnPoint = true;

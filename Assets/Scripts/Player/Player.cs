@@ -10,10 +10,10 @@ public class Player : AStateController
     [HideInInspector] public Transform playerParent;
 
     #region STATES
-    public RunState runState = new();
-    public JumpState jumpState = new();
-    public AtIntersectionState atIntersection = new();
-    public CaughtState caughtState = new();
+    public PlayerRunState runState = new();
+    public PlayerJumpState jumpState = new();
+    public PlayerAtIntersectionState atIntersection = new();
+    public PlayerCaughtState caughtState = new();
     #endregion
 
     #region BEHAVIOURS
