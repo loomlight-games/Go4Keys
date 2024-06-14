@@ -3,35 +3,36 @@ using UnityEngine.SceneManagement;
 
 public class GameEndState : AGameState
 {
-    GameObject buttons;
-    GameObject replayButton;
-    GameObject mainMenuButton;
-    GameObject quitButton;
-    GameObject results;
-    GameObject victoryResult;
-    GameObject caughtResult;
-    GameObject tiredResult;
+
     string buttonClickedName = "None";
     bool eventsSubscribed = false;
 
     public override void Enter(string result)
     {
-        buttons = GameObject.Find("Buttons");
-        replayButton = buttons.transform.Find("Replay").gameObject;
-        mainMenuButton = buttons.transform.Find("Main menu").gameObject;
-        quitButton = buttons.transform.Find("Quit").gameObject;
+        Time.timeScale = 0f; // Stops simulation
+
+        // Buttons
+        GameObject buttons = GameObject.Find("Buttons");
+        GameObject replayButton = buttons.transform.Find("Replay").gameObject;
+        GameObject mainMenuButton = buttons.transform.Find("Main menu").gameObject;
+        GameObject quitButton = buttons.transform.Find("Quit").gameObject;
+        
         replayButton.SetActive(true);
         mainMenuButton.SetActive(true);
         quitButton.SetActive(true);
 
-        results = GameObject.Find("Results");
-        victoryResult = results.transform.Find("Victory").gameObject;
-        caughtResult = results.transform.Find("Caught").gameObject;
-        tiredResult = results.transform.Find("Tired").gameObject;
+        // Tutorial pop ups
+        GameObject tutorial = GameObject.Find("Tutorial pop ups");
+        
+        tutorial.SetActive(false);
 
-        Time.timeScale = 0f; // Stops simulation
+        // Result pop ups
+        GameObject results = GameObject.Find("Results");
+        GameObject victoryResult = results.transform.Find("Victory").gameObject;
+        GameObject caughtResult = results.transform.Find("Caught").gameObject;
+        GameObject tiredResult = results.transform.Find("Tired").gameObject;
 
-        if(result == "Victory")
+        if (result == "Victory")
             victoryResult.SetActive(true);
         else if (result == "Caught")
             caughtResult.SetActive(true);
@@ -55,11 +56,6 @@ public class GameEndState : AGameState
     {
         if (buttonClickedName == "Replay") // Replay button clicked or 'Esc' pressed
         {
-            buttonClickedName = "None";
-            replayButton.SetActive(false);
-            mainMenuButton.SetActive(false);
-            quitButton.SetActive(false);
-
             Time.timeScale = 1f; // Resumes simulation
 
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);

@@ -21,8 +21,8 @@ public class TutorialManager
     GameObject advice;
     bool atIntersection = false;
     bool hasSurpassedTurnPoint = false;
-    float showTime = 2.5f;
-
+    bool tutorialFinished = false;
+    float popUpShowTime = 2f;
 
     public void Initialize()
     {
@@ -45,47 +45,13 @@ public class TutorialManager
             intersection = popUps.transform.Find("Intersection").gameObject;
             advice = popUps.transform.Find("Advice").gameObject;
 
-            left.SetActive(true);
+            left.SetActive(true); // Left
         }
     }
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A) && left.activeSelf)
-        {
-            left.SetActive(false);
-            right.SetActive(true);
-        }  
-        else if (Input.GetKeyDown(KeyCode.D) && right.activeSelf)
-        {
-            right.SetActive(false);
-            jump.SetActive(true);
-        }
-        else if (Input.GetKeyDown(KeyCode.Space) && jump.activeSelf)
-        {
-            jump.SetActive(false);
-            stamina.SetActive(true);
-            Time.timeScale = 0f;
-        }
-        else if (Input.anyKeyDown)
-        {
-            if (stamina.activeSelf)
-            {
-                stamina.SetActive(false);
-                keys.SetActive(true);
-            }
-            else if (keys.activeSelf)
-            {
-                keys.SetActive(false);
-                telephone.SetActive(true);
-            }
-            else if (telephone.activeSelf)
-            {
-                telephone.SetActive(false);
-                Time.timeScale = 1f;
-            }
-        }
-        else if (atIntersection)
+        if (atIntersection) // Intersection guides
         {
             intersection.SetActive(true);
             atIntersection = false;
@@ -94,15 +60,62 @@ public class TutorialManager
         {
             intersection.SetActive(false);
 
-            if (showTime < 0f)
+            if (popUpShowTime < 0f)
             {
                 advice.SetActive(false);
+                tutorialFinished = false;
                 hasSurpassedTurnPoint = false;
             }
-            else if (showTime >= 0f)
+            else if (popUpShowTime >= 0f)
             {
-                advice.SetActive(true);
-                showTime -= Time.deltaTime;
+                advice.SetActive(true); // Advice
+                popUpShowTime -= Time.deltaTime;
+            }
+        }
+        else if (!tutorialFinished) 
+        {
+            if (Input.GetKeyDown(KeyCode.A) && left.activeSelf)
+            {
+                left.SetActive(false);
+                right.SetActive(true); // Right
+            }
+            else if (Input.GetKeyDown(KeyCode.D) && right.activeSelf)
+            {
+                right.SetActive(false);
+                jump.SetActive(true); // Jump
+            }
+            else if (jump.activeSelf)
+            {
+                if (popUpShowTime < 0f)
+                {
+                    jump.SetActive(false);
+                    stamina.SetActive(true); // Stamina
+                    popUpShowTime = 2f;
+                    Time.timeScale = 0f;
+                }
+                else if (popUpShowTime >= 0f)
+                {
+                    popUpShowTime -= Time.deltaTime;
+                }
+
+            }
+            else if (Input.anyKeyDown)
+            {
+                if (stamina.activeSelf)
+                {
+                    stamina.SetActive(false);
+                    keys.SetActive(true); // Keys
+                }
+                else if (keys.activeSelf)
+                {
+                    keys.SetActive(false);
+                    telephone.SetActive(true); // Telephone
+                }
+                else if (telephone.activeSelf)
+                {
+                    telephone.SetActive(false);
+                    Time.timeScale = 1f;
+                }
             }
         }
     }
