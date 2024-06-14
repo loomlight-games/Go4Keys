@@ -1,214 +1,119 @@
 using System;
 using UnityEngine;
 
-//HANDLES TUTORIAL POP-UPS
-
+/// <summary>
+/// Handles tutorial pop ups
+/// </summary>
 [Serializable]
-public class TutorialManager : MonoBehaviour
+public class TutorialManager
 {
-    //DIRTYFLAG
-    readonly Serializable<bool> tutorialVisibility = new();//Serialized object to know if tutorial is active
-    bool tutorialIsShown;//Learn tutorial
+    readonly Serializable<bool> tutorialVisibility = new(); // Serialized object to know if tutorial is activated
+    bool learnTutorial;
 
-    //Sprites group
-    [SerializeField] GameObject popUpsGroup;//Needs to be ordered
-    GameObject[] popUpsArray;//Array of popUps
-    int current = 0;//Current popUp (starts from the first)
-
-    //Trigger intersection popUp
-    [SerializeField] Transform intersectionChecker;//Detects intersection
-    [SerializeField] float checkerRadious = 1f;
-    [SerializeField] LayerMask triggerMask;//Intersection
+    GameObject popUps;
+    GameObject left;
+    GameObject right;
+    GameObject jump;
+    GameObject stamina;
+    GameObject keys;
+    GameObject telephone;
+    GameObject intersection;
+    GameObject advice;
     bool atIntersection = false;
-    
-    //Message show time
-    [SerializeField] float showTime = 4f;//Time certain popUps will be shown
+    bool hasSurpassedTurnPoint = false;
+    float showTime = 2.5f;
 
-    // Start is called before the first frame update
-    void Start()
+
+    public void Initialize()
     {
         //Reads from memory if tutorial is activated
-        tutorialIsShown = tutorialVisibility.Deserialize("tutorialvisibility.json");
+        learnTutorial = tutorialVisibility.Deserialize("tutorialvisibility.json");
 
-        //Want to learn the tutorial
-        if (tutorialIsShown)
+        if (learnTutorial)
         {
-            popUpsGroup.SetActive(true);
+            Player.Instance.endlessRunner.AtIntersectionEvent += AtIntersection;
+            Player.Instance.turner.TurnedEvent += TurnPointSurpassed;
 
-            //Creates array the size of number of children of popUps
-            popUpsArray = new GameObject[popUpsGroup.transform.childCount];
+            popUps = GameObject.Find("Tutorial pop ups");
 
-            //Fills the array with each gameObject
-            for (int i = 0; i < popUpsArray.Length; i++)
+            left = popUps.transform.Find("Left").gameObject;
+            right = popUps.transform.Find("Right").gameObject;
+            jump = popUps.transform.Find("Jump").gameObject;
+            stamina = popUps.transform.Find("Stamina").gameObject;
+            keys = popUps.transform.Find("Keys").gameObject;
+            telephone = popUps.transform.Find("Telephone").gameObject;
+            intersection = popUps.transform.Find("Intersection").gameObject;
+            advice = popUps.transform.Find("Advice").gameObject;
+
+            left.SetActive(true);
+        }
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A) && left.activeSelf)
+        {
+            left.SetActive(false);
+            right.SetActive(true);
+        }  
+        else if (Input.GetKeyDown(KeyCode.D) && right.activeSelf)
+        {
+            right.SetActive(false);
+            jump.SetActive(true);
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && jump.activeSelf)
+        {
+            jump.SetActive(false);
+            stamina.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else if (Input.anyKeyDown)
+        {
+            if (stamina.activeSelf)
             {
-                popUpsArray[i] = popUpsGroup.transform.GetChild(i).gameObject;
+                stamina.SetActive(false);
+                keys.SetActive(true);
+            }
+            else if (keys.activeSelf)
+            {
+                keys.SetActive(false);
+                telephone.SetActive(true);
+            }
+            else if (telephone.activeSelf)
+            {
+                telephone.SetActive(false);
+                Time.timeScale = 1f;
+            }
+        }
+        else if (atIntersection)
+        {
+            intersection.SetActive(true);
+            atIntersection = false;
+        }
+        else if (hasSurpassedTurnPoint)
+        {
+            intersection.SetActive(false);
 
-                //Deactivates all popUps
-                popUpsArray[i].SetActive(false);
+            if (showTime < 0f)
+            {
+                advice.SetActive(false);
+                hasSurpassedTurnPoint = false;
+            }
+            else if (showTime >= 0f)
+            {
+                advice.SetActive(true);
+                showTime -= Time.deltaTime;
             }
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void AtIntersection(object sender, EventArgs any)
     {
-        //Want to learn the tutorial
-        if (tutorialIsShown)
-        {
-            CheckIntersection();
-
-            switch (current)
-            {
-                //Move left 'A'
-                case 0:
-                    popUpsArray[current].SetActive(true);
-
-                    //When 'A' pressed
-                    if (Input.GetKeyDown(KeyCode.A))
-                    {
-                        popUpsArray[current].SetActive(false);
-
-                        //Next popUp
-                        current = 1;
-                    }
-                    break;
-
-                //Move right 'D'
-                case 1:
-                    popUpsArray[current].SetActive(true);
-
-                    //When 'D' pressed
-                    if (Input.GetKeyDown(KeyCode.D))
-                    {
-                        popUpsArray[current].SetActive(false);
-
-                        //Next popUp
-                        current = 2;
-                    }
-                    break;
-
-                //Jump 'Space'
-                case 2:
-                    popUpsArray[current].SetActive(true);
-
-                    //When 'Space' pressed
-                    if (Input.GetKeyDown(KeyCode.Space))
-                    {
-                        popUpsArray[current].SetActive(false);
-
-                        //Next popUp
-                        current = 3;
-                    }
-                    break;
-
-                //Stamina
-                case 3:
-                    popUpsArray[current].SetActive(true);
-
-                    //Pauses simulation so that player can read the popUp
-                    PauseGame();
-
-                    //When any key down
-                    if (Input.anyKeyDown)
-                    {
-                        popUpsArray[current].SetActive(false);
-
-                        //Next popUp
-                        current = 4;
-                    }
-                    break;
-
-                //Keys
-                case 4:
-                    popUpsArray[current].SetActive(true);
-
-                    //Simulation is still paused
-
-                    //When any key down
-                    if (Input.anyKeyDown)
-                    {
-                        popUpsArray[current].SetActive(false);
-
-                        //Next popUp
-                        current = 5;
-                    }
-                    break;
-
-                //Telephone
-                case 5:
-                    popUpsArray[current].SetActive(true);
-
-                    //Simulation is still paused
-
-                    //When any key down
-                    if (Input.anyKeyDown)
-                    {
-                        popUpsArray[current].SetActive(false);
-
-                        //Next popUp
-                        current = 6;
-
-                        //Resumes simulation
-                        ResumeGame();
-                    }
-                    break;
-
-                //Intersection
-                case 6:
-                    //In intersection
-                    if (atIntersection)
-                    {
-                        popUpsArray[current].SetActive(true);
-
-                        //When 'A' or 'D' pressed
-                        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
-                        {
-                            popUpsArray[current].SetActive(false);
-
-                            //Next popUp
-                            current++;
-                        }
-                    }
-                    break;
-
-                //Don't get caught
-                default:
-                    popUpsArray[current].SetActive(true);
-
-                    //Timer ends
-                    if (showTime <= 0)
-                    {
-                        popUpsArray[current].SetActive(false);
-                    }
-                    else
-                    {
-                        //Reduces timer
-                        showTime -= Time.deltaTime;
-                    }
-
-                    break;
-            }
-        }
+        atIntersection = true;
     }
 
-    private void CheckIntersection()
+    void TurnPointSurpassed(object sender, bool turned)
     {
-        //Creates a sphere with certain radious at checker position that will get triggered by certain mask
-        if (Physics.CheckSphere(intersectionChecker.position,checkerRadious, triggerMask))
-        {
-            atIntersection= true;
-        }
-    }
-
-    void PauseGame()
-    {
-        // Set the time scale to 0 to pause the game
-        Time.timeScale = 0f;
-    }
-
-    void ResumeGame()
-    {
-        // Set the time scale back to 1 to resume the game
-        Time.timeScale = 1f;
+        hasSurpassedTurnPoint = true;
     }
 }

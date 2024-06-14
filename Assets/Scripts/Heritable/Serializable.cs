@@ -9,7 +9,7 @@ public class Serializable<T>
     T value;
 
     /// <summary>
-    /// Saves in memory
+    /// Saves in memory.
     /// </summary>
     public virtual void Serialize(T value, string fileName)
     {
@@ -22,7 +22,7 @@ public class Serializable<T>
     }
 
     /// <summary>
-    /// Reads from memory
+    /// Reads from memory.
     /// </summary>
     public virtual T Deserialize(string fileName)
     {

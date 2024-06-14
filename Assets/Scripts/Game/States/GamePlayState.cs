@@ -9,6 +9,7 @@ public class GamePlayState : AGameState
     bool eventsSubscribed = false;
     PlayerCollectiblesUI playerCollectedUI;
     PlayerStaminaUI playerStaminaUI;
+    TutorialManager tutorialManager;
 
     public override void Enter()
     {
@@ -24,8 +25,10 @@ public class GamePlayState : AGameState
 
             playerCollectedUI = new();
             playerStaminaUI = new();
+            tutorialManager = new();
             playerCollectedUI.Initialize();
             playerStaminaUI.Initialize();
+            tutorialManager.Initialize();
 
             eventsSubscribed = true;
         }
@@ -37,6 +40,7 @@ public class GamePlayState : AGameState
             buttonClickedName = "Pause";
 
         //game.autosave.Update();
+        tutorialManager.Update();
     }
 
     public override void Exit()
