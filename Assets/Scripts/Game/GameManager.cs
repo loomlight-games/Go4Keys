@@ -2,7 +2,7 @@ using System;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Implements context methods 
+/// Implements context and transitions for game states.
 /// </summary>
 public class GameManager : AStateController
 {

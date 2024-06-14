@@ -2,14 +2,13 @@
 
 public class GamePlayState : AGameState
 {
-    PlayerCollectiblesUI playerCollectedUI;
-    PlayerStaminaUI playerStaminaUI;
     GameObject buttons;
     GameObject pauseButton;
     string buttonClickedName = "None";
-    string result;
-    bool gameEnded = false;
+    string result = "None";
     bool eventsSubscribed = false;
+    PlayerCollectiblesUI playerCollectedUI;
+    PlayerStaminaUI playerStaminaUI;
 
     public override void Enter()
     {
@@ -48,7 +47,7 @@ public class GamePlayState : AGameState
             pauseButton.SetActive(false);
             game.SetState(game.pauseState);
         }
-        else if (gameEnded)
+        else if (result != "None") // Result has been received
         {
             game.SetState(game.endState,result);
         }
@@ -61,7 +60,6 @@ public class GamePlayState : AGameState
 
     void GameEnded(object sender, string result)
     {
-        gameEnded = true;
         this.result = result;
     }
 }
