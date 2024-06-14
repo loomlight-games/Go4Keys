@@ -1,37 +1,52 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class SoundManager : MonoBehaviour
 {
     float lastStaminaValue = 100f;
     bool played = false;
 
-    // Game
     [SerializeField] AudioSource staminaRecovered;
     [SerializeField] AudioSource jump;
     [SerializeField] AudioSource chaserResetted;
     [SerializeField] AudioSource collectibleFound;
     [SerializeField] AudioSource turn;
-    // UI
-    [SerializeField] AudioSource pause;
     [SerializeField] AudioSource victory;
     [SerializeField] AudioSource defeat;
+    [SerializeField] AudioSource pause;
+    [SerializeField] AudioSource other;
 
     // Start is called before the first frame update
     void Start()
     {
-        Player.Instance.resilient.StaminaChangeEvent += StaminaRecover;
-        Player.Instance.jumper.JumpEvent += Jump;
-        Player.Instance.chased.ChaserResettedEvent += ChaserResetted;
-        Player.Instance.keyCollecter.CollectibleFoundEvent += CollectibleFound;
-        Player.Instance.turner.TurnedEvent += Turn;
         GameManager.Instance.ButtonClicked += ButtonClicked;
-        Player.Instance.keyCollecter.AllFoundEvent += Victory;
-        Player.Instance.chased.CaughtEvent += Caught;
-        Player.Instance.resilient.StaminaChangeEvent += Tired;
+
+        if (Player.Instance != null)
+        {
+            Player.Instance.resilient.StaminaChangeEvent += StaminaRecover;
+            Player.Instance.jumper.JumpEvent += Jump;
+            Player.Instance.chased.ChaserResettedEvent += ChaserResetted;
+            Player.Instance.keyCollecter.CollectibleFoundEvent += CollectibleFound;
+            Player.Instance.turner.TurnedEvent += Turn;
+            Player.Instance.keyCollecter.AllFoundEvent += Victory;
+            Player.Instance.chased.CaughtEvent += Caught;
+            Player.Instance.resilient.StaminaChangeEvent += Tired;
+        }
+    }
+
+    void ButtonClicked(object sender, string buttonName)
+    {
+        switch (buttonName)
+        {
+            case "Pause":
+            case "Resume":
+            case "Replay":
+                pause.Play();
+                break;
+            default:
+                other.Play();
+                break;
+        }
     }
 
     void StaminaRecover(object sender, float stamina)
@@ -64,11 +79,6 @@ public class SoundManager : MonoBehaviour
             turn.Play();
     }
 
-    void ButtonClicked(object sender, string buttonName)
-    {
-        pause.Play();
-    }
-
     void Victory(object sender, EventArgs e)
     {
         victory.Play();
@@ -87,5 +97,4 @@ public class SoundManager : MonoBehaviour
             played = true;
         }
     }
-
 }

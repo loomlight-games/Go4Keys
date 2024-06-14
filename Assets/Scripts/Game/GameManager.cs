@@ -65,7 +65,11 @@ public class GameManager : AStateController
 
     public override void Start()
     {
-        if (SceneManager.GetActiveScene().name == "Level01")
+        if (SceneManager.GetActiveScene().name == "Main Menu")
+        {
+            SetState(mainMenuState);
+        }
+        else
         {
             playerCollectedUI = new(leftIcons, foundIcons);
             playerStaminaUI = new(staminaBar);
@@ -74,10 +78,6 @@ public class GameManager : AStateController
             gameResultUI = new(victory, caught, tired);
 
             SetState(playState);
-        }
-        else
-        {
-            SetState(mainMenuState);
         }
     }
 
