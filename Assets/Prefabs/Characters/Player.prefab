@@ -166,8 +166,8 @@ MonoBehaviour:
   jumpForce: 7
   keysToCollect: 3
   staminaLossPerStep: 2
-  staminaLossPerJump: 500
-  chaserResetDistance: 7.5
+  staminaLossPerJump: 600
+  chaserResetDistance: 8
 --- !u!1001 &8825828370497070521
 PrefabInstance:
   m_ObjectHideFlags: 0

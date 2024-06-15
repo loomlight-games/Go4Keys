@@ -49,9 +49,9 @@ public class Chaser : MonoBehaviour
                 UpdatePos(correspondingPosition); 
             }
             // It's too much behind the player
-            else if (transform.localPosition.z < player.localPosition.z - 8f)
+            else if (transform.localPosition.z < player.localPosition.z - 9f)
             {
-                farthestPos = player.localPosition.z - 8f + acceleration * accelerationIncrement * Time.deltaTime;
+                farthestPos = player.localPosition.z - 9f + acceleration * accelerationIncrement * Time.deltaTime;
 
                 // Resets to farthest position
                 UpdatePos(farthestPos);
