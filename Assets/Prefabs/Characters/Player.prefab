@@ -161,24 +161,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d492cd5d8cd8cda4085d0ee14fc2588f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidBody: {fileID: 0}
-  playerParent: {fileID: 0}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  groundChecker: {fileID: 1121701607193939789}
-  obstacleChecker: {fileID: 4890186227112978585}
-  railChangeSpeed: 7
   forwardSpeed: 8
+  railChangeSpeed: 7
   jumpForce: 7
-  rails: {fileID: 0}
   keysToCollect: 3
   staminaLossPerStep: 2
   staminaLossPerJump: 500
-  chaserResetDistance: 8
+  chaserResetDistance: 7.5
 --- !u!1001 &8825828370497070521
 PrefabInstance:
   m_ObjectHideFlags: 0

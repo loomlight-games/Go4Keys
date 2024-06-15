@@ -8,18 +8,19 @@ using UnityEngine;
 public class PlayerAtIntersectionState : APlayerState
 {
     bool hasSurpassedTurnPoint = false;
-    bool isCaught = false;
-    bool alreadyCalled = false;
+    string result;
+    bool alreadyEntered = false;
 
     public override void Enter()
     {
-        if (!alreadyCalled)
+        if (!alreadyEntered)
         {
-            // Subscribe just once
             player.turner.TurnedEvent += TurnPointSurpassed;
+            player.keyCollecter.AllFoundEvent += Victory;
             player.chased.CaughtEvent += Caught;
+            player.resilient.StaminaChangeEvent += Tired;
 
-            alreadyCalled = true;
+            alreadyEntered = true;
         }
     }
     public override void Update()
@@ -49,11 +50,9 @@ public class PlayerAtIntersectionState : APlayerState
             hasSurpassedTurnPoint = false;
             player.SetState(player.runState);
         }
-        else if (isCaught)
+        else if (result != null)
         {
-            //isCaught = false; No need bc won't return
-            player.SetState(player.endState);
-            
+            player.SetState(player.endState, result);
         }
     }
 
@@ -62,8 +61,21 @@ public class PlayerAtIntersectionState : APlayerState
         hasSurpassedTurnPoint = true;
     }
 
+    void Victory(object sender, EventArgs e)
+    {
+        result = "Victory";
+    }
+
     void Caught(object sender, EventArgs any)
     {
-        isCaught = true;
+        result = "Caught";
+    }
+
+    void Tired(object sender, float stamina)
+    {
+        if (stamina <= 0)
+        {
+            result = "Tired";
+        }
     }
 }

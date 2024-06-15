@@ -51,70 +51,73 @@ public class TutorialManager
 
     public void Update()
     {
-        if (atIntersection) // Intersection guides
+        if (learnTutorial)
         {
-            intersection.SetActive(true);
-            atIntersection = false;
-        }
-        else if (hasSurpassedTurnPoint)
-        {
-            intersection.SetActive(false);
+            if (atIntersection) // Intersection guides
+            {
+                intersection.SetActive(true);
+                atIntersection = false;
+            }
+            else if (hasSurpassedTurnPoint)
+            {
+                intersection.SetActive(false);
 
-            if (popUpShowTime < 0f)
-            {
-                advice.SetActive(false);
-                tutorialFinished = false;
-                hasSurpassedTurnPoint = false;
-            }
-            else if (popUpShowTime >= 0f)
-            {
-                advice.SetActive(true); // Advice
-                popUpShowTime -= Time.deltaTime;
-            }
-        }
-        else if (!tutorialFinished) 
-        {
-            if (Input.GetKeyDown(KeyCode.A) && left.activeSelf)
-            {
-                left.SetActive(false);
-                right.SetActive(true); // Right
-            }
-            else if (Input.GetKeyDown(KeyCode.D) && right.activeSelf)
-            {
-                right.SetActive(false);
-                jump.SetActive(true); // Jump
-            }
-            else if (jump.activeSelf)
-            {
                 if (popUpShowTime < 0f)
                 {
-                    jump.SetActive(false);
-                    stamina.SetActive(true); // Stamina
-                    popUpShowTime = 2f;
-                    Time.timeScale = 0f;
+                    advice.SetActive(false);
+                    tutorialFinished = false;
+                    hasSurpassedTurnPoint = false;
                 }
                 else if (popUpShowTime >= 0f)
                 {
+                    advice.SetActive(true); // Advice
                     popUpShowTime -= Time.deltaTime;
                 }
-
             }
-            else if (Input.anyKeyDown)
+            else if (!tutorialFinished)
             {
-                if (stamina.activeSelf)
+                if (Input.GetKeyDown(KeyCode.A) && left.activeSelf)
                 {
-                    stamina.SetActive(false);
-                    keys.SetActive(true); // Keys
+                    left.SetActive(false);
+                    right.SetActive(true); // Right
                 }
-                else if (keys.activeSelf)
+                else if (Input.GetKeyDown(KeyCode.D) && right.activeSelf)
                 {
-                    keys.SetActive(false);
-                    telephone.SetActive(true); // Telephone
+                    right.SetActive(false);
+                    jump.SetActive(true); // Jump
                 }
-                else if (telephone.activeSelf)
+                else if (jump.activeSelf)
                 {
-                    telephone.SetActive(false);
-                    Time.timeScale = 1f;
+                    if (popUpShowTime < 0f)
+                    {
+                        jump.SetActive(false);
+                        stamina.SetActive(true); // Stamina
+                        popUpShowTime = 2f;
+                        Time.timeScale = 0f;
+                    }
+                    else if (popUpShowTime >= 0f)
+                    {
+                        popUpShowTime -= Time.deltaTime;
+                    }
+
+                }
+                else if (Input.anyKeyDown)
+                {
+                    if (stamina.activeSelf)
+                    {
+                        stamina.SetActive(false);
+                        keys.SetActive(true); // Keys
+                    }
+                    else if (keys.activeSelf)
+                    {
+                        keys.SetActive(false);
+                        telephone.SetActive(true); // Telephone
+                    }
+                    else if (telephone.activeSelf)
+                    {
+                        telephone.SetActive(false);
+                        Time.timeScale = 1f;
+                    }
                 }
             }
         }

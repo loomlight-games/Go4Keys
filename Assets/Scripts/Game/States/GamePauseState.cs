@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Stops simulation and can quit the game or switch to gameplay or main menu states.
+/// </summary>
 public class GamePauseState : AGameState
 {
     GameObject buttons;
@@ -8,7 +11,7 @@ public class GamePauseState : AGameState
     GameObject mainMenuButton;
     GameObject quitButton;
     string buttonClickedName = "None";
-    bool eventsSubscribed = false;
+    bool alreadyEntered = false;
 
     public override void Enter()
     {
@@ -22,17 +25,20 @@ public class GamePauseState : AGameState
 
         Time.timeScale = 0f; // Stops simulation
 
-        if (!eventsSubscribed) // Subscribes to events just once
+        if (!alreadyEntered) // Subscribes to events just once
         {
             game.ButtonClicked += ButtonClicked;
-            eventsSubscribed = true;
+            alreadyEntered = true;
         }
     }
 
     public override void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
+        {
             buttonClickedName = "Resume";
+            game.ClickButton("Resume");
+        }
     }
 
     public override void Exit()

@@ -1,8 +1,7 @@
-
 using UnityEngine;
 
 /// <summary>
-/// Defines context methods. Implements MonoBehaviour
+/// Defines context methods. Implements MonoBehaviour.
 /// </summary>
 public abstract class AStateController: MonoBehaviour
 {
@@ -28,7 +27,7 @@ public abstract class AStateController: MonoBehaviour
     }
 
     /// <summary>
-    /// Gets the current state of the controller
+    /// Gets the current state of the controller.
     /// </summary>
     /// <returns>Current state</returns>
     public virtual IState GetState()
@@ -37,9 +36,8 @@ public abstract class AStateController: MonoBehaviour
     }
 
     /// <summary>
-    /// Sets the current state of the controller
+    /// Sets the current state of the controller.
     /// </summary>
-    /// <param name="state">New current state</param>
     public virtual void SetState(IState state)
     {
         currentState = state;
@@ -48,6 +46,9 @@ public abstract class AStateController: MonoBehaviour
         Debug.Log(currentState.ToString());
     }
 
+    /// <summary>
+    /// Sets the current state of the controller with additional info.
+    /// </summary>
     public virtual void SetState(IState state, string info)
     {
         currentState = state;

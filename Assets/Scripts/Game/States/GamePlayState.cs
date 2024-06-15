@@ -1,24 +1,26 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Handles gameplay with the simulation going.
+/// </summary>
 public class GamePlayState : AGameState
 {
     GameObject buttons;
     GameObject pauseButton;
-    string buttonClickedName = "None";
-    string result = "None";
-    bool eventsSubscribed = false;
     PlayerCollectiblesUI playerCollectedUI;
     PlayerStaminaUI playerStaminaUI;
     TutorialManager tutorialManager;
+    string buttonClickedName = "None";
+    string result = "None";
+    bool alreadyEntered = false;
 
     public override void Enter()
     {
         buttons = GameObject.Find("Buttons");
         pauseButton = buttons.transform.Find("Pause").gameObject;
         pauseButton.SetActive(true);
-        //game.autosave.Start();
 
-        if (!eventsSubscribed) // Subscribes to events just once
+        if (!alreadyEntered) // Subscribes to events just once
         {
             game.ButtonClicked += ButtonClicked;
             Player.Instance.endState.EndGameEvent += GameEnded;
@@ -30,16 +32,18 @@ public class GamePlayState : AGameState
             playerStaminaUI.Initialize();
             tutorialManager.Initialize();
 
-            eventsSubscribed = true;
+            alreadyEntered = true;
         }
     }
 
     public override void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
+        {
             buttonClickedName = "Pause";
+            game.ClickButton("Pause");
+        }
 
-        //game.autosave.Update();
         tutorialManager.Update();
     }
 

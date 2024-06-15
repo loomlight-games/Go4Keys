@@ -9,15 +9,12 @@ public class PlayerRunState : APlayerState
 {
     bool atIntersection = false;
     string result;
-    bool alreadyCalled = false;
+    bool alreadyEntered = false;
 
     public override void Enter()
     {
-        player.keyCollecter.Initialize();
-
-        if (!alreadyCalled)
+        if (!alreadyEntered)
         {
-            // Subscribe just once
             player.endlessRunner.AtIntersectionEvent += AtIntersection;
             player.keyCollecter.AllFoundEvent += Victory;
             player.chased.CaughtEvent += Caught;
@@ -27,7 +24,7 @@ public class PlayerRunState : APlayerState
             player.railed.Initialize(); // Detects rails parent
             player.jumper.Initialize(); // Detects obstacle checker
 
-            alreadyCalled = true;
+            alreadyEntered = true;
         }
     }
 
@@ -56,6 +53,7 @@ public class PlayerRunState : APlayerState
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            // Jump
             player.SetState(player.jumpState);
         }
         else if (atIntersection)

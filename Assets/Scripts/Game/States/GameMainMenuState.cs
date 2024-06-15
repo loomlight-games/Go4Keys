@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Handles main game menu and can quit game or switch to play, options or credits states.
+/// </summary>
 public class GameMainMenuState : AGameState
 {
     GameObject UI;
     string buttonClickedName = "None";
-    bool eventsSubscribed = false;
+    bool alreadyEntered = false;
 
     public override void Enter()
     {
@@ -13,10 +16,10 @@ public class GameMainMenuState : AGameState
         UI = UI.transform.Find("Main menu UI").gameObject;
         UI.SetActive(true);
 
-        if (!eventsSubscribed) // Subscribes to events just once
+        if (!alreadyEntered) // Subscribes to events just once
         {
             game.ButtonClicked += ButtonClicked;
-            eventsSubscribed = true;
+            alreadyEntered = true;
         }
     }
 

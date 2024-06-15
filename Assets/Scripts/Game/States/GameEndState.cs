@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Stops simulation to show the result of the game. Can quit the game or switch to gameplay or main menu states.
+/// </summary>
 public class GameEndState : AGameState
 {
-
     string buttonClickedName = "None";
-    bool eventsSubscribed = false;
+    bool alreadyEntered = false;
 
     public override void Enter(string result)
     {
@@ -39,17 +41,20 @@ public class GameEndState : AGameState
         else if (result == "Tired")
             tiredResult.SetActive(true);
 
-        if (!eventsSubscribed) // Subscribes to events just once
+        if (!alreadyEntered) // Subscribes to events just once
         {
             game.ButtonClicked += ButtonClicked;
-            eventsSubscribed = true;
+            alreadyEntered = true;
         }
     }
 
     public override void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
+        {
             buttonClickedName = "Replay";
+            game.ClickButton("Replay");
+        }
     }
 
     public override void Exit()

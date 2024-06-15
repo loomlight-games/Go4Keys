@@ -1,12 +1,14 @@
-
 using UnityEngine;
 
+/// <summary>
+/// Handles music and effects volume, as well as tutorial visibility. Can switch to main menu state.
+/// </summary>
 public class GameOptionsMenuState : AGameState
 {
     GameObject UI;
-    string buttonClickedName = "None";
-    bool alreadyInitialized = false;
     readonly TutorialToggler tutorialToggler = new();
+    string buttonClickedName = "None";
+    bool alreadyEntered = false;
 
     public override void Enter()
     {
@@ -16,11 +18,11 @@ public class GameOptionsMenuState : AGameState
 
         tutorialToggler.Initialize(); // Finds buttons and activate them according to saved data
 
-        if (!alreadyInitialized) // Subscribes to events just once
+        if (!alreadyEntered) // Subscribes to events just once
         {
             game.ButtonClicked += ButtonClicked;
 
-            alreadyInitialized = true;
+            alreadyEntered = true;
         }
     }
 

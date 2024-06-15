@@ -1,12 +1,13 @@
-
 using UnityEngine;
 
+/// <summary>
+/// Shows game credits. Can switch to main menu state
+/// </summary>
 public class GameCreditsState : AGameState
 {
     GameObject UI;
-
     string buttonClickedName = "None";
-    bool eventsSubscribed = false;
+    bool alreadyEntered = false;
 
     public override void Enter()
     {
@@ -14,10 +15,10 @@ public class GameCreditsState : AGameState
         UI = UI.transform.Find("Credits UI").gameObject;
         UI.SetActive(true);
 
-        if (!eventsSubscribed) // Subscribes to events just once
+        if (!alreadyEntered) // Subscribes to events just once
         {
             game.ButtonClicked += ButtonClicked;
-            eventsSubscribed = true;
+            alreadyEntered = true;
         }
     }
 

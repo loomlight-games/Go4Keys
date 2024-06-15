@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Provides player states, movement and mechanics.
+/// Implements context and transitions for player states.
 /// </summary>
 public class Player : AStateController
 {
