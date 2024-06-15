@@ -47,7 +47,7 @@ public class Resilient
         //With an energy drink
         if (other.gameObject.CompareTag("EnergyDrink"))
         {
-            currentStamina += other.GetComponent<EnergyDrink>().type.recover;
+            currentStamina += other.GetComponent<EnergyDrink>().recoverValue;
 
             //Deactivates it
             other.gameObject.SetActive(false);
