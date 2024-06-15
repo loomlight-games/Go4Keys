@@ -8,6 +8,7 @@ using UnityEngine;
 public class EndlessRunner
 {
     public event EventHandler AtIntersectionEvent;
+    public event EventHandler<bool> ObstacleInFront;
 
     readonly Transform runner;
     readonly float speed;
@@ -30,9 +31,14 @@ public class EndlessRunner
 
     public void Update()
     {
-        // Obstacle is NOT in front (obstacle checker collides with obstacle layer)
-        if (!Physics.CheckSphere(obstacleChecker.position, checkerRadius, obstacle))
+        // Obstacle in front (obstacle checker collides with obstacle layer)
+        if (Physics.CheckSphere(obstacleChecker.position, checkerRadius, obstacle))
         {
+            ObstacleInFront?.Invoke(this, true);
+        }
+        else
+        {
+            ObstacleInFront?.Invoke(this, false);
             runner.Translate(speed * Time.deltaTime * Vector3.forward);
         }
     }

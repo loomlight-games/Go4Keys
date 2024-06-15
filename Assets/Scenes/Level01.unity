@@ -9463,7 +9463,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 481660406}
-  - component: {fileID: 481660409}
   m_Layer: 5
   m_Name: Buttons
   m_TagString: Untagged
@@ -9496,18 +9495,6 @@ RectTransform:
   m_AnchoredPosition: {x: 92, y: 622}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &481660409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481660405}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 430ba6cdf530bf340ab2298c73928918, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &482207793
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17198,7 +17185,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 481660409}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: KeyCountResetter, Assembly-CSharp
         m_MethodName: ResetKeyCount
         m_Mode: 1
@@ -45754,6 +45741,10 @@ PrefabInstance:
     - target: {fileID: 16122683316483596, guid: d76042eafccd8c840a33121b95135238, type: 3}
       propertyPath: m_TagString
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3054181774513162768, guid: d76042eafccd8c840a33121b95135238, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6038181690433566219, guid: d76042eafccd8c840a33121b95135238, type: 3}
       propertyPath: m_RootOrder

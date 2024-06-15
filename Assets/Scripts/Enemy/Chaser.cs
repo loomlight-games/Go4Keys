@@ -8,12 +8,13 @@ public class Chaser : MonoBehaviour
 {
     Rigidbody chaserRigidBody;
     Transform robberObstacleChecker;
-    Transform playerPosition;
-    Transform playerObstacleChecker;
+    Transform player;
     LayerMask obstacle;
     LayerMask ground;
     bool targetCaught = false;
-    bool targetRunning = false;
+    bool targetStopped = false;
+    float lastZposition = 100f;
+    float correspondingPosition, normalPosition, fastPosition, farthestPos;
 
     [SerializeField] float acceleration; // Related to its parent speed
     [SerializeField] float accelerationIncrement;
@@ -22,12 +23,13 @@ public class Chaser : MonoBehaviour
 
     void Start()
     {
-        chaserRigidBody = transform.GetComponent<Rigidbody>();
-
+        Player.Instance.endlessRunner.ObstacleInFront += TargetStopped;
         Player.Instance.chased.CaughtEvent += TargetCaught;
         Player.Instance.chased.ChaserResettedEvent += ResetPosition;
-        playerPosition = Player.Instance.transform;
-        playerObstacleChecker = GameObject.Find("Player obstacle checker").transform;
+
+        player = Player.Instance.transform;
+
+        chaserRigidBody = transform.GetComponent<Rigidbody>();
         robberObstacleChecker = GameObject.Find("Robber checker").transform;
         obstacle = 1 << LayerMask.NameToLayer("Obstacle");
         ground = 1 << LayerMask.NameToLayer("Ground");
@@ -35,49 +37,83 @@ public class Chaser : MonoBehaviour
 
     void Update()
     {
-        // Replicates target position in X
-        transform.localPosition = new Vector3(playerPosition.localPosition.x, transform.localPosition.y, transform.localPosition.z);
-
         if (!targetCaught)
         {
-            //Obstacle in front of target (has stopped)
-            if (Physics.CheckSphere(playerObstacleChecker.position, .4f, obstacle)) //Same radious as EndlessRunner.CheckObstacle
-            {
-                targetRunning = false;
-                transform.Translate(acceleration * accelerationIncrement * Time.deltaTime * transform.forward, Space.World);
-            }
-            else //No obstacle in front (target still running)
-            {
-                targetRunning = true;
-                transform.Translate(acceleration * Time.deltaTime * transform.forward, Space.World);
-            }
+            // Last position at max speed
+            correspondingPosition = lastZposition + acceleration * accelerationIncrement * Time.deltaTime;
 
-            // Check for obstacles and jump if it's also touching ground
-            if (Physics.CheckSphere(robberObstacleChecker.position, checkerRadious, obstacle)
-                && Physics.CheckSphere(robberObstacleChecker.position, checkerRadious, ground))
+            // Has advanced too fast from last position
+            if (transform.localPosition.z > correspondingPosition) 
             {
-                if (targetRunning) //Jumps if target is running
+                // Resets to last position at max speed
+                UpdatePos(correspondingPosition); 
+            }
+            // It's too much behind the player
+            else if (transform.localPosition.z < player.localPosition.z - 8f)
+            {
+                farthestPos = player.localPosition.z - 8f + acceleration * accelerationIncrement * Time.deltaTime;
+
+                // Resets to farthest position
+                UpdatePos(farthestPos);
+            }
+            // Moves normally
+            else
+            {
+                // Current position at normal speed
+                normalPosition = transform.localPosition.z + acceleration * Time.deltaTime;
+                // Current position at max speed
+                fastPosition = transform.localPosition.z + acceleration * accelerationIncrement * Time.deltaTime;
+
+                // Target encounters an obstacle in front
+                if (targetStopped)
                 {
-                    chaserRigidBody.velocity = new Vector3(chaserRigidBody.velocity.x, jumpForce, chaserRigidBody.velocity.z);
+                    // Increases speed
+                    UpdatePos(fastPosition);
                 }
+                // Target is advancing forward normally
+                else
+                {
+                    // Normal speed
+                    UpdatePos(normalPosition);
+
+                    // Jumps if there's an obstacle in front and is grounded
+                    if (Physics.CheckSphere(robberObstacleChecker.position, checkerRadious, obstacle)
+                        && Physics.CheckSphere(robberObstacleChecker.position, checkerRadious, ground))
+                    {
+                        chaserRigidBody.velocity = new Vector3(chaserRigidBody.velocity.x,
+                                                               jumpForce,
+                                                               chaserRigidBody.velocity.z);
+                    }
+                }
+
+                lastZposition = transform.localPosition.z;
             }
         }
     }
 
     /// <summary>
-    /// Called by the event invoked when target has been caught.
+    /// Updates position as the X of player and a step in Z position
     /// </summary>
+    void UpdatePos(float step)
+    {
+        transform.localPosition = new Vector3(player.localPosition.x,transform.localPosition.y,step);
+    }
+
+    void TargetStopped(object sender, bool stopped)
+    {
+        targetStopped = stopped;
+    }
+    
     void TargetCaught(object sender, EventArgs e)
     {
         targetCaught = true;
     }
 
-    /// <summary>
-    /// Called by the event invoked when target collides with a resetter.
-    /// </summary>
     void ResetPosition(object sender, float resetDistance)
     {
-        transform.localPosition = new Vector3(playerPosition.localPosition.x, transform.localPosition.y, playerPosition.localPosition.z - resetDistance);
+        transform.localPosition = new Vector3(player.localPosition.x, 
+                                              transform.localPosition.y, 
+                                              player.localPosition.z - resetDistance);
     }
 
     private void OnDrawGizmos()
