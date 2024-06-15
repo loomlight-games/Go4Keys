@@ -10,7 +10,7 @@ public class EnergyDrink : MonoBehaviour
     #region INTRINSIC STATE
     // Common properties for all the energy drinks of the same type
     // (Defined in the prefab)
-    public EnergyDrinkSO EnergyDrinkSO; 
+    public EnergyDrinkSO EnergyDrinkSO;
     public RotatorySO rotationType;
     public float bounceSpeed;
     Transform upMark;
@@ -20,7 +20,7 @@ public class EnergyDrink : MonoBehaviour
     #region EXTRINSIC STATE 
     // Differente in each object
     readonly System.Random random = new();
-    public float recoverValue;
+    [HideInInspector] public float recoverValue;
     bool goUp = true;
     #endregion
 

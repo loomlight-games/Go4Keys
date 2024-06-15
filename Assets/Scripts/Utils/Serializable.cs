@@ -18,7 +18,6 @@ public class Serializable<T>
         FileStream jsonFile = File.Create(fileName); //Creates file with that name
         formatter.Serialize(jsonFile, this); //Writes information in file
         jsonFile.Close(); //Close file
-        Debug.Log("Saved as " + value);
     }
 
     /// <summary>
@@ -31,7 +30,6 @@ public class Serializable<T>
         Serializable<T> data = (Serializable<T>)formatter.Deserialize(jsonFile); //Extracts information from file
         jsonFile.Close(); //Close file
         this.value = data.value;
-        Debug.Log("Restored as " + value);
         return value;
     }
 }
