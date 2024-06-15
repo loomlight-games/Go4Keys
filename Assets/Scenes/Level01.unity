@@ -45721,7 +45721,8 @@ PrefabInstance:
       propertyPath: keysFoundUI
       value: 
       objectReference: {fileID: 1069986187}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5859872538111919777, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

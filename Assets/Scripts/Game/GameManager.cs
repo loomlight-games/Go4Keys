@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Implements context and transitions for game states.
 /// </summary>
-public class GameManager : AStateController
+public class GameManager : AStateManager
 {
     public static GameManager Instance;
     public event EventHandler<string> ButtonClicked;

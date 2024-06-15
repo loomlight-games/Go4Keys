@@ -31,8 +31,8 @@ public class TutorialManager
 
         if (learnTutorial)
         {
-            Player.Instance.endlessRunner.AtIntersectionEvent += AtIntersection;
-            Player.Instance.turner.TurnedEvent += TurnPointSurpassed;
+            PlayerManager.Instance.endlessRunner.AtIntersectionEvent += AtIntersection;
+            PlayerManager.Instance.turner.TurnEvent += TurnPointSurpassed;
 
             popUps = GameObject.Find("Tutorial pop ups");
 

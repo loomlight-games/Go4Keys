@@ -15,7 +15,7 @@ public class PlayerCollectiblesUI
         leftArray = SetArray(GameObject.Find("Remaining"));
         foundArray = SetArray(GameObject.Find("Found"));
 
-        Player.Instance.keyCollecter.CollectibleFoundEvent += UpdateIcons;
+        PlayerManager.Instance.keyCollecter.KeyFoundEvent += UpdateIcons;
     }
 
     /// <summary>

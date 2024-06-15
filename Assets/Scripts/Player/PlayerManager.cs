@@ -3,9 +3,9 @@
 /// <summary>
 /// Implements context and transitions for player states.
 /// </summary>
-public class Player : AStateController
+public class PlayerManager : AStateManager
 {
-    public static Player Instance;
+    public static PlayerManager Instance;
 
     #region STATES
     public PlayerRunState runState = new();

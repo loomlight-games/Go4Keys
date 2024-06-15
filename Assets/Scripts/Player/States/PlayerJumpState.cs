@@ -19,7 +19,7 @@ public class PlayerJumpState : APlayerState
         if (!alreadyEntered)
         {
             player.endlessRunner.AtIntersectionEvent += AtIntersection;
-            player.turner.TurnedEvent += TurnPointSurpassed;
+            player.turner.TurnEvent += TurnPointSurpassed;
             player.chased.CaughtEvent += Caught;
 
             alreadyEntered = true;

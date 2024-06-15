@@ -7,7 +7,7 @@ using UnityEngine;
 public class KeyCollecter
 {
     public event EventHandler AllFoundEvent;
-    public event EventHandler<int> CollectibleFoundEvent;
+    public event EventHandler<int> KeyFoundEvent;
 
     readonly int keysToCollect;
     int keysCollected = 0;
@@ -27,7 +27,7 @@ public class KeyCollecter
 
             keysCollected++;
 
-            CollectibleFoundEvent?.Invoke(this, keysCollected);
+            KeyFoundEvent?.Invoke(this, keysCollected);
 
             if (keysCollected == keysToCollect)
                 AllFoundEvent?.Invoke(this, EventArgs.Empty);

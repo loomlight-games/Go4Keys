@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 public class SoundManager : MonoBehaviour
 {
     float lastStaminaValue = 100f;
-    bool played = false;
 
     [SerializeField] AudioSource mainMenuMusic;
     [SerializeField] AudioSource gameplayMusic;
@@ -32,14 +31,13 @@ public class SoundManager : MonoBehaviour
         {
             gameplayMusic.Play();
 
-            Player.Instance.resilient.StaminaChangeEvent += StaminaRecover;
-            Player.Instance.jumper.JumpEvent += Jump;
-            Player.Instance.chased.ChaserResettedEvent += ChaserResetted;
-            Player.Instance.keyCollecter.CollectibleFoundEvent += CollectibleFound;
-            Player.Instance.turner.TurnedEvent += Turn;
-            Player.Instance.keyCollecter.AllFoundEvent += Victory;
-            Player.Instance.chased.CaughtEvent += Caught;
-            Player.Instance.resilient.StaminaChangeEvent += Tired;
+            PlayerManager.Instance.resilient.StaminaChangeEvent += StaminaChange;
+            PlayerManager.Instance.jumper.JumpEvent += Jump;
+            PlayerManager.Instance.chased.ResetChaserEvent += ChaserResetted;
+            PlayerManager.Instance.keyCollecter.KeyFoundEvent += CollectibleFound;
+            PlayerManager.Instance.turner.TurnEvent += Turn;
+            PlayerManager.Instance.keyCollecter.AllFoundEvent += Victory;
+            PlayerManager.Instance.chased.CaughtEvent += Caught;
         }
     }
 
@@ -58,10 +56,16 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    void StaminaRecover(object sender, float stamina)
+    void StaminaChange(object sender, float stamina)
     {
-        if (stamina > lastStaminaValue)
+        if (stamina < 0)
+        {
+            defeat.Play();
+        }
+        else if (stamina > lastStaminaValue)
+        {
             staminaRecovered.Play();
+        }
 
         lastStaminaValue = stamina;
     }
@@ -96,14 +100,5 @@ public class SoundManager : MonoBehaviour
     void Caught(object sender, EventArgs e)
     {
         defeat.Play();
-    }
-
-    void Tired(object sender, float stamina)
-    {
-        if (stamina <= 0 && !played)
-        {
-            defeat.Play();
-            played = true;
-        }
     }
 }

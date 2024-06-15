@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class Turner
 {
-    public event EventHandler<bool> TurnedEvent;
+    public event EventHandler<bool> TurnEvent;
 
     readonly Transform turner;
     Vector2 transformPosition2D;
@@ -46,18 +46,18 @@ public class Turner
             if (turn == -1)
             {
                 turner.Rotate(0f, -90f, 0f);
-                TurnedEvent?.Invoke(this, true);
+                TurnEvent?.Invoke(this, true);
             }
             else if (turn == 1)
             {
                 turner.Rotate(0f, 90f, 0f);
-                TurnedEvent?.Invoke(this, true);
+                TurnEvent?.Invoke(this, true);
             }
 
             // Reset decision
             turn = 0;
 
-            TurnedEvent?.Invoke(this, false);
+            TurnEvent?.Invoke(this, false);
         }
         
     }
