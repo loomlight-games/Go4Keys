@@ -43,9 +43,13 @@ public class GameManager : AStateController
         }
         else
         {
-            SetState(playState);
-
             Player.Instance.PlayerResult += GameEnded;
+
+            playerCollectedUI.Initialize();
+            playerStaminaUI.Initialize();
+            tutorialUI.Initialize();
+
+            SetState(playState);
         }
     }
 

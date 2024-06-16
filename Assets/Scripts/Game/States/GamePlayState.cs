@@ -6,7 +6,6 @@
 public class GamePlayState : AState
 {
     GameObject UI;
-    bool alreadyEntered = false;
 
     public override void Enter()
     {
@@ -15,15 +14,6 @@ public class GamePlayState : AState
         UI = GameObject.Find("Buttons");
         UI = UI.transform.Find("Pause").gameObject;
         UI.SetActive(true);
-
-        if (!alreadyEntered)
-        {
-            GameManager.Instance.playerCollectedUI.Initialize();
-            GameManager.Instance.playerStaminaUI.Initialize();
-            GameManager.Instance.tutorialUI.Initialize();
-
-            alreadyEntered = true;
-        }
     }
 
     public override void Update()

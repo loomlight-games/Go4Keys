@@ -16,7 +16,7 @@ public class GameOptionsMenuState : AState
 
         if (!alreadyEntered) 
         {
-            GameManager.Instance.tutorialToggler.Initialize(); // Finds buttons and activate them according to saved data
+            GameManager.Instance.tutorialToggler.Initialize(); // Finds buttons
             alreadyEntered = true;
         }
     }
