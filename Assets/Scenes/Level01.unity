@@ -45637,18 +45637,6 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5859872538111919777, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
-      propertyPath: rails
-      value: 
-      objectReference: {fileID: 1322850705}
-    - target: {fileID: 5859872538111919777, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
-      propertyPath: collectible
-      value: 
-      objectReference: {fileID: 947267103}
-    - target: {fileID: 5859872538111919777, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
-      propertyPath: railsParent
-      value: 
-      objectReference: {fileID: 1322850705}
     - target: {fileID: 8117148013260554024, guid: 1fed8ba179da12442a6373cf268be9d0, type: 3}
       propertyPath: railsParent
       value: 
