@@ -25,7 +25,7 @@ public class GameEndState : AState
         // Tutorial pop ups
         GameObject tutorial = GameObject.Find("Tutorial pop ups");
         
-        tutorial.SetActive(false);
+        tutorial?.SetActive(false);
 
         // Result pop ups
         GameObject results = GameObject.Find("Results");
