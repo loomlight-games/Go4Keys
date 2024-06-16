@@ -5,32 +5,22 @@
 /// </summary>
 public class GamePlayState : AGameState
 {
-    GameObject buttons;
-    GameObject pauseButton;
-    PlayerCollectiblesUI playerCollectedUI;
-    PlayerStaminaUI playerStaminaUI;
-    TutorialManager tutorialManager;
-    string buttonClickedName = "None";
-    string result = "None";
+    GameObject UI;
     bool alreadyEntered = false;
 
     public override void Enter()
     {
-        buttons = GameObject.Find("Buttons");
-        pauseButton = buttons.transform.Find("Pause").gameObject;
-        pauseButton.SetActive(true);
+        Time.timeScale = 1f; // Resumes simulation
 
-        if (!alreadyEntered) // Subscribes to events just once
+        UI = GameObject.Find("Buttons");
+        UI = UI.transform.Find("Pause").gameObject;
+        UI.SetActive(true);
+
+        if (!alreadyEntered)
         {
-            game.ButtonClicked += ButtonClicked;
-            Player.Instance.endState.EndGameEvent += GameEnded;
-
-            playerCollectedUI = new();
-            playerStaminaUI = new();
-            tutorialManager = new();
-            playerCollectedUI.Initialize();
-            playerStaminaUI.Initialize();
-            tutorialManager.Initialize();
+            game.playerCollectedUI.Initialize();
+            game.playerStaminaUI.Initialize();
+            game.tutorialUI.Initialize();
 
             alreadyEntered = true;
         }
@@ -39,35 +29,13 @@ public class GamePlayState : AGameState
     public override void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            buttonClickedName = "Pause";
             game.ClickButton("Pause");
-        }
 
-        tutorialManager.Update();
+        game.tutorialUI.Update();
     }
 
     public override void Exit()
     {
-        if (buttonClickedName == "Pause") // Pause button clicked or 'Esc' pressed
-        {
-            buttonClickedName = "None";
-            pauseButton.SetActive(false);
-            game.SetState(game.pauseState);
-        }
-        else if (result != "None") // Result has been received
-        {
-            game.SetState(game.endState,result);
-        }
-    }
-
-    void ButtonClicked(object sender, string buttonName)
-    {
-        buttonClickedName = buttonName;
-    }
-
-    void GameEnded(object sender, string result)
-    {
-        this.result = result;
+        UI.SetActive(false);
     }
 }

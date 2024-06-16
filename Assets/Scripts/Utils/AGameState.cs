@@ -22,7 +22,6 @@ public abstract class AGameState : IState
     public virtual void UpdateFrame()
     {
         Update();
-        Exit();
     }
     public virtual void Update() { }
     public virtual void OnTriggerEnter(Collider other) { }

@@ -5,7 +5,7 @@ using UnityEngine;
 /// Handles tutorial pop ups
 /// </summary>
 [Serializable]
-public class TutorialManager
+public class TutorialUI
 {
     readonly Serializable<bool> tutorialVisibility = new(); // Serialized object to know if tutorial is activated
     bool learnTutorial;
@@ -22,7 +22,8 @@ public class TutorialManager
     bool atIntersection = false;
     bool hasSurpassedTurnPoint = false;
     bool tutorialFinished = false;
-    float popUpShowTime = 2f;
+    bool Apressed, Dpressed, SpacePressed, timeEnded, startTimer;
+    float time = 0.3f;
 
     public void Initialize()
     {
@@ -46,6 +47,7 @@ public class TutorialManager
             advice = popUps.transform.Find("Advice").gameObject;
 
             left.SetActive(true); // Left
+            Time.timeScale = 0.2f;
         }
     }
 
@@ -53,53 +55,97 @@ public class TutorialManager
     {
         if (learnTutorial)
         {
+            if (startTimer)
+            {
+                if (time < 0f)
+                {
+                    timeEnded = true;
+                    startTimer = false;
+
+                    if (stamina.activeSelf)
+                        time = 2f;
+                    else
+                        time = 0.3f;
+                }
+                else if (time >= 0f)
+                {
+                    time -= Time.deltaTime;
+                }
+            }
+
             if (atIntersection) // Intersection guides
             {
-                intersection.SetActive(true);
+                intersection.SetActive(true); // Intersection
                 atIntersection = false;
+                timeEnded = false;
             }
             else if (hasSurpassedTurnPoint)
             {
                 intersection.SetActive(false);
 
-                if (popUpShowTime < 0f)
+                startTimer = true;
+
+                advice.SetActive(true);
+
+                if (timeEnded)
                 {
                     advice.SetActive(false);
+                    timeEnded = false;
                     tutorialFinished = false;
                     hasSurpassedTurnPoint = false;
-                }
-                else if (popUpShowTime >= 0f)
-                {
-                    advice.SetActive(true); // Advice
-                    popUpShowTime -= Time.deltaTime;
                 }
             }
             else if (!tutorialFinished)
             {
-                if (Input.GetKeyDown(KeyCode.A) && left.activeSelf)
+                if (Input.GetKeyDown(KeyCode.A))
+                    Apressed = true;
+                else if (Input.GetKeyDown(KeyCode.D))
+                    Dpressed = true;
+                else if (Input.GetKeyDown(KeyCode.Space))
+                    SpacePressed = true;
+
+                if (Apressed && left.activeSelf)
                 {
-                    left.SetActive(false);
-                    right.SetActive(true); // Right
-                }
-                else if (Input.GetKeyDown(KeyCode.D) && right.activeSelf)
-                {
-                    right.SetActive(false);
-                    jump.SetActive(true); // Jump
-                }
-                else if (jump.activeSelf)
-                {
-                    if (popUpShowTime < 0f)
+                    Time.timeScale = 1f;
+
+                    startTimer = true;
+
+                    if (timeEnded)
                     {
-                        jump.SetActive(false);
-                        stamina.SetActive(true); // Stamina
-                        popUpShowTime = 2f;
-                        Time.timeScale = 0f;
-                    }
-                    else if (popUpShowTime >= 0f)
-                    {
-                        popUpShowTime -= Time.deltaTime;
+                        left.SetActive(false);
+                        right.SetActive(true); // Right
+                        Time.timeScale = 0.2f;
+                        timeEnded = false;
                     }
 
+                }
+                else if (Dpressed && right.activeSelf)
+                {
+                    Time.timeScale = 1f;
+
+                    startTimer = true;
+
+                    if (timeEnded)
+                    {
+                        right.SetActive(false); 
+                        jump.SetActive(true); // Jump
+                        Time.timeScale = 0.2f;
+                        timeEnded = false;
+                    }
+                }
+                else if (SpacePressed && jump.activeSelf)
+                {
+                    Time.timeScale = 1f;
+
+                    startTimer = true;
+
+                    if (timeEnded)
+                    {
+                        jump.SetActive(false); 
+                        stamina.SetActive(true); // Stamina
+                        Time.timeScale = 0.3f;
+                        timeEnded = false;
+                    }
                 }
                 else if (Input.anyKeyDown)
                 {

@@ -1,21 +1,26 @@
 using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Implements context and transitions for game states.
+/// Implements context and transitions between game states.
 /// </summary>
 public class GameManager : AStateController
 {
     public static GameManager Instance;
+    public TutorialToggler tutorialToggler = new();
+    public PlayerCollectiblesUI playerCollectedUI = new();
+    public PlayerStaminaUI playerStaminaUI = new();
+    public TutorialUI tutorialUI = new();
     public event EventHandler<string> ButtonClicked;
 
     #region STATES
-    public GameMainMenuState mainMenuState = new();
-    public GameOptionsMenuState optionsMenuState = new();
-    public GameCreditsState creditsState = new();
-    public GamePlayState playState = new();
-    public GamePauseState pauseState = new();
-    public GameEndState endState = new();
+    readonly GameMainMenuState mainMenuState = new();
+    readonly GameOptionsMenuState optionsMenuState = new();
+    readonly GameCreditsState creditsState = new();
+    readonly GamePlayState playState = new();
+    readonly GamePauseState pauseState = new();
+    readonly GameEndState endState = new();
     #endregion
 
     public override void Awake()
@@ -30,13 +35,66 @@ public class GameManager : AStateController
     public override void Start()
     {
         if (SceneManager.GetActiveScene().name == "Main Menu")
+        {
             SetState(mainMenuState);
+        }
         else
+        {
             SetState(playState);
+
+            Player.Instance.endState.EndGameEvent += GameEnded;
+        }
     }
 
     public void ClickButton(string buttonName)
     {
         ButtonClicked?.Invoke(this, buttonName);
+
+        switch (buttonName)
+        {
+            case "Start":
+                SceneManager.LoadScene("Level01");
+                break;
+            case "Options":
+                SwitchState(optionsMenuState);
+                break;
+            case "Tutorial on":
+                if (currentState == optionsMenuState)
+                    tutorialToggler.Activate(false);
+                break;
+            case "Tutorial off":
+                if (currentState == optionsMenuState)
+                    tutorialToggler.Activate(true);
+                break;
+            case "Credits":
+                SwitchState(creditsState);
+                break;
+            case "Return":
+                SwitchState(mainMenuState);
+                break;
+            case "Pause":
+                SwitchState(pauseState);
+                break;
+            case "Resume":
+                SwitchState(playState);
+                break;
+            case "Replay":
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                break;
+            case "Main menu":
+                SceneManager.LoadScene("Main Menu");
+                break;
+            case "Quit":
+                Debug.Log("Quit");
+                Application.Quit();
+                break;
+            default:
+                break;
+        }
+    }
+
+    void GameEnded(object sender, string result)
+    {
+        SwitchState(endState, result);
     }
 }

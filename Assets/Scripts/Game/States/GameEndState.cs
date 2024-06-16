@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class GameEndState : AGameState
 {
-    string buttonClickedName = "None";
-    bool alreadyEntered = false;
+    GameObject replayButton, mainMenuButton, quitButton, resultPopUp;
 
     public override void Enter(string result)
     {
@@ -15,9 +14,9 @@ public class GameEndState : AGameState
 
         // Buttons
         GameObject buttons = GameObject.Find("Buttons");
-        GameObject replayButton = buttons.transform.Find("Replay").gameObject;
-        GameObject mainMenuButton = buttons.transform.Find("Main menu").gameObject;
-        GameObject quitButton = buttons.transform.Find("Quit").gameObject;
+        replayButton = buttons.transform.Find("Replay").gameObject;
+        mainMenuButton = buttons.transform.Find("Main menu").gameObject;
+        quitButton = buttons.transform.Find("Quit").gameObject;
         
         replayButton.SetActive(true);
         mainMenuButton.SetActive(true);
@@ -35,52 +34,28 @@ public class GameEndState : AGameState
         GameObject tiredResult = results.transform.Find("Tired").gameObject;
 
         if (result == "Victory")
-            victoryResult.SetActive(true);
+            resultPopUp = victoryResult;
         else if (result == "Caught")
-            caughtResult.SetActive(true);
+            resultPopUp = caughtResult;
         else if (result == "Tired")
-            tiredResult.SetActive(true);
+            resultPopUp = tiredResult;
 
-        if (!alreadyEntered) // Subscribes to events just once
-        {
-            game.ButtonClicked += ButtonClicked;
-            alreadyEntered = true;
-        }
+        resultPopUp?.SetActive(true);
     }
 
     public override void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            buttonClickedName = "Replay";
             game.ClickButton("Replay");
-        }
     }
 
     public override void Exit()
     {
-        if (buttonClickedName == "Replay") // Replay button clicked or 'Esc' pressed
-        {
-            Time.timeScale = 1f; // Resumes simulation
+        Time.timeScale = 1f; // Resumes simulation
 
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-        else if (buttonClickedName == "Main menu")
-        {
-            Time.timeScale = 1f; // Resumes simulation
-
-            SceneManager.LoadScene("Main Menu");
-        }
-        else if (buttonClickedName == "Quit")
-        {
-            Debug.Log("Quit game");
-
-            Application.Quit();
-        }
-    }
-
-    void ButtonClicked(object sender, string buttonName)
-    {
-        buttonClickedName = buttonName;
+        replayButton.SetActive(false);
+        mainMenuButton.SetActive(false);
+        quitButton.SetActive(false);
+        resultPopUp.SetActive(false);
     }
 }

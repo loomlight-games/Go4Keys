@@ -56,4 +56,28 @@ public abstract class AStateController: MonoBehaviour
 
         Debug.Log(currentState.ToString());
     }
+
+    /// <summary>
+    /// Swichts to another state after exiting the current.
+    /// </summary>
+    public virtual void SwitchState(IState state)
+    {
+        currentState.Exit();
+        currentState = state;
+        currentState.Enter(this);
+
+        Debug.Log(currentState.ToString());
+    }
+
+    /// <summary>
+    /// Swichts to another state, transmittin additional info, after exiting the current.
+    /// </summary>
+    public virtual void SwitchState(IState state, string info)
+    {
+        currentState.Exit();
+        currentState = state;
+        currentState.Enter(this, info);
+
+        Debug.Log(currentState.ToString());
+    }
 }
