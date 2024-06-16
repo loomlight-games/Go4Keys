@@ -27,10 +27,12 @@ public class SoundManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Main Menu")
         {
             mainMenuMusic.Play();
+            gameplayMusic.Stop();
         }
         else
         {
             gameplayMusic.Play();
+            mainMenuMusic.Stop();
 
             Player.Instance.resilient.StaminaChangeEvent += StaminaRecover;
             Player.Instance.jumper.JumpEvent += Jump;

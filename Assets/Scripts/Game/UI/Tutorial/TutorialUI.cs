@@ -18,7 +18,6 @@ public class TutorialUI
     GameObject keys;
     GameObject telephone;
     GameObject intersection;
-    GameObject advice;
     bool atIntersection = false;
     bool hasSurpassedTurnPoint = false;
     bool tutorialFinished = false;
@@ -44,7 +43,6 @@ public class TutorialUI
             keys = popUps.transform.Find("Keys").gameObject;
             telephone = popUps.transform.Find("Telephone").gameObject;
             intersection = popUps.transform.Find("Intersection").gameObject;
-            advice = popUps.transform.Find("Advice").gameObject;
 
             left.SetActive(true); // Left
             Time.timeScale = 0.2f;
@@ -81,22 +79,9 @@ public class TutorialUI
             }
             else if (hasSurpassedTurnPoint)
             {
+                hasSurpassedTurnPoint = false;
+
                 intersection.SetActive(false);
-
-                if (!tutorialFinished)
-                {
-                    startTimer = true;
-
-                    advice.SetActive(true);
-
-                    if (timeEnded)
-                    {
-                        advice.SetActive(false);
-                        timeEnded = false;
-                        tutorialFinished = true;
-                        hasSurpassedTurnPoint = false;
-                    }
-                }
             }
             else if (!tutorialFinished)
             {
