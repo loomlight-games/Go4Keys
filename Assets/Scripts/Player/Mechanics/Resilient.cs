@@ -25,7 +25,7 @@ public class Resilient
     /// <summary>
     /// Called when running (every frame)
     /// </summary>
-    public void Runs()
+    public void LossPerStep()
     {
         currentStamina += lossPerStep * Time.deltaTime;
 
@@ -35,7 +35,7 @@ public class Resilient
     /// <summary>
     /// Called when jumping (once)
     /// </summary>
-    public void Jumps()
+    public void LossPerJump()
     {
         currentStamina += lossPerJump * Time.deltaTime;
 

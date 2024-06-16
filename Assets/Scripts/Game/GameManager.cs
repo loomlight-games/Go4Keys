@@ -8,10 +8,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : AStateController
 {
     public static GameManager Instance;
-    public TutorialToggler tutorialToggler = new();
-    public PlayerCollectiblesUI playerCollectedUI = new();
-    public PlayerStaminaUI playerStaminaUI = new();
-    public TutorialUI tutorialUI = new();
     public event EventHandler<string> ButtonClicked;
 
     #region STATES
@@ -21,6 +17,13 @@ public class GameManager : AStateController
     readonly GamePlayState playState = new();
     readonly GamePauseState pauseState = new();
     readonly GameEndState endState = new();
+    #endregion
+
+    #region UI
+    public TutorialToggler tutorialToggler = new();
+    public PlayerCollectiblesUI playerCollectedUI = new();
+    public PlayerStaminaUI playerStaminaUI = new();
+    public TutorialUI tutorialUI = new();
     #endregion
 
     public override void Awake()
@@ -42,7 +45,7 @@ public class GameManager : AStateController
         {
             SetState(playState);
 
-            Player.Instance.endState.EndGameEvent += GameEnded;
+            Player.Instance.PlayerResult += GameEnded;
         }
     }
 

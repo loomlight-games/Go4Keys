@@ -7,6 +7,7 @@ using UnityEngine;
 public class Jumper
 {
     public event EventHandler JumpEvent;
+    public event EventHandler GroundedEvent;
 
     readonly Rigidbody rigidBody;    
     readonly float jumpForce;
@@ -27,25 +28,27 @@ public class Jumper
         ground = 1 << LayerMask.NameToLayer("Ground");
     }
 
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            JumpEvent?.Invoke(this, EventArgs.Empty);
+    }
+
     /// <summary>
     /// Moves rigidbody in Y axis. If jumpforce is positive it will jump
     /// </summary>
     public void Jump()
     {
         rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpForce, rigidBody.velocity.z);
-
-        JumpEvent?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>
     /// Checks if ground checker collides with ground
     /// </summary>
-    public bool IsGrounded()
+    public void IsGrounded()
     {
         // Ground is hit (ground checker collides with ground layer)
         if (Physics.CheckSphere(groundChecker.position, checkerRadius, ground))
-            return true;
-
-        return false;
+            GroundedEvent?.Invoke(this, EventArgs.Empty);
     }
 }

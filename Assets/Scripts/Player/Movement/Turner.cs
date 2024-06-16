@@ -59,7 +59,6 @@ public class Turner
 
             TurnedEvent?.Invoke(this, false);
         }
-        
     }
 
     public void OnTriggerEnter(Collider other)
