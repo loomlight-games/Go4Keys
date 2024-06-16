@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d3701ee26507dc4e8d2036882ef56df, type: 3}
   m_Name: Normal
   m_EditorClassIdentifier: 
-  recover: 20
+  minValue: 20
+  maxValue: 30
+  bounceSpeed: 2
