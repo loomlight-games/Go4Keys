@@ -63,7 +63,7 @@ public class TutorialUI
                     startTimer = false;
 
                     if (stamina.activeSelf)
-                        time = 2f;
+                        time = 1f;
                     else
                         time = 0.3f;
                 }
@@ -146,7 +146,7 @@ public class TutorialUI
                     {
                         jump.SetActive(false); 
                         stamina.SetActive(true); // Stamina
-                        Time.timeScale = 0.3f;
+                        Time.timeScale = 0.2f;
                         timeEnded = false;
                     }
                 }
