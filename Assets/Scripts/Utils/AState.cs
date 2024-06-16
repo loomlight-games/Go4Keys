@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Implements common functionalities in all player states
+/// Defines common functionalities in all states.
 /// </summary>
 public abstract class AState
 {

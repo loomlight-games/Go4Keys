@@ -2,7 +2,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Implements context and transitions for player states.
+/// Implements context and transitions between player states.
 /// </summary>
 public class Player : AStateController
 {
