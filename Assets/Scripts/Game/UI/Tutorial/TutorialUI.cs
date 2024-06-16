@@ -83,16 +83,19 @@ public class TutorialUI
             {
                 intersection.SetActive(false);
 
-                startTimer = true;
-
-                advice.SetActive(true);
-
-                if (timeEnded)
+                if (!tutorialFinished)
                 {
-                    advice.SetActive(false);
-                    timeEnded = false;
-                    tutorialFinished = false;
-                    hasSurpassedTurnPoint = false;
+                    startTimer = true;
+
+                    advice.SetActive(true);
+
+                    if (timeEnded)
+                    {
+                        advice.SetActive(false);
+                        timeEnded = false;
+                        tutorialFinished = true;
+                        hasSurpassedTurnPoint = false;
+                    }
                 }
             }
             else if (!tutorialFinished)
