@@ -12,14 +12,14 @@ public class EnergyDrink : MonoBehaviour
     // (Defined in the prefab)
     public EnergyDrinkType type;
     public RotatorySO rotationType;
-    Transform upMark;
-    Transform downMark;
     #endregion
 
     #region EXTRINSIC STATE 
     // Differente in each object
     readonly System.Random random = new();
     [HideInInspector] public float recoverValue;
+    Transform upMark;
+    Transform downMark;
     bool goUp = true;
     #endregion
 
@@ -33,6 +33,7 @@ public class EnergyDrink : MonoBehaviour
         upMark = transform.parent.Find("Up");
         downMark = transform.parent.Find("Down");
 
+        // Calculates random recover value
         recoverValue = (float)random.Next(type.minValue, type.maxValue);
     }
 
