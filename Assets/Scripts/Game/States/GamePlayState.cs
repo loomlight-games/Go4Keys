@@ -23,7 +23,7 @@ public class GamePlayState : AGameState
         if (!alreadyEntered) // Subscribes to events just once
         {
             game.ButtonClicked += ButtonClicked;
-            PlayerManager.Instance.endState.EndGameEvent += GameEnded;
+            Player.Instance.endState.EndGameEvent += GameEnded;
 
             playerCollectedUI = new();
             playerStaminaUI = new();

@@ -2,8 +2,7 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// Provides limited stamina, losing a bit it with every step and a lot with every jump. 
-/// Can recover it consuming an energy drink.
+/// Provides limited stamina. Can recover it when hitting certain object.
 /// </summary>
 public class Resilient
 {

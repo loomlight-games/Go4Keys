@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class Chased
 {
-    public event EventHandler<float> ResetChaserEvent;
+    public event EventHandler<float> ChaserResettedEvent;
     public event EventHandler CaughtEvent;
 
     readonly float chaserResetDistance;
@@ -21,7 +21,7 @@ public class Chased
     public void OnTriggerEnter(Collider other)
     {
         if (other.transform.CompareTag("Resetter"))
-            ResetChaserEvent?.Invoke(this, chaserResetDistance);
+            ChaserResettedEvent?.Invoke(this, chaserResetDistance);
     }
 
     public void OnCollisionEnter(Collision collision)

@@ -15,7 +15,7 @@ public class PlayerAtIntersectionState : APlayerState
     {
         if (!alreadyEntered)
         {
-            player.turner.TurnEvent += TurnPointSurpassed;
+            player.turner.TurnedEvent += TurnPointSurpassed;
             player.keyCollecter.AllFoundEvent += Victory;
             player.chased.CaughtEvent += Caught;
             player.resilient.StaminaChangeEvent += Tired;

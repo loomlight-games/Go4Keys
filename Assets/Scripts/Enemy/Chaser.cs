@@ -23,11 +23,11 @@ public class Chaser : MonoBehaviour
 
     void Start()
     {
-        PlayerManager.Instance.endlessRunner.ObstacleInFront += TargetStopped;
-        PlayerManager.Instance.chased.CaughtEvent += TargetCaught;
-        PlayerManager.Instance.chased.ResetChaserEvent += ResetPosition;
+        Player.Instance.endlessRunner.ObstacleInFront += TargetStopped;
+        Player.Instance.chased.CaughtEvent += TargetCaught;
+        Player.Instance.chased.ChaserResettedEvent += ResetPosition;
 
-        player = PlayerManager.Instance.transform;
+        player = Player.Instance.transform;
 
         chaserRigidBody = transform.GetComponent<Rigidbody>();
         robberObstacleChecker = GameObject.Find("Robber checker").transform;

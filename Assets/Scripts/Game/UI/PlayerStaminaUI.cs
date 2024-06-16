@@ -12,7 +12,7 @@ public class PlayerStaminaUI
     {
         staminaBar = GameObject.Find("Stamina bar").GetComponent<Slider>();
 
-        PlayerManager.Instance.resilient.StaminaChangeEvent += UpdateValue;
+        Player.Instance.resilient.StaminaChangeEvent += UpdateValue;
     }
 
     /// <summary>

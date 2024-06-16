@@ -8,12 +8,12 @@ public interface IState
     /// <summary>
     /// Called when entering an state.
     /// </summary>
-    public void Enter(AStateManager controller);
+    public void Enter(AStateController controller);
 
     /// <summary>
     /// Called when entering an state with additional information.
     /// </summary>
-    public void Enter(AStateManager controller, string info) { }
+    public void Enter(AStateController controller, string info) { }
 
     /// <summary>
     /// Called in MonoBehaviour.Update() in controller.

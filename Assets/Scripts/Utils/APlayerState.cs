@@ -5,17 +5,17 @@ using UnityEngine;
 /// </summary>
 public abstract class APlayerState : IState
 {
-    protected PlayerManager player;
+    protected Player player;
 
-    public virtual void Enter(AStateManager controller)
+    public virtual void Enter(AStateController controller)
     {
-        player = (PlayerManager)controller;
+        player = (Player)controller;
         Enter();
     }
     public virtual void Enter() { }
-    public virtual void Enter(AStateManager controller, string info)
+    public virtual void Enter(AStateController controller, string info)
     {
-        player = (PlayerManager)controller;
+        player = (Player)controller;
         Enter(info);
     }
     public virtual void Enter(string info) { }

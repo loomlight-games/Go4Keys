@@ -7,13 +7,13 @@ public abstract class AGameState : IState
 {
     protected GameManager game;
 
-    public virtual void Enter(AStateManager controller)
+    public virtual void Enter(AStateController controller)
     {
         game = (GameManager)controller;
         Enter();
     }
     public virtual void Enter() { }
-    public virtual void Enter(AStateManager controller, string info)
+    public virtual void Enter(AStateController controller, string info)
     {
         game = (GameManager)controller;
         Enter(info);
