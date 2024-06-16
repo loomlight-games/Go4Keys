@@ -5,7 +5,7 @@ using UnityEngine;
 /// </summary>
 public abstract class AStateController: MonoBehaviour
 {
-    protected IState currentState;
+    protected AState currentState;
 
     public abstract void Awake();
 
@@ -13,8 +13,12 @@ public abstract class AStateController: MonoBehaviour
 
     public virtual void Update()
     {
-        currentState.UpdateFrame();
+        currentState.Update();
+
+        UpdateFrame();
     }
+
+    public virtual void UpdateFrame() { }
 
     public virtual void OnTriggerEnter(Collider other)
     {
@@ -30,7 +34,7 @@ public abstract class AStateController: MonoBehaviour
     /// Gets the current state of the controller.
     /// </summary>
     /// <returns>Current state</returns>
-    public virtual IState GetState()
+    public virtual AState GetState()
     {
         return currentState;
     }
@@ -38,10 +42,10 @@ public abstract class AStateController: MonoBehaviour
     /// <summary>
     /// Sets the current state of the controller.
     /// </summary>
-    public virtual void SetState(IState state)
+    public virtual void SetState(AState state)
     {
         currentState = state;
-        currentState.Enter(this);
+        currentState.Enter();
 
         Debug.Log(currentState.ToString());
     }
@@ -49,10 +53,10 @@ public abstract class AStateController: MonoBehaviour
     /// <summary>
     /// Sets the current state of the controller with additional info.
     /// </summary>
-    public virtual void SetState(IState state, string info)
+    public virtual void SetState(AState state, string info)
     {
         currentState = state;
-        currentState.Enter(this, info);
+        currentState.Enter(info);
 
         Debug.Log(currentState.ToString());
     }
@@ -60,11 +64,11 @@ public abstract class AStateController: MonoBehaviour
     /// <summary>
     /// Swichts to another state after exiting the current.
     /// </summary>
-    public virtual void SwitchState(IState state)
+    public virtual void SwitchState(AState state)
     {
         currentState.Exit();
         currentState = state;
-        currentState.Enter(this);
+        currentState.Enter();
 
         Debug.Log(currentState.ToString());
     }
@@ -72,11 +76,11 @@ public abstract class AStateController: MonoBehaviour
     /// <summary>
     /// Swichts to another state, transmittin additional info, after exiting the current.
     /// </summary>
-    public virtual void SwitchState(IState state, string info)
+    public virtual void SwitchState(AState state, string info)
     {
         currentState.Exit();
         currentState = state;
-        currentState.Enter(this, info);
+        currentState.Enter(info);
 
         Debug.Log(currentState.ToString());
     }

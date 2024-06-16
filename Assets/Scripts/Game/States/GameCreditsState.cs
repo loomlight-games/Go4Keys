@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Shows game credits. Can switch to main menu state
 /// </summary>
-public class GameCreditsState : AGameState
+public class GameCreditsState : AState
 {
     GameObject UI;
 

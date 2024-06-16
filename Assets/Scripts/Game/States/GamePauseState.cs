@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Stops simulation and can quit the game or switch to gameplay or main menu states.
 /// </summary>
-public class GamePauseState : AGameState
+public class GamePauseState : AState
 {
     GameObject buttons;
     GameObject resumeButton;
@@ -28,7 +28,7 @@ public class GamePauseState : AGameState
     public override void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            game.ClickButton("Resume");
+            GameManager.Instance.ClickButton("Resume");
     }
 
     public override void Exit()

@@ -3,7 +3,7 @@
 /// <summary>
 /// Handles gameplay with the simulation going.
 /// </summary>
-public class GamePlayState : AGameState
+public class GamePlayState : AState
 {
     GameObject UI;
     bool alreadyEntered = false;
@@ -18,9 +18,9 @@ public class GamePlayState : AGameState
 
         if (!alreadyEntered)
         {
-            game.playerCollectedUI.Initialize();
-            game.playerStaminaUI.Initialize();
-            game.tutorialUI.Initialize();
+            GameManager.Instance.playerCollectedUI.Initialize();
+            GameManager.Instance.playerStaminaUI.Initialize();
+            GameManager.Instance.tutorialUI.Initialize();
 
             alreadyEntered = true;
         }
@@ -29,9 +29,9 @@ public class GamePlayState : AGameState
     public override void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            game.ClickButton("Pause");
+            GameManager.Instance.ClickButton("Pause");
 
-        game.tutorialUI.Update();
+        GameManager.Instance.tutorialUI.Update();
     }
 
     public override void Exit()

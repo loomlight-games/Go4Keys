@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GameMainMenuState : AGameState
+public class GameMainMenuState : AState
 {
     GameObject UI;
 

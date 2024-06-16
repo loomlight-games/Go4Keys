@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Stops simulation to show the result of the game. Can quit the game or switch to gameplay or main menu states.
 /// </summary>
-public class GameEndState : AGameState
+public class GameEndState : AState
 {
     GameObject replayButton, mainMenuButton, quitButton, resultPopUp;
 
@@ -46,7 +46,7 @@ public class GameEndState : AGameState
     public override void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            game.ClickButton("Replay");
+            GameManager.Instance.ClickButton("Replay");
     }
 
     public override void Exit()

@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Handles music and effects volume, as well as tutorial visibility. Can switch to main menu state.
 /// </summary>
-public class GameOptionsMenuState : AGameState
+public class GameOptionsMenuState : AState
 {
     GameObject UI;
     bool alreadyEntered = false;
@@ -16,7 +16,7 @@ public class GameOptionsMenuState : AGameState
 
         if (!alreadyEntered) 
         {
-            game.tutorialToggler.Initialize(); // Finds buttons and activate them according to saved data
+            GameManager.Instance.tutorialToggler.Initialize(); // Finds buttons and activate them according to saved data
             alreadyEntered = true;
         }
     }

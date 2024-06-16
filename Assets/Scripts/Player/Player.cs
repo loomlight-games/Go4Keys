@@ -74,13 +74,11 @@ public class Player : AStateController
         SetState(runState);
     }
 
-    public override void Update()
+    public override void UpdateFrame()
     {
         endlessRunner.Update(); // Runs endlessly,
         resilient.LossPerStep(); // thus, loses stamina
         railed.Update(); // Changes rails
-
-        currentState.UpdateFrame();
     }
 
     public override void OnTriggerEnter(Collider other)
@@ -105,8 +103,6 @@ public class Player : AStateController
         Gizmos.DrawSphere(obstacleChecker.position, 0.4f);
         Gizmos.DrawSphere(groundChecker.position, 0.1f);
     }
-
-    
 
     void Jump(object sender, EventArgs any)
     {
