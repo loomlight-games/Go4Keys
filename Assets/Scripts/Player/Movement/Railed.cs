@@ -7,12 +7,12 @@ public class Railed
 {
     readonly Transform player;
     readonly float railChangeSpeed;
-    
+
     float[] railsXPositions;
     public int currentRailIndex = 1;
     Vector3 currentRailPos;
 
-    public Railed(Transform player, float railChangeSpeed)//, Transform railsParent)
+    public Railed(Transform player, float railChangeSpeed)
     {
         this.player = player;
         this.railChangeSpeed = railChangeSpeed;
@@ -22,10 +22,10 @@ public class Railed
     {
         Transform railsParent = GameObject.Find("Rails").transform;
 
-        //Creates array the size of number of children of railsParent
+        // Creates array the size of number of children of railsParent
         railsXPositions = new float[railsParent.childCount];
 
-        //Fills the array with the rails positions
+        // Fills the array with the rails positions
         for (int i = 0; i < railsXPositions.Length; i++)
         {
             railsXPositions[i] = railsParent.GetChild(i).position.x;
@@ -34,32 +34,18 @@ public class Railed
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A)) // To left rail
-        { 
-            //Not in the leftMost rail
-            if (currentRailIndex > 0)
-            {
-                //Move one rail to left
-                currentRailIndex--;
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.D)) // To right rail
-        {
-            //Not in the rightMost rail
-            if (currentRailIndex < railsXPositions.Length - 1)
-            {
-                //Move one rail to right
-                currentRailIndex++;
-            }
-        }
+        // Use accelerometer input to move player
+        float accelerationX = Input.acceleration.x;
 
-        // Updates current rail vector with X position of the rail and Y and Z positions of player
-        currentRailPos = new Vector3(railsXPositions[currentRailIndex], 
-                                    player.localPosition.y, 
-                                    player.localPosition.z);
+        // Calculate new X position based on acceleration
+        float newXPosition = player.localPosition.x + accelerationX * railChangeSpeed * Time.deltaTime;
 
-        // Moves to current rail (according to local position = parent position).
-        // localposition adapts the axis of this object after the parent has rotated
-        player.localPosition = Vector3.MoveTowards(player.localPosition, currentRailPos, railChangeSpeed * Time.deltaTime);
+        // Clamp the new X position within the bounds of the rails
+        float minX = railsXPositions[0]; // Left rail
+        float maxX = railsXPositions[railsXPositions.Length - 1]; // Right rail
+        newXPosition = Mathf.Clamp(newXPosition, minX, maxX);
+
+        // Update player's position
+        player.localPosition = new Vector3(newXPosition, player.localPosition.y, player.localPosition.z);
     }
-}    
+}

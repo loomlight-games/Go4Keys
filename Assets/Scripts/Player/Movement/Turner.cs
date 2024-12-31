@@ -32,10 +32,12 @@ public class Turner
             if (InputManager.Instance.swipeLeft) // To left
             {
                 turn = -1;
+                InputManager.Instance.swipeLeft = false;
             }
             if (InputManager.Instance.swipeRight) // To right
             {
                 turn = 1;
+                InputManager.Instance.swipeRight = false;
             }
         }
         else // Has reached turn point
