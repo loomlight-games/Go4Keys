@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 [DefaultExecutionOrder(-1)] // Will run before any other script
 public class InputManager : MonoBehaviour
 {
+    [HideInInspector] public bool swipeUp, swipeRight, swipeLeft;
     public static InputManager Instance; // Singleton
     PlayerInput playerInput; // InputActions script
 

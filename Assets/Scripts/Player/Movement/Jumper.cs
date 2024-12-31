@@ -9,7 +9,7 @@ public class Jumper
     public event EventHandler JumpEvent;
     public event EventHandler GroundedEvent;
 
-    readonly Rigidbody rigidBody;    
+    readonly Rigidbody rigidBody;
     readonly float jumpForce;
     readonly float checkerRadius = 0.2f;
 
@@ -30,8 +30,11 @@ public class Jumper
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (InputManager.Instance.swipeUp)
+        {
             JumpEvent?.Invoke(this, EventArgs.Empty);
+            InputManager.Instance.swipeUp = false;
+        }
     }
 
     /// <summary>

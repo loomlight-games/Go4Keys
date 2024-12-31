@@ -29,11 +29,11 @@ public class Turner
         // Not yet at turn point (with some threshold)
         if (Vector2.Distance(transformPosition2D, turnPoint2D) > 0.4f)
         {
-            if (Input.GetKeyDown(KeyCode.A)) // To left
+            if (InputManager.Instance.swipeLeft) // To left
             {
                 turn = -1;
             }
-            if (Input.GetKeyDown(KeyCode.D)) // To right
+            if (InputManager.Instance.swipeRight) // To right
             {
                 turn = 1;
             }
@@ -67,8 +67,8 @@ public class Turner
         if (other.gameObject.CompareTag("Intersection"))
         {
             // Intersection center = turn point
-            turnPoint2D = new Vector2(other.gameObject.transform.position.x, 
-                                    other.gameObject.transform.position.z) ;
+            turnPoint2D = new Vector2(other.gameObject.transform.position.x,
+                                    other.gameObject.transform.position.z);
         }
     }
 }

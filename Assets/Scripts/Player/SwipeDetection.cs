@@ -72,19 +72,22 @@ public class SwipeDetection : MonoBehaviour
     {
         if (Vector2.Dot(Vector2.up, direction) > directionThreshold)
         {
-            Debug.Log("Swipe up");
+            Debug.Log("Swipe up"); // Jump
+            InputManager.Instance.swipeUp = true;
         }
         else if (Vector2.Dot(Vector2.right, direction) > directionThreshold)
         {
-            Debug.Log("Swipe right");
+            Debug.Log("Swipe right"); // Take street on the right
+            InputManager.Instance.swipeRight = true;
         }
-        else if (Vector2.Dot(Vector2.down, direction) > directionThreshold)
-        {
-            Debug.Log("Swipe down");
-        }
+        // else if (Vector2.Dot(Vector2.down, direction) > directionThreshold)
+        // {
+        //     Debug.Log("Swipe down"); 
+        // }
         else if (Vector2.Dot(Vector2.left, direction) > directionThreshold)
         {
-            Debug.Log("Swipe left");
+            Debug.Log("Swipe left"); // Take street on the left
+            InputManager.Instance.swipeLeft = true;
         }
     }
 

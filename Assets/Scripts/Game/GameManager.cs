@@ -41,7 +41,7 @@ public class GameManager : AStateController
         {
             SetState(mainMenuState);
         }
-        else
+        else // Gameplay scene
         {
             Player.Instance.PlayerResult += GameEnded;
 
@@ -60,7 +60,7 @@ public class GameManager : AStateController
         switch (buttonName)
         {
             case "Start":
-                SceneManager.LoadScene("Level01");
+                SceneManager.LoadScene("Gameplay");
                 break;
             case "Options":
                 SwitchState(optionsMenuState);

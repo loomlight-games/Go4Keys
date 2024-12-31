@@ -126,7 +126,7 @@ public class Player : AStateController
 
     void Victory(object sender, EventArgs e)
     {
-       PlayerResult?.Invoke(this,"Victory");
+        PlayerResult?.Invoke(this, "Victory");
     }
 
     void Caught(object sender, EventArgs any)
