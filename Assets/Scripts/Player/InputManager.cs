@@ -43,13 +43,11 @@ public class InputManager : MonoBehaviour
 
     void StartTouchPrimary(InputAction.CallbackContext ctx)
     {
-        //if (OnStartTouch != null)
         OnStartTouch?.Invoke(PrimaryPosition(), (float)ctx.startTime);
     }
 
     void EndTouchPrimary(InputAction.CallbackContext ctx)
     {
-        //if (OnEndTouch != null)
         OnEndTouch?.Invoke(PrimaryPosition(), (float)ctx.time);
     }
 

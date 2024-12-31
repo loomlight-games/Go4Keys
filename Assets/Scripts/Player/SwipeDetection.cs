@@ -9,6 +9,7 @@ public class SwipeDetection : MonoBehaviour
     public GameObject trail;
 
     InputManager inputManager;
+    Camera mainCamera;
 
     Vector2 startPos, endPos;
     float startTime, endTime;
@@ -17,6 +18,7 @@ public class SwipeDetection : MonoBehaviour
     void Awake()
     {
         inputManager = InputManager.Instance;
+        mainCamera = Camera.main; // Get the main camera
     }
 
     void OnEnable()
@@ -37,7 +39,7 @@ public class SwipeDetection : MonoBehaviour
         startTime = time;
 
         trail.SetActive(true);
-        trail.transform.position = pos;
+        trail.transform.position = mainCamera.ScreenToWorldPoint(new Vector3(pos.x, pos.y, mainCamera.nearClipPlane));
         trailCoroutine = StartCoroutine(Trail());
     }
 
@@ -59,7 +61,6 @@ public class SwipeDetection : MonoBehaviour
             (endTime - startTime) <= maxTime
         )
         {
-            //Debug.Log("Swipe detected!");
             Debug.DrawLine(startPos, endPos, Color.red, 3f);
             Vector3 direction3D = endPos - startPos;
             Vector2 direction2D = new Vector2(direction3D.x, direction3D.y).normalized;
@@ -94,7 +95,9 @@ public class SwipeDetection : MonoBehaviour
     {
         while (true)
         {
-            trail.transform.position = inputManager.PrimaryPosition();
+            Vector2 screenPos = inputManager.PrimaryPosition();
+            Vector3 worldPos = mainCamera.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, mainCamera.nearClipPlane));
+            trail.transform.position = worldPos;
             yield return null; // wait for next frame
         }
     }
