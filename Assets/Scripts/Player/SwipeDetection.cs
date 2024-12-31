@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SwipeDetection : MonoBehaviour
@@ -5,11 +6,13 @@ public class SwipeDetection : MonoBehaviour
     public float minDistance = .2f;
     public float maxTime = 1f;
     [Range(0f, 1f)] public float directionThreshold = .9f;
+    public GameObject trail;
 
     InputManager inputManager;
 
     Vector2 startPos, endPos;
     float startTime, endTime;
+    Coroutine trailCoroutine;
 
     void Awake()
     {
@@ -32,10 +35,17 @@ public class SwipeDetection : MonoBehaviour
     {
         startPos = pos;
         startTime = time;
+
+        trail.SetActive(true);
+        trail.transform.position = pos;
+        trailCoroutine = StartCoroutine(Trail());
     }
 
     private void SwipeEnd(Vector2 pos, float time)
     {
+        trail.SetActive(false);
+        StopCoroutine(trailCoroutine);
+
         endPos = pos;
         endTime = time;
 
@@ -49,8 +59,8 @@ public class SwipeDetection : MonoBehaviour
             (endTime - startTime) <= maxTime
         )
         {
-            Debug.Log("Swipe detected!");
-            Debug.DrawLine(startPos, endPos, Color.red, 5f);
+            //Debug.Log("Swipe detected!");
+            Debug.DrawLine(startPos, endPos, Color.red, 3f);
             Vector3 direction3D = endPos - startPos;
             Vector2 direction2D = new Vector2(direction3D.x, direction3D.y).normalized;
             SwipeDirection(direction2D);
@@ -74,6 +84,19 @@ public class SwipeDetection : MonoBehaviour
         else if (Vector2.Dot(Vector2.left, direction) > directionThreshold)
         {
             Debug.Log("Swipe left");
+        }
+    }
+
+    /// <summary>
+    /// For the trail renderer
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator Trail()
+    {
+        while (true)
+        {
+            trail.transform.position = inputManager.PrimaryPosition();
+            yield return null; // wait for next frame
         }
     }
 }

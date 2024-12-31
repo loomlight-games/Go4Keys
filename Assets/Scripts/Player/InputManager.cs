@@ -18,10 +18,7 @@ public class InputManager : MonoBehaviour
     {
         // Singleton
         if (Instance == null)
-        {
             Instance = this;
-            DontDestroyOnLoad(Instance);
-        }
         else
             Destroy(gameObject);
 
@@ -64,7 +61,7 @@ public class InputManager : MonoBehaviour
     ////////////////////////////////////////////////////////////////////////////////////////////
     public static Vector3 ScreenToWorld(Camera camera, Vector3 pos)
     {
-        pos.z = camera.nearClipPlane;
+        pos.z = 0;//camera.nearClipPlane;
         return camera.ScreenToWorldPoint(pos);
     }
 }
