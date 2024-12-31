@@ -43,25 +43,25 @@ public class InputManager : MonoBehaviour
 
     void StartTouchPrimary(InputAction.CallbackContext ctx)
     {
-        if (OnStartTouch != null)
-            OnStartTouch(ScreenToWorld(Camera.main, playerInput.Touch.PrimaryPosition.ReadValue<Vector2>()), (float)ctx.startTime);
+        //if (OnStartTouch != null)
+        OnStartTouch?.Invoke(PrimaryPosition(), (float)ctx.startTime);
     }
 
     void EndTouchPrimary(InputAction.CallbackContext ctx)
     {
-        if (OnEndTouch != null)
-            OnEndTouch(ScreenToWorld(Camera.main, playerInput.Touch.PrimaryPosition.ReadValue<Vector2>()), (float)ctx.time);
+        //if (OnEndTouch != null)
+        OnEndTouch?.Invoke(PrimaryPosition(), (float)ctx.time);
     }
 
     public Vector2 PrimaryPosition()
     {
-        return ScreenToWorld(Camera.main, playerInput.Touch.PrimaryPosition.ReadValue<Vector2>());
+        return playerInput.Touch.PrimaryPosition.ReadValue<Vector2>();//ScreenToWorld(Camera.main, playerInput.Touch.PrimaryPosition.ReadValue<Vector2>());
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    public static Vector3 ScreenToWorld(Camera camera, Vector3 pos)
+    static Vector3 ScreenToWorld(Camera camera, Vector3 pos)
     {
-        pos.z = 0;//camera.nearClipPlane;
+        pos.z = camera.nearClipPlane;
         return camera.ScreenToWorldPoint(pos);
     }
 }

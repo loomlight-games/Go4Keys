@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Defines context methods. Implements MonoBehaviour.
 /// </summary>
-public abstract class AStateController: MonoBehaviour
+public abstract class AStateController : MonoBehaviour
 {
     protected AState currentState;
 
@@ -82,6 +82,6 @@ public abstract class AStateController: MonoBehaviour
         currentState = state;
         currentState.Enter(info);
 
-        Debug.Log(currentState.ToString());
+        Debug.LogWarning(currentState.ToString());
     }
 }

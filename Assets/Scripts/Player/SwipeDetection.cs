@@ -90,7 +90,6 @@ public class SwipeDetection : MonoBehaviour
     /// <summary>
     /// For the trail renderer
     /// </summary>
-    /// <returns></returns>
     IEnumerator Trail()
     {
         while (true)
