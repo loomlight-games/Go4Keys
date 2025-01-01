@@ -49,7 +49,7 @@ public class GameManager : AStateController
 
             playerCollectedUI.Initialize();
             playerStaminaUI.Initialize();
-            tutorialUI.Initialize();
+            //tutorialUI.Initialize();
 
             SetState(playState);
         }
