@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Provides lateral movement between rails.
@@ -34,18 +35,27 @@ public class Railed
 
     public void Update()
     {
-        // Use accelerometer input to move player
-        float accelerationX = Input.acceleration.x;
+        // Check if the gyroscope is available
+        if (UnityEngine.InputSystem.Gyroscope.current != null)
+        {
+            // Use gyroscope input to move player
+            Vector3 rotationRate = UnityEngine.InputSystem.Gyroscope.current.angularVelocity.ReadValue();
+            float rotationX = rotationRate.x;
 
-        // Calculate new X position based on acceleration
-        float newXPosition = player.localPosition.x + accelerationX * railChangeSpeed * Time.deltaTime;
+            // Calculate new X position based on rotation
+            float newXPosition = player.localPosition.x + rotationX * railChangeSpeed * Time.deltaTime;
 
-        // Clamp the new X position within the bounds of the rails
-        float minX = railsXPositions[0]; // Left rail
-        float maxX = railsXPositions[railsXPositions.Length - 1]; // Right rail
-        newXPosition = Mathf.Clamp(newXPosition, minX, maxX);
+            // Clamp the new X position within the bounds of the rails
+            float minX = railsXPositions[0]; // Left rail
+            float maxX = railsXPositions[railsXPositions.Length - 1]; // Right rail
+            newXPosition = Mathf.Clamp(newXPosition, minX, maxX);
 
-        // Update player's position
-        player.localPosition = new Vector3(newXPosition, player.localPosition.y, player.localPosition.z);
+            // Update player's position
+            player.localPosition = new Vector3(newXPosition, player.localPosition.y, player.localPosition.z);
+        }
+        else
+        {
+            Debug.LogWarning("Gyroscope not available on this device.");
+        }
     }
 }
