@@ -30,7 +30,9 @@ public class GameManager : AStateController
     {
         // Singleton
         if (Instance == null)
+        {
             Instance = this;
+        }
         else
             Destroy(gameObject);
     }

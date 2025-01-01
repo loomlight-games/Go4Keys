@@ -16,16 +16,14 @@ public class animationStateController : MonoBehaviour
     void Update()
     {
         bool isJumping = animator.GetBool(isJumpingHash);
-        bool jumpPressed = Input.GetKey(KeyCode.Space);
-        // if player pressed space key
-        if (!isJumping && jumpPressed)
+
+        if (!isJumping && InputManager.Instance.swipeUp)
         {
             // then set the isJumping boolean to be true
             animator.SetBool(isJumpingHash, true);
         }
 
-        // if player is not pressing space key
-        if (isJumping && !jumpPressed)
+        if (isJumping && !InputManager.Instance.swipeUp)
         {
             // then set the isJumping boolean to be false
             animator.SetBool(isJumpingHash, false);

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SwipeDetection : MonoBehaviour
 {
-    public float minDistance = .2f;
+    public float minDistance = .1f;
     public float maxTime = 1f;
     [Range(0f, 1f)] public float directionThreshold = .9f;
     public GameObject trail;

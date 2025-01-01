@@ -18,9 +18,6 @@ public class GamePlayState : AState
 
     public override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            GameManager.Instance.ClickButton("Pause");
-
         GameManager.Instance.tutorialUI.Update();
     }
 

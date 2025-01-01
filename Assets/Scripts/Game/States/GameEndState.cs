@@ -17,14 +17,14 @@ public class GameEndState : AState
         replayButton = buttons.transform.Find("Replay").gameObject;
         mainMenuButton = buttons.transform.Find("Main menu").gameObject;
         quitButton = buttons.transform.Find("Quit").gameObject;
-        
+
         replayButton.SetActive(true);
         mainMenuButton.SetActive(true);
         quitButton.SetActive(true);
 
         // Tutorial pop ups
         GameObject tutorial = GameObject.Find("Tutorial pop ups");
-        
+
         tutorial?.SetActive(false);
 
         // Result pop ups
@@ -41,12 +41,14 @@ public class GameEndState : AState
             resultPopUp = tiredResult;
 
         resultPopUp?.SetActive(true);
+
+        // Deactivate touch input
+        InputManager.Instance.gameObject.SetActive(false);
     }
 
     public override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            GameManager.Instance.ClickButton("Replay");
+
     }
 
     public override void Exit()
