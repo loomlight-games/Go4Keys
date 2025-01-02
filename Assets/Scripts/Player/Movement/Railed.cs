@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 /// <summary>
 /// Provides lateral movement between rails.
@@ -39,8 +38,12 @@ public class Railed
         if (UnityEngine.InputSystem.Gyroscope.current != null)
         {
             // Use gyroscope input to move player
-            Vector3 rotationRate = UnityEngine.InputSystem.Gyroscope.current.angularVelocity.ReadValue();
-            float rotationX = rotationRate.x;
+            float rotationX = InputManager.Instance.DeviceRotation().x;
+            float rotationY = InputManager.Instance.DeviceRotation().y;
+            float rotationZ = InputManager.Instance.DeviceRotation().z;
+
+            // Display gyroscope data using debugText
+            GameManager.Instance.debugText.text = $"Gyroscope rotation - X: {rotationX}, Y: {rotationY}, Z: {rotationZ}";
 
             // Calculate new X position based on rotation
             float newXPosition = player.localPosition.x + rotationX * railChangeSpeed * Time.deltaTime;
@@ -55,7 +58,7 @@ public class Railed
         }
         else
         {
-            Debug.LogWarning("Gyroscope not available on this device.");
+            GameManager.Instance.debugText.text = "No gyroscope available.";
         }
     }
 }

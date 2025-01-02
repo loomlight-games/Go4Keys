@@ -44,6 +44,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Gyroscope"",
+                    ""type"": ""Value"",
+                    ""id"": ""6b8b1cf4-4650-4ac1-a35f-95019d7536d7"",
+                    ""expectedControlType"": ""Vector3"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -68,6 +77,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""PrimaryPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b1d70494-85ed-4a42-a7d9-e1c4f861a76a"",
+                    ""path"": ""<Gyroscope>/angularVelocity"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Gyroscope"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -78,6 +98,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Touch = asset.FindActionMap("Touch", throwIfNotFound: true);
         m_Touch_PrimaryContact = m_Touch.FindAction("PrimaryContact", throwIfNotFound: true);
         m_Touch_PrimaryPosition = m_Touch.FindAction("PrimaryPosition", throwIfNotFound: true);
+        m_Touch_Gyroscope = m_Touch.FindAction("Gyroscope", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -146,12 +167,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private List<ITouchActions> m_TouchActionsCallbackInterfaces = new List<ITouchActions>();
     private readonly InputAction m_Touch_PrimaryContact;
     private readonly InputAction m_Touch_PrimaryPosition;
+    private readonly InputAction m_Touch_Gyroscope;
     public struct TouchActions
     {
         private @PlayerInput m_Wrapper;
         public TouchActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @PrimaryContact => m_Wrapper.m_Touch_PrimaryContact;
         public InputAction @PrimaryPosition => m_Wrapper.m_Touch_PrimaryPosition;
+        public InputAction @Gyroscope => m_Wrapper.m_Touch_Gyroscope;
         public InputActionMap Get() { return m_Wrapper.m_Touch; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -167,6 +190,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @PrimaryPosition.started += instance.OnPrimaryPosition;
             @PrimaryPosition.performed += instance.OnPrimaryPosition;
             @PrimaryPosition.canceled += instance.OnPrimaryPosition;
+            @Gyroscope.started += instance.OnGyroscope;
+            @Gyroscope.performed += instance.OnGyroscope;
+            @Gyroscope.canceled += instance.OnGyroscope;
         }
 
         private void UnregisterCallbacks(ITouchActions instance)
@@ -177,6 +203,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @PrimaryPosition.started -= instance.OnPrimaryPosition;
             @PrimaryPosition.performed -= instance.OnPrimaryPosition;
             @PrimaryPosition.canceled -= instance.OnPrimaryPosition;
+            @Gyroscope.started -= instance.OnGyroscope;
+            @Gyroscope.performed -= instance.OnGyroscope;
+            @Gyroscope.canceled -= instance.OnGyroscope;
         }
 
         public void RemoveCallbacks(ITouchActions instance)
@@ -198,5 +227,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     {
         void OnPrimaryContact(InputAction.CallbackContext context);
         void OnPrimaryPosition(InputAction.CallbackContext context);
+        void OnGyroscope(InputAction.CallbackContext context);
     }
 }

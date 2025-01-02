@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +10,8 @@ public class GameManager : AStateController
 {
     public static GameManager Instance;
     public event EventHandler<string> ButtonClicked;
+
+    public TextMeshProUGUI debugText;
 
     #region STATES
     readonly GameMainMenuState mainMenuState = new();

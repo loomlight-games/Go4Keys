@@ -54,7 +54,12 @@ public class InputManager : MonoBehaviour
 
     public Vector2 PrimaryPosition()
     {
-        return playerInput.Touch.PrimaryPosition.ReadValue<Vector2>();//ScreenToWorld(Camera.main, playerInput.Touch.PrimaryPosition.ReadValue<Vector2>());
+        return playerInput.Touch.PrimaryPosition.ReadValue<Vector2>();
+    }
+
+    public Vector3 DeviceRotation()
+    {
+        return playerInput.Touch.Gyroscope.ReadValue<Vector3>();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
