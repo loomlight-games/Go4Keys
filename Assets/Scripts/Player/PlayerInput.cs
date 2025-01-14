@@ -49,7 +49,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""name"": ""Gyroscope"",
                     ""type"": ""Value"",
                     ""id"": ""6b8b1cf4-4650-4ac1-a35f-95019d7536d7"",
-                    ""expectedControlType"": ""Quaternion"",
+                    ""expectedControlType"": ""Vector3"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -81,7 +81,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b1d70494-85ed-4a42-a7d9-e1c4f861a76a"",
-                    ""path"": ""<AttitudeSensor>/attitude"",
+                    ""path"": ""<Gyroscope>/angularVelocity"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

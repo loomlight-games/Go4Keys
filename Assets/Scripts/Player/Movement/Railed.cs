@@ -1,49 +1,46 @@
 using UnityEngine;
 
 /// <summary>
-/// Provides lateral movement between rails.
+/// Provides lateral movement between rails to the player, not to its parent.
 /// </summary>
 public class Railed
 {
-    readonly Transform player;
+    readonly Transform player, rails;
     readonly float railChangeSpeed;
-
-    float[] railsXPositions;
-
     float minX, maxX;
+    float[] railsXPositions;
+    bool isGyroscopeEnabled;
 
-    public int currentRailIndex = 1;
-    Vector3 currentRailPos;
-
-    public Railed(Transform player, float railChangeSpeed)
+    public Railed(Transform player, Transform rails, float railChangeSpeed)
     {
         this.player = player;
+        this.rails = rails;
         this.railChangeSpeed = railChangeSpeed;
     }
 
     public void Initialize()
     {
-        Transform railsParent = GameObject.Find("Rails").transform;
-
         // Creates array the size of number of children of railsParent
-        railsXPositions = new float[railsParent.childCount];
+        railsXPositions = new float[rails.childCount];
 
         // Fills the array with the rails positions
         for (int i = 0; i < railsXPositions.Length; i++)
         {
-            railsXPositions[i] = railsParent.GetChild(i).position.x;
+            railsXPositions[i] = rails.GetChild(i).position.x;
         }
 
         minX = railsXPositions[0]; // Left rail
         maxX = railsXPositions[^1]; // Right rail [railsXPositions.Length - 1]
 
-        if (!UnityEngine.InputSystem.Gyroscope.current.enabled)
+        isGyroscopeEnabled = UnityEngine.InputSystem.Gyroscope.current.enabled;
+
+        if (!isGyroscopeEnabled)
             GameManager.Instance.debugText.text = "No gyroscope available.";
     }
 
     public void Update()
     {
-        if (!UnityEngine.InputSystem.Gyroscope.current.enabled) return;
+        if (!isGyroscopeEnabled) return;
 
         // Use gyroscope input to move player
         float rotationX = InputManager.Instance.DeviceRotation().x;
@@ -53,7 +50,7 @@ public class Railed
         // Display gyroscope data using debugText
         GameManager.Instance.debugText.text = $"Device rotation - X: {rotationX}, Y: {rotationY}, Z: {rotationZ}";
 
-        // Calculate new X position based on mobile rotation
+        // Calculate new X position based on mobile rotation on Y-axis
         float newXPosition = player.localPosition.x + rotationY * railChangeSpeed * Time.deltaTime;
 
         // Clamp the new X position within the bounds of the rails

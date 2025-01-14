@@ -30,17 +30,19 @@ public class InputManager : MonoBehaviour
     {
         playerInput.Enable();
 
+        // Enable device gyroscope (new input system)
         if (UnityEngine.InputSystem.Gyroscope.current != null)
             InputSystem.EnableDevice(UnityEngine.InputSystem.Gyroscope.current);
-
-        if (AttitudeSensor.current != null)
-            InputSystem.EnableDevice(AttitudeSensor.current);
 
     }
 
     void OnDisable()
     {
         playerInput.Disable();
+
+        // Disable device gyroscope (new input system)
+        if (UnityEngine.InputSystem.Gyroscope.current != null)
+            InputSystem.DisableDevice(UnityEngine.InputSystem.Gyroscope.current);
     }
 
     void Start()
@@ -61,13 +63,14 @@ public class InputManager : MonoBehaviour
 
     public Vector2 PrimaryPosition()
     {
+        // Return PrimaryPosition action value
         return playerInput.Mobile.PrimaryPosition.ReadValue<Vector2>();
     }
 
     public Vector3 DeviceRotation()
     {
-        //return playerInput.Mobile.Gyroscope.ReadValue<Vector3>();
-        return UnityEngine.InputSystem.Gyroscope.current.angularVelocity.ReadValue();
+        // Return Gyroscope action value
+        return playerInput.Mobile.Gyroscope.ReadValue<Vector3>();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////

@@ -27,14 +27,16 @@ public class Player : AStateController
 
     #region PROPERTIES
     [Header("Movement")]
-    [SerializeField] float forwardSpeed;
-    [SerializeField] float railChangeSpeed;
-    [SerializeField] float jumpForce;
+    [HideInInspector] public Transform parent;
+    [HideInInspector] public Transform rails;
+    public float forwardSpeed = 8f;
+    public float railChangeSpeed = 7f;
+    public float jumpForce = 7f;
     [Header("Mechanics")]
-    [SerializeField] int keysToCollect;
-    [SerializeField] float staminaLossPerStep;
-    [SerializeField] float staminaLossPerJump;
-    [SerializeField] float chaserResetDistance;
+    public int keysToCollect = 3;
+    public float staminaLossPerStep = 2f;
+    public float staminaLossPerJump = 600f;
+    public float chaserResetDistance = 8;
     #endregion
 
     public override void Awake()
@@ -46,12 +48,13 @@ public class Player : AStateController
             Destroy(gameObject);
 
         Rigidbody rigidBody = GetComponent<Rigidbody>();
-        Transform playerParent = transform.parent;
+        parent = transform.parent;
+        rails = GameObject.Find("Rails").transform;
 
-        endlessRunner = new(playerParent, forwardSpeed);
-        railed = new(transform, railChangeSpeed);
+        endlessRunner = new(parent, forwardSpeed);
+        railed = new(transform, rails, railChangeSpeed);
         jumper = new(rigidBody, jumpForce);
-        turner = new(playerParent);
+        turner = new(parent);
         resilient = new(staminaLossPerStep, staminaLossPerJump);
         keyCollecter = new(keysToCollect);
         chased = new(chaserResetDistance);
