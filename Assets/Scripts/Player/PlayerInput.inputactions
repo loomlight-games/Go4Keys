@@ -2,7 +2,7 @@
     "name": "PlayerInput",
     "maps": [
         {
-            "name": "Touch",
+            "name": "Mobile",
             "id": "a982bdbc-9c40-415e-886b-01f163fbbffe",
             "actions": [
                 {
@@ -27,7 +27,7 @@
                     "name": "Gyroscope",
                     "type": "Value",
                     "id": "6b8b1cf4-4650-4ac1-a35f-95019d7536d7",
-                    "expectedControlType": "Vector3",
+                    "expectedControlType": "Quaternion",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -59,7 +59,7 @@
                 {
                     "name": "",
                     "id": "b1d70494-85ed-4a42-a7d9-e1c4f861a76a",
-                    "path": "<Gyroscope>/angularVelocity",
+                    "path": "<AttitudeSensor>/attitude",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

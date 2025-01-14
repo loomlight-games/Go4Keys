@@ -29,6 +29,13 @@ public class InputManager : MonoBehaviour
     void OnEnable()
     {
         playerInput.Enable();
+
+        if (UnityEngine.InputSystem.Gyroscope.current != null)
+            InputSystem.EnableDevice(UnityEngine.InputSystem.Gyroscope.current);
+
+        if (AttitudeSensor.current != null)
+            InputSystem.EnableDevice(AttitudeSensor.current);
+
     }
 
     void OnDisable()
@@ -38,8 +45,8 @@ public class InputManager : MonoBehaviour
 
     void Start()
     {
-        playerInput.Touch.PrimaryContact.started += ctx => StartTouchPrimary(ctx);
-        playerInput.Touch.PrimaryContact.canceled += ctx => EndTouchPrimary(ctx);
+        playerInput.Mobile.PrimaryContact.started += ctx => StartTouchPrimary(ctx);
+        playerInput.Mobile.PrimaryContact.canceled += ctx => EndTouchPrimary(ctx);
     }
 
     void StartTouchPrimary(InputAction.CallbackContext ctx)
@@ -54,12 +61,13 @@ public class InputManager : MonoBehaviour
 
     public Vector2 PrimaryPosition()
     {
-        return playerInput.Touch.PrimaryPosition.ReadValue<Vector2>();
+        return playerInput.Mobile.PrimaryPosition.ReadValue<Vector2>();
     }
 
     public Vector3 DeviceRotation()
     {
-        return playerInput.Touch.Gyroscope.ReadValue<Vector3>();
+        //return playerInput.Mobile.Gyroscope.ReadValue<Vector3>();
+        return UnityEngine.InputSystem.Gyroscope.current.angularVelocity.ReadValue();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////

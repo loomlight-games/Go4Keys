@@ -9,6 +9,9 @@ public class Railed
     readonly float railChangeSpeed;
 
     float[] railsXPositions;
+
+    float minX, maxX;
+
     public int currentRailIndex = 1;
     Vector3 currentRailPos;
 
@@ -30,35 +33,33 @@ public class Railed
         {
             railsXPositions[i] = railsParent.GetChild(i).position.x;
         }
+
+        minX = railsXPositions[0]; // Left rail
+        maxX = railsXPositions[^1]; // Right rail [railsXPositions.Length - 1]
+
+        if (!UnityEngine.InputSystem.Gyroscope.current.enabled)
+            GameManager.Instance.debugText.text = "No gyroscope available.";
     }
 
     public void Update()
     {
-        // Check if the gyroscope is available
-        if (UnityEngine.InputSystem.Gyroscope.current != null)
-        {
-            // Use gyroscope input to move player
-            float rotationX = InputManager.Instance.DeviceRotation().x;
-            float rotationY = InputManager.Instance.DeviceRotation().y;
-            float rotationZ = InputManager.Instance.DeviceRotation().z;
+        if (!UnityEngine.InputSystem.Gyroscope.current.enabled) return;
 
-            // Display gyroscope data using debugText
-            GameManager.Instance.debugText.text = $"Gyroscope rotation - X: {rotationX}, Y: {rotationY}, Z: {rotationZ}";
+        // Use gyroscope input to move player
+        float rotationX = InputManager.Instance.DeviceRotation().x;
+        float rotationY = InputManager.Instance.DeviceRotation().y;
+        float rotationZ = InputManager.Instance.DeviceRotation().z;
 
-            // Calculate new X position based on rotation
-            float newXPosition = player.localPosition.x + rotationX * railChangeSpeed * Time.deltaTime;
+        // Display gyroscope data using debugText
+        GameManager.Instance.debugText.text = $"Device rotation - X: {rotationX}, Y: {rotationY}, Z: {rotationZ}";
 
-            // Clamp the new X position within the bounds of the rails
-            float minX = railsXPositions[0]; // Left rail
-            float maxX = railsXPositions[railsXPositions.Length - 1]; // Right rail
-            newXPosition = Mathf.Clamp(newXPosition, minX, maxX);
+        // Calculate new X position based on mobile rotation
+        float newXPosition = player.localPosition.x + rotationY * railChangeSpeed * Time.deltaTime;
 
-            // Update player's position
-            player.localPosition = new Vector3(newXPosition, player.localPosition.y, player.localPosition.z);
-        }
-        else
-        {
-            GameManager.Instance.debugText.text = "No gyroscope available.";
-        }
+        // Clamp the new X position within the bounds of the rails
+        newXPosition = Mathf.Clamp(newXPosition, minX, maxX);
+
+        // Update player's position
+        player.localPosition = new Vector3(newXPosition, player.localPosition.y, player.localPosition.z);
     }
 }

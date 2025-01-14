@@ -24,7 +24,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     ""name"": ""PlayerInput"",
     ""maps"": [
         {
-            ""name"": ""Touch"",
+            ""name"": ""Mobile"",
             ""id"": ""a982bdbc-9c40-415e-886b-01f163fbbffe"",
             ""actions"": [
                 {
@@ -49,7 +49,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""name"": ""Gyroscope"",
                     ""type"": ""Value"",
                     ""id"": ""6b8b1cf4-4650-4ac1-a35f-95019d7536d7"",
-                    ""expectedControlType"": ""Vector3"",
+                    ""expectedControlType"": ""Quaternion"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -81,7 +81,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b1d70494-85ed-4a42-a7d9-e1c4f861a76a"",
-                    ""path"": ""<Gyroscope>/angularVelocity"",
+                    ""path"": ""<AttitudeSensor>/attitude"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -94,16 +94,16 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // Touch
-        m_Touch = asset.FindActionMap("Touch", throwIfNotFound: true);
-        m_Touch_PrimaryContact = m_Touch.FindAction("PrimaryContact", throwIfNotFound: true);
-        m_Touch_PrimaryPosition = m_Touch.FindAction("PrimaryPosition", throwIfNotFound: true);
-        m_Touch_Gyroscope = m_Touch.FindAction("Gyroscope", throwIfNotFound: true);
+        // Mobile
+        m_Mobile = asset.FindActionMap("Mobile", throwIfNotFound: true);
+        m_Mobile_PrimaryContact = m_Mobile.FindAction("PrimaryContact", throwIfNotFound: true);
+        m_Mobile_PrimaryPosition = m_Mobile.FindAction("PrimaryPosition", throwIfNotFound: true);
+        m_Mobile_Gyroscope = m_Mobile.FindAction("Gyroscope", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
     {
-        UnityEngine.Debug.Assert(!m_Touch.enabled, "This will cause a leak and performance issues, PlayerInput.Touch.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Mobile.enabled, "This will cause a leak and performance issues, PlayerInput.Mobile.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -162,28 +162,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Touch
-    private readonly InputActionMap m_Touch;
-    private List<ITouchActions> m_TouchActionsCallbackInterfaces = new List<ITouchActions>();
-    private readonly InputAction m_Touch_PrimaryContact;
-    private readonly InputAction m_Touch_PrimaryPosition;
-    private readonly InputAction m_Touch_Gyroscope;
-    public struct TouchActions
+    // Mobile
+    private readonly InputActionMap m_Mobile;
+    private List<IMobileActions> m_MobileActionsCallbackInterfaces = new List<IMobileActions>();
+    private readonly InputAction m_Mobile_PrimaryContact;
+    private readonly InputAction m_Mobile_PrimaryPosition;
+    private readonly InputAction m_Mobile_Gyroscope;
+    public struct MobileActions
     {
         private @PlayerInput m_Wrapper;
-        public TouchActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @PrimaryContact => m_Wrapper.m_Touch_PrimaryContact;
-        public InputAction @PrimaryPosition => m_Wrapper.m_Touch_PrimaryPosition;
-        public InputAction @Gyroscope => m_Wrapper.m_Touch_Gyroscope;
-        public InputActionMap Get() { return m_Wrapper.m_Touch; }
+        public MobileActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PrimaryContact => m_Wrapper.m_Mobile_PrimaryContact;
+        public InputAction @PrimaryPosition => m_Wrapper.m_Mobile_PrimaryPosition;
+        public InputAction @Gyroscope => m_Wrapper.m_Mobile_Gyroscope;
+        public InputActionMap Get() { return m_Wrapper.m_Mobile; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(TouchActions set) { return set.Get(); }
-        public void AddCallbacks(ITouchActions instance)
+        public static implicit operator InputActionMap(MobileActions set) { return set.Get(); }
+        public void AddCallbacks(IMobileActions instance)
         {
-            if (instance == null || m_Wrapper.m_TouchActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_TouchActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_MobileActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MobileActionsCallbackInterfaces.Add(instance);
             @PrimaryContact.started += instance.OnPrimaryContact;
             @PrimaryContact.performed += instance.OnPrimaryContact;
             @PrimaryContact.canceled += instance.OnPrimaryContact;
@@ -195,7 +195,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Gyroscope.canceled += instance.OnGyroscope;
         }
 
-        private void UnregisterCallbacks(ITouchActions instance)
+        private void UnregisterCallbacks(IMobileActions instance)
         {
             @PrimaryContact.started -= instance.OnPrimaryContact;
             @PrimaryContact.performed -= instance.OnPrimaryContact;
@@ -208,22 +208,22 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Gyroscope.canceled -= instance.OnGyroscope;
         }
 
-        public void RemoveCallbacks(ITouchActions instance)
+        public void RemoveCallbacks(IMobileActions instance)
         {
-            if (m_Wrapper.m_TouchActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_MobileActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(ITouchActions instance)
+        public void SetCallbacks(IMobileActions instance)
         {
-            foreach (var item in m_Wrapper.m_TouchActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_MobileActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_TouchActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_MobileActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public TouchActions @Touch => new TouchActions(this);
-    public interface ITouchActions
+    public MobileActions @Mobile => new MobileActions(this);
+    public interface IMobileActions
     {
         void OnPrimaryContact(InputAction.CallbackContext context);
         void OnPrimaryPosition(InputAction.CallbackContext context);
