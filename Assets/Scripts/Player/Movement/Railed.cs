@@ -33,9 +33,6 @@ public class Railed
         maxX = railsXPositions[^1]; // Right rail [railsXPositions.Length - 1]
 
         isGyroscopeEnabled = UnityEngine.InputSystem.Gyroscope.current.enabled;
-
-        if (!isGyroscopeEnabled)
-            GameManager.Instance.debugText.text = "No gyroscope available.";
     }
 
     public void Update()
@@ -43,12 +40,7 @@ public class Railed
         if (!isGyroscopeEnabled) return;
 
         // Use gyroscope input to move player
-        float rotationX = InputManager.Instance.DeviceRotation().x;
         float rotationY = InputManager.Instance.DeviceRotation().y;
-        float rotationZ = InputManager.Instance.DeviceRotation().z;
-
-        // Display gyroscope data using debugText
-        GameManager.Instance.debugText.text = $"Device rotation - X: {rotationX}, Y: {rotationY}, Z: {rotationZ}";
 
         // Calculate new X position based on mobile rotation on Y-axis
         float newXPosition = player.localPosition.x + rotationY * railChangeSpeed * Time.deltaTime;

@@ -44,6 +44,7 @@ public class GameEndState : AState
 
         // Deactivate touch input
         InputManager.Instance.gameObject.SetActive(false);
+
     }
 
     public override void Update()
