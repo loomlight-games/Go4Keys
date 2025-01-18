@@ -38,7 +38,7 @@ public class TutorialUI
         intersection = popUps.transform.Find("Intersection").gameObject;
 
         //gyroscope.SetActive(true); // Left
-        Time.timeScale = 0.2f;
+        //Time.timeScale = 0.2f;
     }
 
     public void Update()
@@ -78,7 +78,6 @@ public class TutorialUI
         }
         else if (!tutorialFinished)
         {
-
             // if (Apressed && left.activeSelf)
             // {
             //     Time.timeScale = 1f;
@@ -154,4 +153,6 @@ public class TutorialUI
     {
         hasSurpassedTurnPoint = true;
     }
+
+
 }

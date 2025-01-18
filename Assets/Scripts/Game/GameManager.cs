@@ -2,6 +2,8 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// Implements context and transitions between game states.
@@ -26,8 +28,10 @@ public class GameManager : AStateController
     public TutorialToggler tutorialToggler = new();
     public PlayerCollectiblesUI playerCollectedUI = new();
     public PlayerStaminaUI playerStaminaUI = new();
-    public TutorialUI tutorialUI = new();
     #endregion
+
+    public const float SLOWED_SPEED = 0.5f, POPUP_DURATION = 1f, LONG_POPUP_DURATION = 4f;
+
 
     public override void Awake()
     {
@@ -52,7 +56,6 @@ public class GameManager : AStateController
 
             playerCollectedUI.Initialize();
             playerStaminaUI.Initialize();
-            tutorialUI.Initialize();
 
             SetState(playState);
         }
@@ -108,5 +111,35 @@ public class GameManager : AStateController
     void GameEnded(object sender, string result)
     {
         SwitchState(endState, result);
+    }
+
+    public void TutorialSequence(List<GameObject> popUpsList)
+    {
+        StartCoroutine(TutorialSequenceCoroutine(popUpsList));
+    }
+
+    public void ActivateMomentarily(GameObject gameObject, float duration = POPUP_DURATION, float simSpeed = 1f)
+    {
+        StartCoroutine(ActivateMomentarilyCoroutine(gameObject, duration, simSpeed));
+    }
+
+    private IEnumerator TutorialSequenceCoroutine(List<GameObject> popUpsList)
+    {
+        foreach (GameObject popUp in popUpsList)
+        {
+            if (popUp.name == "Stamina" || popUp.name == "Keys" || popUp.name == "Telephone")
+                yield return ActivateMomentarilyCoroutine(popUp, LONG_POPUP_DURATION, 0.1f);
+            else
+                yield return ActivateMomentarilyCoroutine(popUp, POPUP_DURATION);
+        }
+    }
+
+    private IEnumerator ActivateMomentarilyCoroutine(GameObject gameObject, float duration, float simSpeed = 1f)
+    {
+        Time.timeScale = simSpeed; // Alters simulation speed
+        gameObject.SetActive(true);
+        yield return new WaitForSecondsRealtime(duration); // Real-time, not simulation
+        gameObject.SetActive(false);
+        Time.timeScale = 1f; // Resets simulation speed
     }
 }
