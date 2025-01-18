@@ -162,12 +162,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d492cd5d8cd8cda4085d0ee14fc2588f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentStateName: 
+  parent: {fileID: 0}
+  rails: {fileID: 0}
   forwardSpeed: 8
   railChangeSpeed: 7
   jumpForce: 7
   keysToCollect: 3
   staminaLossPerStep: 2
-  staminaLossPerJump: 600
+  staminaLossPerJump: 400
   chaserResetDistance: 8
 --- !u!114 &5059357011320905135
 MonoBehaviour:

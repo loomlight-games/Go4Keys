@@ -22,6 +22,8 @@ public class GamePauseState : AState
         quitButton.SetActive(true);
 
         Time.timeScale = 0f; // Stops simulation
+
+
     }
 
     public override void Update()
@@ -31,10 +33,10 @@ public class GamePauseState : AState
 
     public override void Exit()
     {
-        Time.timeScale = 1f; // Resumes simulation
-
         resumeButton.SetActive(false);
         mainMenuButton.SetActive(false);
         quitButton.SetActive(false);
+
+        // Restore all gamenager coroutines
     }
 }

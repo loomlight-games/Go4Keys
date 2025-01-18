@@ -28,18 +28,17 @@ public class GameManager : AStateController
     public TutorialToggler tutorialToggler = new();
     public PlayerCollectiblesUI playerCollectedUI = new();
     public PlayerStaminaUI playerStaminaUI = new();
+    public List<GameObject> tutorialPopUpsList = new();
     #endregion
 
     public const float SLOWED_SPEED = 0.5f, POPUP_DURATION = 1f, LONG_POPUP_DURATION = 4f;
-
+    public float lastSimSpeed = 1f; // Simulation speed
 
     public override void Awake()
     {
         // Singleton
         if (Instance == null)
-        {
             Instance = this;
-        }
         else
             Destroy(gameObject);
     }
@@ -113,9 +112,9 @@ public class GameManager : AStateController
         SwitchState(endState, result);
     }
 
-    public void TutorialSequence(List<GameObject> popUpsList)
+    public void TutorialSequence()
     {
-        StartCoroutine(TutorialSequenceCoroutine(popUpsList));
+        StartCoroutine(TutorialSequenceCoroutine());
     }
 
     public void ActivateMomentarily(GameObject gameObject, float duration = POPUP_DURATION, float simSpeed = 1f)
@@ -123,9 +122,9 @@ public class GameManager : AStateController
         StartCoroutine(ActivateMomentarilyCoroutine(gameObject, duration, simSpeed));
     }
 
-    private IEnumerator TutorialSequenceCoroutine(List<GameObject> popUpsList)
+    private IEnumerator TutorialSequenceCoroutine()
     {
-        foreach (GameObject popUp in popUpsList)
+        foreach (GameObject popUp in tutorialPopUpsList)
         {
             if (popUp.name == "Stamina" || popUp.name == "Keys" || popUp.name == "Telephone")
                 yield return ActivateMomentarilyCoroutine(popUp, LONG_POPUP_DURATION, 0.1f);
@@ -137,9 +136,21 @@ public class GameManager : AStateController
     private IEnumerator ActivateMomentarilyCoroutine(GameObject gameObject, float duration, float simSpeed = 1f)
     {
         Time.timeScale = simSpeed; // Alters simulation speed
+        lastSimSpeed = Time.timeScale;
         gameObject.SetActive(true);
-        yield return new WaitForSecondsRealtime(duration); // Real-time, not simulation
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            if (currentState != pauseState)
+            {
+                elapsedTime += Time.unscaledDeltaTime;
+            }
+            yield return null;
+        }
+
         gameObject.SetActive(false);
         Time.timeScale = 1f; // Resets simulation speed
+        lastSimSpeed = Time.timeScale;
     }
 }

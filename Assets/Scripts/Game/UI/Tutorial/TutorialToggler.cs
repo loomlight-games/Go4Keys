@@ -5,8 +5,6 @@ using UnityEngine;
 /// </summary>
 public class TutorialToggler
 {
-    //readonly Serializable<bool> tutorialSerializable = new(); // Handles tutorial visibility
-    //readonly string tutorialFile = "tutorialVisibility.json";
     public readonly string TUTORIAL_FILE = "TutorialVisibility";
     GameObject togglers, activatedButton, deactivatedButton;
 
@@ -21,8 +19,6 @@ public class TutorialToggler
 
     public void Recover()
     {
-        //bool tutorialActivated = tutorialSerializable.Deserialize(tutorialFile);
-
         // Retrieve the integer value from PlayerPrefs and convert it to a boolean
         int tutorialActivatedInt = PlayerPrefs.GetInt(TUTORIAL_FILE, 0);
         bool tutorialActivated = tutorialActivatedInt == 1;
@@ -33,8 +29,6 @@ public class TutorialToggler
 
     public void Activate(bool activated)
     {
-        //tutorialSerializable.Serialize(activated, tutorialFile);
-
         // Convert the boolean to an integer and store it in PlayerPrefs
         int activatedInt = activated ? 1 : 0;
         PlayerPrefs.SetInt(TUTORIAL_FILE, activatedInt);

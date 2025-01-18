@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -8,13 +7,12 @@ using UnityEngine;
 public class GamePlayState : AState
 {
     const string TUTORIAL_FILE = "TutorialVisibility";
-    List<GameObject> popUpsList = new();
     GameObject pauseButton, intersection, advice;
     bool learnTutorial = true, tutorialStarted = false, tutorialFinished = false;
 
     public override void Enter()
     {
-        Time.timeScale = 1f; // Resumes simulation
+        Time.timeScale = GameManager.Instance.lastSimSpeed; // Resumes simulation
 
         GameObject UI = GameObject.Find("UI");
         pauseButton = UI.transform.Find("Buttons").transform.Find("Pause").gameObject;
@@ -33,24 +31,27 @@ public class GamePlayState : AState
         intersection = UI.transform.Find("Intersection").gameObject;
         advice = UI.transform.Find("Advice").gameObject;
 
-        Transform popUps = UI.transform.Find("Tutorial pop ups");
+        Transform popUpsParent = UI.transform.Find("Tutorial pop ups");
 
-        // Add all children of popUps to popUpsList
-        foreach (Transform child in popUps)
-            popUpsList.Add(child.gameObject);
+        // If tutorial popups list is still empty
+        if (GameManager.Instance.tutorialPopUpsList.Count == 0)
+            // Add all children of popUpsParent to popUpsList
+            foreach (Transform child in popUpsParent)
+                GameManager.Instance.tutorialPopUpsList.Add(child.gameObject);
     }
 
     public override void Update()
     {
-        if (!learnTutorial || tutorialStarted || tutorialFinished) return;
+        if (!learnTutorial || tutorialStarted) return;
 
         tutorialStarted = true;
-        GameManager.Instance.TutorialSequence(popUpsList);
+        GameManager.Instance.TutorialSequence();
     }
 
     public override void Exit()
     {
         pauseButton.SetActive(false);
+
     }
 
     void AtIntersection(object sender, EventArgs any)
