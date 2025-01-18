@@ -2,7 +2,7 @@
     "name": "PlayerInput",
     "maps": [
         {
-            "name": "Mobile",
+            "name": "Touch",
             "id": "a982bdbc-9c40-415e-886b-01f163fbbffe",
             "actions": [
                 {

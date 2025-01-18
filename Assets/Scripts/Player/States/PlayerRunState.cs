@@ -6,6 +6,6 @@ public class PlayerRunState : AState
 {
     public override void Update()
     {
-        Player.Instance.jumper.Update(); // Detects if space is pressed
+        Player.Instance.jumper.Update();
     }
 }

@@ -7,6 +7,8 @@ public abstract class AStateController : MonoBehaviour
 {
     protected AState currentState;
 
+    public string currentStateName;
+
     public abstract void Awake();
 
     public abstract void Start();
@@ -48,6 +50,7 @@ public abstract class AStateController : MonoBehaviour
         currentState.Enter();
 
         Debug.LogWarning(currentState.ToString());
+        currentStateName = currentState.ToString();
     }
 
     /// <summary>
@@ -59,6 +62,7 @@ public abstract class AStateController : MonoBehaviour
         currentState.Enter(info);
 
         Debug.LogWarning(currentState.ToString());
+        currentStateName = currentState.ToString();
     }
 
     /// <summary>
@@ -71,6 +75,7 @@ public abstract class AStateController : MonoBehaviour
         currentState.Enter();
 
         Debug.LogWarning(currentState.ToString());
+        currentStateName = currentState.ToString();
     }
 
     /// <summary>
@@ -83,5 +88,6 @@ public abstract class AStateController : MonoBehaviour
         currentState.Enter(info);
 
         Debug.LogWarning(currentState.ToString());
+        currentStateName = currentState.ToString();
     }
 }

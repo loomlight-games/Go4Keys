@@ -47,8 +47,8 @@ public class InputManager : MonoBehaviour
 
     void Start()
     {
-        playerInput.Mobile.PrimaryContact.started += ctx => StartTouchPrimary(ctx);
-        playerInput.Mobile.PrimaryContact.canceled += ctx => EndTouchPrimary(ctx);
+        playerInput.Touch.PrimaryContact.started += ctx => StartTouchPrimary(ctx);
+        playerInput.Touch.PrimaryContact.canceled += ctx => EndTouchPrimary(ctx);
     }
 
     void StartTouchPrimary(InputAction.CallbackContext ctx)
@@ -64,13 +64,13 @@ public class InputManager : MonoBehaviour
     public Vector2 PrimaryPosition()
     {
         // Return PrimaryPosition action value
-        return playerInput.Mobile.PrimaryPosition.ReadValue<Vector2>();
+        return playerInput.Touch.PrimaryPosition.ReadValue<Vector2>();
     }
 
     public Vector3 DeviceRotation()
     {
         // Return Gyroscope action value
-        return playerInput.Mobile.Gyroscope.ReadValue<Vector3>();
+        return playerInput.Touch.Gyroscope.ReadValue<Vector3>();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////

@@ -9,7 +9,7 @@ public class Railed
     readonly float railChangeSpeed;
     float minX, maxX;
     float[] railsXPositions;
-    bool isGyroscopeEnabled;
+    bool isGyroscopeEnabled = false;
 
     public Railed(Transform player, Transform rails, float railChangeSpeed)
     {
@@ -32,7 +32,8 @@ public class Railed
         minX = railsXPositions[0]; // Left rail
         maxX = railsXPositions[^1]; // Right rail [railsXPositions.Length - 1]
 
-        isGyroscopeEnabled = UnityEngine.InputSystem.Gyroscope.current.enabled;
+        if (UnityEngine.InputSystem.Gyroscope.current != null)
+            isGyroscopeEnabled = UnityEngine.InputSystem.Gyroscope.current.enabled;
     }
 
     public void Update()
