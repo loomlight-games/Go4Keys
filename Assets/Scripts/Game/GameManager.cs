@@ -25,7 +25,6 @@ public class GameManager : AStateController
     #endregion
 
     #region UI
-    public TutorialToggler tutorialToggler = new();
     public PlayerCollectiblesUI playerCollectedUI = new();
     public PlayerStaminaUI playerStaminaUI = new();
     public List<GameObject> tutorialPopUpsList = new();
@@ -74,11 +73,11 @@ public class GameManager : AStateController
                 break;
             case "Tutorial on":
                 if (currentState == optionsMenuState)
-                    tutorialToggler.Activate(false);
+                    optionsMenuState.TutorialTeaching(false);
                 break;
             case "Tutorial off":
                 if (currentState == optionsMenuState)
-                    tutorialToggler.Activate(true);
+                    optionsMenuState.TutorialTeaching(true);
                 break;
             case "Credits":
                 SwitchState(creditsState);
