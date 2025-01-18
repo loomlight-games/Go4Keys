@@ -52,7 +52,7 @@ public class GameManager : AStateController
 
             playerCollectedUI.Initialize();
             playerStaminaUI.Initialize();
-            // TODO tutorialUI.Initialize();
+            tutorialUI.Initialize();
 
             SetState(playState);
         }
