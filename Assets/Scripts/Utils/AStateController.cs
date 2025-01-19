@@ -5,8 +5,7 @@ using UnityEngine;
 /// </summary>
 public abstract class AStateController : MonoBehaviour
 {
-    protected AState currentState;
-
+    public AState currentState;
     public string currentStateName;
 
     public abstract void Awake();

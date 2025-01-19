@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SwipeDetection : MonoBehaviour
 {
@@ -9,7 +10,6 @@ public class SwipeDetection : MonoBehaviour
     public GameObject trail;
 
     InputManager inputManager;
-    Camera mainCamera;
 
     Vector2 startPos, endPos;
     float startTime, endTime;
@@ -18,7 +18,6 @@ public class SwipeDetection : MonoBehaviour
     void Awake()
     {
         inputManager = InputManager.Instance;
-        mainCamera = Camera.main; // Get the main camera
     }
 
     void OnEnable()
@@ -39,7 +38,6 @@ public class SwipeDetection : MonoBehaviour
         startTime = time;
 
         trail.SetActive(true);
-        trail.transform.position = mainCamera.ScreenToWorldPoint(new Vector3(pos.x, pos.y, mainCamera.nearClipPlane));
         trailCoroutine = StartCoroutine(Trail());
     }
 
@@ -56,38 +54,38 @@ public class SwipeDetection : MonoBehaviour
 
     void DetectSwipe()
     {
-        if (
-            Vector3.Distance(startPos, endPos) >= minDistance &&
-            (endTime - startTime) <= maxTime
-        )
+        if (Vector3.Distance(startPos, endPos) >= minDistance &&
+            (endTime - startTime) <= maxTime)
         {
             Debug.DrawLine(startPos, endPos, Color.red, 3f);
-            Vector3 direction3D = endPos - startPos;
-            Vector2 direction2D = new Vector2(direction3D.x, direction3D.y).normalized;
-            SwipeDirection(direction2D);
+            Vector2 direction = endPos - startPos;
+            direction.Normalize();
+            SwipeDirection(direction);
         }
     }
 
     void SwipeDirection(Vector2 direction)
     {
+        // Only check right and left swipes at intersections
+        if (Player.Instance.currentState == Player.Instance.atIntersection)
+        {
+            if (Vector2.Dot(Vector2.right, direction) > directionThreshold)
+            {
+                Debug.Log("Swipe right"); // Take street on the right
+                InputManager.Instance.swipeRight = true;
+            }
+            else if (Vector2.Dot(Vector2.left, direction) > directionThreshold)
+            {
+                Debug.Log("Swipe left"); // Take street on the left
+                InputManager.Instance.swipeLeft = true;
+            }
+        }
+
+        // But check up swipes always
         if (Vector2.Dot(Vector2.up, direction) > directionThreshold)
         {
             Debug.Log("Swipe up"); // Jump
             InputManager.Instance.swipeUp = true;
-        }
-        else if (Vector2.Dot(Vector2.right, direction) > directionThreshold)
-        {
-            Debug.Log("Swipe right"); // Take street on the right
-            InputManager.Instance.swipeRight = true;
-        }
-        // else if (Vector2.Dot(Vector2.down, direction) > directionThreshold)
-        // {
-        //     Debug.Log("Swipe down"); 
-        // }
-        else if (Vector2.Dot(Vector2.left, direction) > directionThreshold)
-        {
-            Debug.Log("Swipe left"); // Take street on the left
-            InputManager.Instance.swipeLeft = true;
         }
     }
 
@@ -98,10 +96,8 @@ public class SwipeDetection : MonoBehaviour
     {
         while (true)
         {
-            Vector2 screenPos = inputManager.PrimaryPosition();
-            Vector3 worldPos = mainCamera.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, mainCamera.nearClipPlane));
-            trail.transform.position = worldPos;
-            yield return null; // wait for next frame
+            trail.transform.position = inputManager.PrimaryWorldPosition();
+            yield return null; // Wait for next frame
         }
     }
 }

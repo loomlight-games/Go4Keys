@@ -10,9 +10,9 @@ public class Player : AStateController
     public event EventHandler<string> PlayerResult;
 
     #region STATES
-    readonly PlayerRunState runState = new();
-    readonly PlayerJumpState jumpState = new();
-    readonly PlayerAtIntersectionState atIntersection = new();
+    public readonly PlayerRunState runState = new();
+    public readonly PlayerJumpState jumpState = new();
+    public readonly PlayerAtIntersectionState atIntersection = new();
     #endregion
 
     #region HABILITIES

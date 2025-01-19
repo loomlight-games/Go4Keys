@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,12 +9,8 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance; // Singleton
     PlayerInput playerInput; // InputActions script
 
-    #region Events
-    public delegate void StartTouch(Vector2 pos, float time);
-    public event StartTouch OnStartTouch;
-    public delegate void EndTouch(Vector2 pos, float time);
-    public event EndTouch OnEndTouch;
-    #endregion
+    public delegate void TouchEvent(Vector2 screenPos, float time);
+    public event TouchEvent OnStartTouch, OnEndTouch;
 
     void Awake()
     {
@@ -51,8 +48,9 @@ public class InputManager : MonoBehaviour
         playerInput.Touch.PrimaryContact.canceled += ctx => EndTouchPrimary(ctx);
     }
 
-    void StartTouchPrimary(InputAction.CallbackContext ctx)
+    private async void StartTouchPrimary(InputAction.CallbackContext ctx)
     {
+        await Task.Delay(50);
         OnStartTouch?.Invoke(PrimaryPosition(), (float)ctx.startTime);
     }
 
@@ -67,16 +65,15 @@ public class InputManager : MonoBehaviour
         return playerInput.Touch.PrimaryPosition.ReadValue<Vector2>();
     }
 
+    public Vector3 PrimaryWorldPosition()
+    {
+        Vector2 screenPos = PrimaryPosition();
+        return Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, Camera.main.nearClipPlane + 1f));
+    }
+
     public Vector3 DeviceRotation()
     {
         // Return Gyroscope action value
         return playerInput.Touch.Gyroscope.ReadValue<Vector3>();
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    static Vector3 ScreenToWorld(Camera camera, Vector3 pos)
-    {
-        pos.z = camera.nearClipPlane;
-        return camera.ScreenToWorldPoint(pos);
     }
 }
