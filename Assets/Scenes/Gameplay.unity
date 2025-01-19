@@ -46032,10 +46032,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 2.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7624390240055608613, guid: d76042eafccd8c840a33121b95135238, type: 3}
-      propertyPath: accelerationIncrement
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
