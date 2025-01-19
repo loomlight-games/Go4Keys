@@ -14,6 +14,8 @@ public class GamePlayState : AState
     {
         Time.timeScale = GameManager.Instance.lastSimSpeed; // Resumes simulation
 
+        InputManager.Instance.enabled = true;
+
         GameObject UI = GameObject.Find("UI");
         pauseButton = UI.transform.Find("Buttons").transform.Find("Pause").gameObject;
         pauseButton.SetActive(true);
@@ -51,7 +53,7 @@ public class GamePlayState : AState
     public override void Exit()
     {
         pauseButton.SetActive(false);
-
+        InputManager.Instance.enabled = false;
     }
 
     void AtIntersection(object sender, EventArgs any)

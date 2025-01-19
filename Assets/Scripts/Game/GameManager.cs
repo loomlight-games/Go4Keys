@@ -30,7 +30,7 @@ public class GameManager : AStateController
     public List<GameObject> tutorialPopUpsList = new();
     #endregion
 
-    public const float SLOWED_SPEED = 0.5f, POPUP_DURATION = 1f, LONG_POPUP_DURATION = 4f;
+    public const float SLOWED_SPEED = 0.5f, POPUP_DURATION = 2f, LONG_POPUP_DURATION = 4f;
     public float lastSimSpeed = 1f; // Simulation speed
 
     public override void Awake()

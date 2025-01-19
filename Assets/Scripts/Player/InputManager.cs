@@ -68,7 +68,7 @@ public class InputManager : MonoBehaviour
     public Vector3 PrimaryWorldPosition()
     {
         Vector2 screenPos = PrimaryPosition();
-        return Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, Camera.main.nearClipPlane + 1f));
+        return Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, 3f));
     }
 
     public Vector3 DeviceRotation()
