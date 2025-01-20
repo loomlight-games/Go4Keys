@@ -32,6 +32,7 @@ public class GameManager : AStateController
 
     public const float SLOWED_SPEED = 0.5f, POPUP_DURATION = 2f, LONG_POPUP_DURATION = 4f;
     public float lastSimSpeed = 1f; // Simulation speed
+    public const string TUTORIAL_FILE = "TutorialVisibility";
 
     public override void Awake()
     {

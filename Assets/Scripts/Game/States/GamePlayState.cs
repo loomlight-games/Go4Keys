@@ -6,7 +6,6 @@ using UnityEngine;
 /// </summary>
 public class GamePlayState : AState
 {
-    const string TUTORIAL_FILE = "TutorialVisibility";
     GameObject pauseButton, intersection, advice;
     bool learnTutorial = true, tutorialStarted = false, tutorialFinished = false;
 
@@ -21,7 +20,7 @@ public class GamePlayState : AState
         pauseButton.SetActive(true);
 
         // Retrieve the integer value from PlayerPrefs and convert it to a boolean
-        int tutorialActivatedInt = PlayerPrefs.GetInt(TUTORIAL_FILE, 1);
+        int tutorialActivatedInt = PlayerPrefs.GetInt(GameManager.TUTORIAL_FILE, 1);
         learnTutorial = tutorialActivatedInt == 1;
         Debug.Log("Learn tutorial: " + learnTutorial);
 

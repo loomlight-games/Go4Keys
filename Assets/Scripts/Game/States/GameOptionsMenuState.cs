@@ -5,7 +5,6 @@ using UnityEngine;
 /// </summary>
 public class GameOptionsMenuState : AState
 {
-    public readonly string TUTORIAL_FILE = "TutorialVisibility";
     GameObject UI, tutorialTogglers, teachedTutorialButton, notTeachedTutorialButton;
     bool alreadyEntered = false;
 
@@ -35,7 +34,7 @@ public class GameOptionsMenuState : AState
     public void Recover()
     {
         // Retrieve the integer value from PlayerPrefs and convert it to a boolean
-        int tutorialTeachedInt = PlayerPrefs.GetInt(TUTORIAL_FILE, 0);
+        int tutorialTeachedInt = PlayerPrefs.GetInt(GameManager.TUTORIAL_FILE, 0);
         bool tutorialTeached = tutorialTeachedInt == 1;
 
         Debug.Log("Loaded tutorial teaching: " + tutorialTeached);
@@ -46,7 +45,7 @@ public class GameOptionsMenuState : AState
     {
         // Convert the boolean to an integer and store it in PlayerPrefs
         int teachedInt = teached ? 1 : 0;
-        PlayerPrefs.SetInt(TUTORIAL_FILE, teachedInt);
+        PlayerPrefs.SetInt(GameManager.TUTORIAL_FILE, teachedInt);
 
         Debug.Log("Tutorial teaching: " + teached);
         ToggleButtonSprites(teached);
