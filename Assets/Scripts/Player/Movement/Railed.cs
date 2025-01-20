@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Provides lateral movement between rails to the player, not to its parent.
+/// Provides lateral movement to the player, not to its parent.
 /// </summary>
 public class Railed
 {
