@@ -1,6 +1,6 @@
 
 /// <summary>
-/// Can rotate to left if 'A' is pressed, or right if 'D'.
+/// Can rotate to left if swipe left, or right if swipe right.
 /// </summary>
 public class PlayerAtIntersectionState : AState
 {

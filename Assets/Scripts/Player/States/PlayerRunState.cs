@@ -1,6 +1,6 @@
 ﻿
 /// <summary>
-/// Detects if 'Space' is pressed in any moment.
+/// Detects swipe up
 /// </summary>
 public class PlayerRunState : AState
 {
